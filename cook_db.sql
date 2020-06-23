@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS cookie_master;
+CREATE DATABASE IF NOT EXISTS cook_master;
 
-USE cookie_master;
+USE cook_master;
 
 CREATE TABLE Users (
     id INT NOT NULL AUTO_INCREMENT,
