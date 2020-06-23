@@ -6,7 +6,6 @@ const getALLRecipes = async (req, res) => {
     btn = true;
   }
   const allRecipes = await Root.findAllRecipes();
-  console.log(1, allRecipes)
   res.render('home', { results: allRecipes, btn });
 };
 

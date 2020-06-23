@@ -17,4 +17,4 @@ const connection = () => getSession().then((session) => session.getSchema('cook_
 module.exports = {
   getSession,
   connection,
-}
+};
