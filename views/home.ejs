@@ -7,5 +7,12 @@
   </head>
   <body>
     <h1>Boas vindas ao Cookmaster!</h1>
+    <% recipes.forEach((recipe)=> {%>
+      <p>Receita: <%= recipe[0] %></p>
+      <p>Realizado Por: <%= recipe[1] %></p>
+        <% if(token) {%>
+          <a href="/test">Mais detalhes</a>
+        <% } %>
+    <% }) %>
   </body>
 </html>
