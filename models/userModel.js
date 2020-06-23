@@ -1,4 +1,5 @@
 /* Quando você implementar a conexão com o banco, não deve mais precisar desse objeto */
+
 const TEMP_USER = {
   id: 'd2a667c4-432d-4dd5-8ab1-b51e88ddb5fe',
   email: 'taylor.doe@company.com',
