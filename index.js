@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
+const Parser = require('cookie-parser');
 
 const middlewares = require('./middlewares');
 const controllers = require('./controllers');
