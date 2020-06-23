@@ -1,14 +1,15 @@
-const connection = require('./connection');
+const { getSession } = require('./connection');
+
+const GET_ALL_RECIPES_QUERY =
+  `SELECT r.id, r.recipe_name, (CONCAT(first_name, ' ', u.last_name)) creator_name
+FROM Recipes r
+INNER JOIN Users u ON u.id = r.creator_id;`;
 
 const findAllRecipes = async () => {
-  try {
-    const db = await connection();
-    const results = await db.getTable('Recipes').select(['recipe_name', 'creator_id']).execute();
-    const recipes = await results.fetchAll();
-    return recipes;
-  } catch (e) {
-    console.log(e);
-  }
+  const db = await getSession();
+  const sesions = await db.sql(GET_ALL_RECIPES_QUERY).execute();
+  const recipes = await sesions.fetchAll();
+  return recipes;
 };
 
 module.exports = {

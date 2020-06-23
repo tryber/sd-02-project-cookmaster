@@ -10,7 +10,8 @@
     <h2>Receitas cadastradas</h2>
     <ul>
       <% results.forEach(recipe => { %>
-      <li>Receita: <%= (recipe[0]) %> - Autor: <%= (recipe[1]) %></li>
+      <li>Receita: <%= (recipe[1]) %> - Autor: <%= (recipe[2]) %></li>
+      <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
       <% }) %>
     </ul>
     <% if (btn) { %>
