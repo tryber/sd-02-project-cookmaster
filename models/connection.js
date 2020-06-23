@@ -1,9 +1,12 @@
 const mysqlx = require('@mysql/xdevapi');
+const dotenv = require('dotenv');
+
+dotenv.config({ path: './config.env' });
 
 const connection = () => {
   return mysqlx.getSession({
     user: 'root',
-    password: '******',
+    password: process.env.DATABASE_PASSWORD,
     host: 'localhost',
     port: 33060,
     schema: 'cook_master',
