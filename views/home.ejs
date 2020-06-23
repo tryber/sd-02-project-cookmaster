@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Home</title>
-  </head>
-  <body>
-    <h1>Boas vindas ao Cookmaster!</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Home</title>
+
+  <style>
+    .Home_header {
+      background-color: grey;
+      position: relative;
+      padding: 1vh 2vw;
+      margin: -10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .Home_header_tags {
+      font-size: 2vh;
+    }
+
+    .Home_recipes {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2vw 0 2vw;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="Home_header">
+    <p class="Home_header_tags">Cookmaster</p>
+    <button class=" Home_header_tags" type="button">Login</button>
+  </div>
+  <div class="Home_recipes">
+    <h1>Receitas</h1>
+    <div>
+      <button type="button" class="my_recipes">Minhas Receitas</button>
+      <button type="button" class="search_recipes">Buscar Receita</button>
+      <button type="button" class="new_recipe">Nova Receita</button>
+    </div>
+  </div>
+
+  <div class="dataReceive"></div>
+</body>
+
 </html>
