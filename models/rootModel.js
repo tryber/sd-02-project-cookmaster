@@ -1,4 +1,4 @@
-const connection = require("./connection");
+const connection = require('./connection');
 
 const findAllRecipes = async () => {
   try {
@@ -7,8 +7,8 @@ const findAllRecipes = async () => {
     const recipes = await results.fetchAll();
     return recipes;
   } catch (e) {
-    console.log(e)
-  }
+    console.log(e);
+  };
 }
 
 module.exports = {
