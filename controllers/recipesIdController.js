@@ -22,8 +22,6 @@ const createRecipe = async (req, res) => {
 
 const editRecipe = async (req, res) => {
   const recipeDetails = await RecipeId.findRecipe(req.params.id);
-  console.log(1, req.user.id);
-  console.log(2, recipeDetails);
   if (req.user.id !== recipeDetails[0].creatorId) {
     return res.redirect(`/recipes/${req.params.id}`);
   }
@@ -46,10 +44,38 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const deleteRecipe = async (req, res) => {
+  const recipeDetails = await RecipeId.findRecipe(req.params.id);
+  if (req.user.id !== recipeDetails[0].creatorId) {
+    return res.redirect(`/recipes/${req.params.id}`);
+  }
+  const recipe = {
+    name: recipeDetails[0].recipeName,
+    id: req.params.id,
+  };
+  res.render('deleteRecipe', { recipe, fail: false });
+}
+
+const deleteRecipeDB = async (req, res) => {
+  if (req.password === req.body.password) {
+    const DELETE_QUERY = `DELETE FROM Recipes WHERE id = ${req.params.id};`;
+    await Root.queryDb(DELETE_QUERY);
+    return res.redirect('/');
+  }
+  const recipeDetails = await RecipeId.findRecipe(req.params.id);
+  const recipe = {
+    name: recipeDetails[0].recipeName,
+    id: req.params.id,
+  };
+  res.render('deleteRecipe', { recipe, fail: true });
+}
+
 module.exports = {
   getRecipeInfo,
   newRecipePage,
   createRecipe,
   editRecipe,
   updateRecipe,
+  deleteRecipe,
+  deleteRecipeDB,
 };

@@ -22,7 +22,7 @@ const findById = async (id) => {
   try {
     const arraySelection = ['email', 'pass', 'id', 'first_name', 'last_name'];
     const user = await byId(id, 'Users', arraySelection);
-    return { name: user[0][3], lastName: user[0][4], id: user[0][2] };
+    return { name: user[0][3], lastName: user[0][4], id: user[0][2], password: user[0][1] };
   } catch (e) {
     console.log(e);
   }

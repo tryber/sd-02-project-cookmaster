@@ -24,7 +24,7 @@ const createRecipe = async (id, recipeName, ingredients, howToPrepare) => {
     const params = [recipeName, ingredients, howToPrepare, id];
     await insertDb('Recipes', fields, params);
   } catch (error) {
-    console.log(1, error);
+    console.log(error);
   }
 };
 
