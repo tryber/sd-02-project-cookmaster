@@ -41,9 +41,9 @@ const findById = async (param) => {
 
   if (!userIdData) return null;
 
-  const [id, email, password, firstName, lastName] = userIdData;
+  const [id, email, password, name, lastName] = userIdData;
 
-  return { id, email, password, firstName, lastName };
+  return { id, email, password, name, lastName };
 };
 
 module.exports = { findByEmail, findById };

@@ -19,7 +19,7 @@ const getNames = async () =>
 const findRecipesById = async (param) => {
   const recipeIdData = await getSchema().then((db) => db
     .getTable('recipes')
-    .select(['id', 'name', 'ingredients', 'prepare_method', 'author_id'])
+    .select(['name', 'ingredients', 'prepare_method', 'author_id'])
     .where('id = :id')
     .bind('id', param)
     .execute()
@@ -28,9 +28,9 @@ const findRecipesById = async (param) => {
 
   if (!recipeIdData) return null;
 
-  const [id, name, ingredients, prepareMethod, authorId] = recipeIdData;
+  const [name, ingredients, prepareMethod, authorId] = recipeIdData;
 
-  return { id, name, ingredients, prepareMethod, authorId };
+  return { name, ingredients, prepareMethod, authorId };
 };
 
 module.exports = { getNames, findRecipesById };

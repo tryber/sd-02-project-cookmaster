@@ -26,7 +26,7 @@
   </p>
   <% console.log(isLogged) %>
   <p>
-    <% if (recipe.id === isLogged.id) { %>
+    <% if (recipe.authorId === isLogged.id) { %>
       <!-- <a href=/recipes/new>Nova receita!</a> -->
       <form action=<%= `/recipes/${recipe.id}/edit` %> method="GET">
         <button type="submit">Editar receita</button>
