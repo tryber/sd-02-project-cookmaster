@@ -37,14 +37,14 @@ const findByEmail = async (email) =>
  * @param {string} id ID do usuário
  */
 
-const findById = async (id) =>
+const findById = async (idUser) =>
   getSchema()
     .then((db) =>
       db
         .getTable('Users')
         .select(['id', 'email', 'first_name', 'last_name'])
         .where('id = :id')
-        .bind('id', id)
+        .bind('id', idUser)
         .execute(),
     )
     .then((results) => results.fetchAll()[0])
