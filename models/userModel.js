@@ -12,7 +12,7 @@ const findByEmail = async (param) => {
   const emailSchema = await getSchema();
   const userEmailData = await emailSchema
     .getTable('users')
-    .select(['id', 'email', 'password', 'first_name', 'last_name'])
+    .select(['id', 'password'])
     .where('email = :email')
     .bind('email', param)
     .execute()
@@ -21,9 +21,9 @@ const findByEmail = async (param) => {
 
   if (!userEmailData) return null;
 
-  const [id, email, password, firstName, lastName] = userEmailData;
+  const [id, password] = userEmailData;
 
-  return { id, email, password, firstName, lastName };
+  return { id, password };
 };
 
 const findById = async (param) => {
