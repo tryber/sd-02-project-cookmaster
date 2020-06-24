@@ -47,7 +47,7 @@ const updateRecipe = async (req, res) => {
 const deleteRecipe = async (req, res) => {
   const recipeDetails = await RecipeId.findRecipe(req.params.id);
   const { id } = req.user;
-  const { creatorId } = recipeDetails[0]
+  const { creatorId } = recipeDetails[0];
   if (id !== creatorId) {
     return res.redirect(`/recipes/${req.params.id}`);
   }
