@@ -17,7 +17,7 @@ const getNames = async () =>
       )));
 
 const findRecipesById = async (param) => {
-  const userIdData = await getSchema().then((db) => db
+  const recipeIdData = await getSchema().then((db) => db
     .getTable('recipes')
     .select(['id', 'name', 'ingredients', 'prepare_method', 'author_id'])
     .where('id = :id')
@@ -26,9 +26,9 @@ const findRecipesById = async (param) => {
     .then((results) => results.fetchAll())
     .then((ids) => ids[0]));
 
-  if (!userIdData) return null;
+  if (!recipeIdData) return null;
 
-  const [id, name, ingredients, prepareMethod, authorId] = userIdData;
+  const [id, name, ingredients, prepareMethod, authorId] = recipeIdData;
 
   return { id, name, ingredients, prepareMethod, authorId };
 };
