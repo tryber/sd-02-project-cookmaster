@@ -22,9 +22,9 @@ const findRecipesById = async (param) => {
     .select(['id', 'name', 'ingredients', 'prepare_method', 'author_id'])
     .where('id = :id')
     .bind('id', param)
-    .execute())
+    .execute()
     .then((results) => results.fetchAll())
-    .then((ids) => ids[0]);
+    .then((ids) => ids[0]));
 
   if (!recipeIdData) return null;
 

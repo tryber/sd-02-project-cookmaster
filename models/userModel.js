@@ -28,14 +28,17 @@ const findByEmail = async (param) => {
 };
 
 const findById = async (param) => {
-  const userIdData = await getSchema().then((db) => db
+  const userSchema = await getSchema();
+  const sql = await userSchema
     .getTable('users')
     .select(['id', 'email', 'password', 'first_name', 'last_name'])
     .where('id = :id')
     .bind('id', param)
-    .execute()
-    .then((results) => results.fetchAll())
-    .then((ids) => ids[0]));
+    .execute();
+  const fetch = await sql.fetchAll();
+  const userIdData = fetch[0];
+
+  console.log('usr', userIdData);
 
   if (!userIdData) return null;
 
