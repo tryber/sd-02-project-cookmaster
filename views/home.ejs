@@ -1,11 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Home</title>
-  </head>
-  <body>
-    <h1>Boas vindas ao Cookmaster!</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Home</title>
+</head>
+
+<body>
+
+  <h1>Boas vindas ao Cookmaster!</h1>
+
+  <ul>
+    <% recipes.forEach(recipe => { %>
+    <li><%= 
+          `Receita: ${recipe.recipeName} - Criador: ${recipe.userFirstName} ${recipe.userLastName}`
+          %></li>
+    <a href=<%=`/recipes/${recipe.recipeId}` %>>Ver Detalhes</a>
+    <% }) %>
+  </ul>
+  <% if (isLogged) { %>
+    <!-- <a href=/recipes/new>Nova receita!</a> -->
+    <form action="/recipes/new" method="GET">
+      <button type="submit">Nova receita!</button>
+    </form>
+  <% } %>
+
+</body>
+
 </html>
