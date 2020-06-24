@@ -26,7 +26,6 @@ const login = async (req, res, _next) => {
 
   const user = await userModel.findUser(email);
   if (!user || user.password !== password) {
-    console.log(password);
     return res.render('admin/login', {
       message: 'Email ou senha incorretos',
       redirect: null,
@@ -46,8 +45,57 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const registerForm = (req, res) => {
+  const { token = '' } = req.cookies || {};
+
+  if (SESSIONS[token]) return res.redirect('/');
+
+  return res.render('admin/register', {
+    message: null,
+    redirect: req.query.redirect,
+  });
+};
+
+const newUser = async (req, res, _next) => {
+  const {
+    email,
+    password,
+    confirm_password: confirmPassword,
+    first_name: firstName,
+    last_name: lastName,
+  } = req.body;
+
+  if (!email || !password || !confirmPassword || !firstName || !lastName) {
+    return res.render('admin/register', {
+      message: 'Preencha todos os campos',
+      redirect: null,
+    });
+  }
+
+  if (password !== confirmPassword) {
+    return res.render('admin/register', {
+      message: 'Preencha a mesma senha nos dois campos',
+      redirect: null,
+    });
+  }
+
+  const registeredUser = await userModel.findUser(email);
+  if (registeredUser) {
+    return res.render('admin/register', {
+      message: 'Usuário já cadastrado, faça o login',
+      redirect: null,
+    });
+  }
+
+  await userModel.registerNewUser({ email, password, firstName, lastName });
+
+  return login(req, res);
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  newUser,
+  registerForm,
 };

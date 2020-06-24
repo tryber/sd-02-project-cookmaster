@@ -19,6 +19,17 @@ const findUser = async (param) => {
   return { id, email, password, name, lastName };
 };
 
+const registerNewUser = async (newUserData) => {
+  const { email, password, firstName, lastName } = newUserData;
+  await connection()
+    .then((database) => database
+      .getTable('users')
+      .insert(['email', 'user_password', 'first_name', 'last_name'])
+      .values(email, password, firstName, lastName)
+      .execute());
+};
+
 module.exports = {
   findUser,
+  registerNewUser,
 };
