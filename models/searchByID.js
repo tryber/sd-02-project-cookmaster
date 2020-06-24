@@ -7,7 +7,7 @@ const byId = async (id, table, arraySelection) => {
     .where('id = :id')
     .bind('id', id)
     .execute();
-  return await results.fetchAll();
+  return results.fetchAll();
 };
 
 module.exports = {
