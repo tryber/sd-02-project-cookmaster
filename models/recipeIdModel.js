@@ -28,7 +28,12 @@ const createRecipe = async (id, recipeName, ingredients, howToPrepare) => {
   }
 };
 
+const editRecipe = async () => {
+  console.log('aqui');
+}
+
 module.exports = {
   findRecipe,
   createRecipe,
+  editRecipe,
 };

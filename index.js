@@ -17,6 +17,9 @@ app.get('/', middlewares.auth(false), controllers.rootController.getALLRecipes);
 app.get('/recipes/new', middlewares.auth(), controllers.recipesIdController.newRecipePage);
 app.post('/recipes/new', middlewares.auth(), controllers.recipesIdController.createRecipe);
 
+app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipesIdController.editRecipe);
+app.post('/recipes/:id/edit', middlewares.auth(), controllers.recipesIdController.updateRecipe);
+
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipesIdController.getRecipeInfo);
 
 app.get('/new-user/', controllers.userController.createNewUserPage);

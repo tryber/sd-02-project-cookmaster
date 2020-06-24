@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Receita</title>
+  </head>
+  <body>
+    <h1>Editar Receita</h1>
+    <h2><%= recipeDetails[0].recipeName %></h2>
+    <form action="" method="POST"> 
+      Nome da receita:
+      <input name="recipeName" type="text" value= "<%= recipeDetails[0].recipeName %>" /> </br>
+      Ingredientes:
+      <input name="ingredients" type="text" value= "<%= recipeDetails[0].ingredients %>" /> </br>
+      Modo de preparo:
+      <input name="howToPrepare" type="text" value= "<%= recipeDetails[0].howToPrepare %>" /> </br> 
+      <button type="submit">Editar receita!</button> </br>
+    </form>
+  </body>
+</html>
