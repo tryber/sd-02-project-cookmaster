@@ -19,6 +19,9 @@ app.get('/recipes/new', middlewares.auth(false), controllers.recipeController.ne
 
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.showRecipe);
 
+app.get('/signup', middlewares.auth(false), controllers.userController.newUser);
+app.post('/signup', middlewares.auth(false), controllers.userController.insertUser);
+
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
 app.get('/login', controllers.userController.loginForm);

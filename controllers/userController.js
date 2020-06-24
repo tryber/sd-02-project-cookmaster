@@ -45,8 +45,25 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const newUser = (_req, res) => {
+  res.render('users/signup', { message: null });
+};
+
+const insertUser = async (req, res) => {
+  const { email, password, firstName, lastName } = req.body;
+
+  if (!userModel.isValid(email, password, firstName, lastName)) {
+    return res.render('users/signup', { message: 'Dados inválidos' });
+  }
+
+  await userModel.insertUser(email, password, firstName, lastName);
+  res.redirect('admin/login');
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  newUser,
+  insertUser,
 };

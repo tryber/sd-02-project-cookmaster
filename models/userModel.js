@@ -12,7 +12,7 @@ const findByEmail = async (param) => {
   const emailSchema = await getSchema();
   const userEmailData = await emailSchema
     .getTable('users')
-    .select(['id', 'password'])
+    .select(['id', 'email', 'password'])
     .where('email = :email')
     .bind('email', param)
     .execute()
@@ -21,9 +21,9 @@ const findByEmail = async (param) => {
 
   if (!userEmailData) return null;
 
-  const [id, password] = userEmailData;
+  const [id, email, password] = userEmailData;
 
-  return { id, password };
+  return { id, email, password };
 };
 
 const findById = async (param) => {
@@ -37,8 +37,6 @@ const findById = async (param) => {
   const fetch = await sql.fetchAll();
   const userIdData = fetch[0];
 
-  console.log('usr', userIdData);
-
   if (!userIdData) return null;
 
   const [id, email, password, name, lastName] = userIdData;
@@ -46,4 +44,20 @@ const findById = async (param) => {
   return { id, email, password, name, lastName };
 };
 
-module.exports = { findByEmail, findById };
+const isValid = (email, password, firstName, lastName) => {
+  if (!email || typeof email !== 'string') return false;
+  if (!password || typeof password !== 'string') return false;
+  if (!firstName || typeof firstName !== 'string') return false;
+  if (!lastName || typeof lastName !== 'string') return false;
+  return true;
+};
+
+const insertUser = async (email, password, firstName, lastName) =>
+  getSchema().then((db) =>
+    db
+      .getTable('users')
+      .insert(['email', 'password', 'first_name', 'last_name'])
+      .values(email, password, firstName, lastName)
+      .execute());
+
+module.exports = { findByEmail, findById, isValid, insertUser };

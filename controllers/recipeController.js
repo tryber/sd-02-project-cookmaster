@@ -12,7 +12,6 @@ const newRecipe = async (req, res) => {
 const showRecipe = async (req, res) => {
   const { id } = req.params;
   const recipe = await recipeModel.findRecipesById(id);
-  console.log('old', req.user);
   res.render('recipes/show', { recipe, isLogged: req.user || {} });
 };
 
