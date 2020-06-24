@@ -10,9 +10,13 @@
     <% recipes.forEach((recipe)=> {%>
       <p>Receita: <%= recipe[0] %></p>
       <p>Realizado Por: <%= recipe[1] %></p>
-        <% if(token) {%>
-          <a href="/test">Mais detalhes</a>
-        <% } %>
-    <% }) %>
+      <a href=<%=`/recipes/${recipe[2]}`%>>Mais detalhes</a>
+      <% }) %>
+      <br />
+      <% if(token) {%>
+        <button>
+          <a href="/recipes/new">Nova Receita</a>
+        </button>
+      <% } %>
   </body>
 </html>

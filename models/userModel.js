@@ -22,14 +22,14 @@ const findByEmail = async (email) =>
     .then((db) =>
       db
         .getTable('Users')
-        .select(['id', 'email', 'pass', 'first_name', 'last_name'])
+        .select(['id', 'pass'])
         .where('email = :email')
         .bind('email', email)
         .execute()
     )
     .then((results) => results.fetchAll()[0])
-    .then(([id, email, password, name, lastName]) =>
-      ({ id, email, password, name, lastName }));
+    .then(([id, password ]) =>
+      ({ id, password }));
 
 
 /**
@@ -42,14 +42,14 @@ const findById = async (id) =>
     .then((db) =>
       db
         .getTable('Users')
-        .select(['id', 'email', 'pass', 'first_name', 'last_name'])
+        .select(['id', 'email', 'first_name', 'last_name'])
         .where('id = :id')
         .bind('id', id)
         .execute()
     )
     .then((results) => results.fetchAll()[0])
-    .then(([id, email, password, name, lastName]) =>
-      ({ id, email, password, name, lastName }));
+    .then(([id, email, name, lastName]) =>
+      ({ id, email, name, lastName }));
 
 module.exports = {
   findByEmail,
