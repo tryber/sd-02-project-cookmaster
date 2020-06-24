@@ -28,16 +28,14 @@ const findByEmail = async (param) => {
 };
 
 const findById = async (param) => {
-  const userIdData = await getSchema()
-    .then((db) =>
-      db
-        .getTable('users')
-        .select(['id', 'email', 'password', 'first_name', 'last_name'])
-        .where('id = :id')
-        .bind('id', param)
-        .execute()
-        .then((results) => results.fetchAll())
-        .then((ids) => ids[0]));
+  const userIdData = await getSchema().then((db) => db
+    .getTable('users')
+    .select(['id', 'email', 'password', 'first_name', 'last_name'])
+    .where('id = :id')
+    .bind('id', param)
+    .execute()
+    .then((results) => results.fetchAll())
+    .then((ids) => ids[0]));
 
   if (!userIdData) return null;
 

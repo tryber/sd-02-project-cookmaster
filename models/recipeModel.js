@@ -4,8 +4,8 @@ const getSchema = require('./getSchema');
 const getNames = async () =>
   connection().then((session) =>
     session.sql(
-      `SELECT r.id, r.name, u.first_name, u.last_name 
-      FROM project_cookmaster.recipes AS r 
+      `SELECT r.id, r.name, u.first_name, u.last_name
+      FROM project_cookmaster.recipes AS r
       INNER JOIN users AS u ON u.id = r.author_id;`,
     )
       .execute()
@@ -17,16 +17,14 @@ const getNames = async () =>
       )));
 
 const findRecipesById = async (param) => {
-  const userIdData = await getSchema()
-    .then((db) =>
-      db
-        .getTable('recipes')
-        .select(['id', 'name', 'ingredients', 'prepare_method', 'author_id'])
-        .where('id = :id')
-        .bind('id', param)
-        .execute()
-        .then((results) => results.fetchAll())
-        .then((ids) => ids[0]));
+  const userIdData = await getSchema().then((db) => db
+    .getTable('recipes')
+    .select(['id', 'name', 'ingredients', 'prepare_method', 'author_id'])
+    .where('id = :id')
+    .bind('id', param)
+    .execute()
+    .then((results) => results.fetchAll())
+    .then((ids) => ids[0]));
 
   if (!userIdData) return null;
 
