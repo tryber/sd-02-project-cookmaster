@@ -50,7 +50,7 @@ const registerForm = (req, res) => {
 
   if (SESSIONS[token]) return res.redirect('/');
 
-  return res.render('admin/register', {
+  return res.render('admin/signup', {
     message: null,
   });
 };
@@ -65,20 +65,20 @@ const newUser = async (req, res, _next) => {
   } = req.body;
 
   if (!email || !password || !confirmPassword || !firstName || !lastName) {
-    return res.render('admin/register', {
+    return res.render('admin/signup', {
       message: 'Preencha todos os campos',
     });
   }
 
   if (password !== confirmPassword) {
-    return res.render('admin/register', {
+    return res.render('admin/signup', {
       message: 'Preencha a mesma senha nos dois campos',
     });
   }
 
   const registeredUser = await userModel.findUser(email);
   if (registeredUser) {
-    return res.render('admin/register', {
+    return res.render('admin/signup', {
       message: 'Usuário já cadastrado, faça o login',
     });
   }

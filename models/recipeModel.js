@@ -1,4 +1,5 @@
 const useSession = require('./useSession');
+const connection = require('./connection');
 
 const getAllRecipes = async () =>
   useSession()
@@ -37,4 +38,29 @@ const getSingleRecipe = async (idRecipe) =>
       return { recipeId, userId, recipeName, ingredients, instructions, userName };
     });
 
-module.exports = { getAllRecipes, getSingleRecipe };
+const recipeAlreadyRegisteredByUser = async (userId, recipeName) =>
+  useSession()
+    .then((session) => session
+      .sql('SELECT COUNT(recipe_name) FROM recipes WHERE user_id = ? AND recipe_name = ?')
+      .bind(userId)
+      .bind(recipeName)
+      .execute())
+    .then((results) => results.fetchAll())
+    .then((recipeCount) => recipeCount[0][0]);
+
+const registerNewRecipe = async (newRecipeData) => {
+  const { recipe, ingredients, instructions, userId } = newRecipeData;
+  await connection()
+    .then((database) => database
+      .getTable('recipes')
+      .insert(['recipe_name', 'ingredients', 'instructions', 'user_id'])
+      .values(recipe, ingredients, instructions, userId)
+      .execute());
+};
+
+module.exports = {
+  getAllRecipes,
+  getSingleRecipe,
+  recipeAlreadyRegisteredByUser,
+  registerNewRecipe,
+};

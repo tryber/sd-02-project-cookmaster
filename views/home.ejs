@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - Home</title>
 </head>
+
 <body>
   <nav>
     <h3>Cookmaster</h3>
-    <h4>Login</h4>
+    <h4><%= userName %></h4>
+    <a href="/logout">Logout</a>
   </nav>
   <h1>Receitas</h1>
   <button type="button">Buscar Receitas</button>
-  <button type="button">Nova Receita</button>
+  <a href="/recipes/new">
+    <button type="button">Nova Receita</button>
+  </a>
   <% recipes && recipes.forEach((recipe) => { %>
-    <p><%= recipe.recipeName %></p>
-    <p><%= recipe.userName %></p>
-    <a href=<%= `/recipes/${recipe.recipeId}` %>>Ver detalhes</a>
+  <p><%= recipe.recipeName %></p>
+  <p><%= recipe.userName %></p>
+  <a href=<%= `/recipes/${recipe.recipeId}` %>>Ver detalhes</a>
   <% }) %>
 </body>
 

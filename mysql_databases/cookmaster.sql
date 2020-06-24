@@ -4,7 +4,7 @@ USE cookmaster;
 
 CREATE TABLE IF NOT EXISTS users (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
     user_password VARCHAR(15),
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL
