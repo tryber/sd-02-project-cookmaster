@@ -1,4 +1,5 @@
 const requestSession = require('./requestSession');
+
 const getSchema = async () =>
   requestSession()
     .then((session) => session.getSchema('cookie_master'))

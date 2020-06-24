@@ -25,10 +25,10 @@ const findByEmail = async (email) =>
         .select(['id', 'pass'])
         .where('email = :email')
         .bind('email', email)
-        .execute()
+        .execute(),
     )
     .then((results) => results.fetchAll()[0])
-    .then(([id, password ]) =>
+    .then(([id, password]) =>
       ({ id, password }));
 
 
@@ -45,7 +45,7 @@ const findById = async (id) =>
         .select(['id', 'email', 'first_name', 'last_name'])
         .where('id = :id')
         .bind('id', id)
-        .execute()
+        .execute(),
     )
     .then((results) => results.fetchAll()[0])
     .then(([id, email, name, lastName]) =>
