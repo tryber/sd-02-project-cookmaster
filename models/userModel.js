@@ -1,10 +1,10 @@
 const connection = require('./connection');
 
-async function findUser(param) {
+const findUser = async (param) => {
   const comparator = typeof param === 'number' ? 'id' : 'email';
   const userData = await connection()
     .then((database) => database
-      .getTable('cookmaster')
+      .getTable('users')
       .select(['id', 'email', 'user_password', 'first_name', 'last_name'])
       .where(`${comparator} = :${comparator}`)
       .bind(`${comparator}`, param)
@@ -14,20 +14,11 @@ async function findUser(param) {
 
   if (!userData) return null;
 
-  const [id, email, password, firstName, lastName] = userData;
+  const [id, email, password, name, lastName] = userData;
 
-  return { id, email, password, firstName, lastName };
-}
-
-const findByEmail = async (userEmail) => {
-  findUser(userEmail);
-};
-
-const findById = async (userId) => {
-  findUser(userId);
+  return { id, email, password, name, lastName };
 };
 
 module.exports = {
-  findByEmail,
-  findById,
+  findUser,
 };

@@ -15,7 +15,8 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/', recipeController.listRecipes);
+app.get('/', middlewares.auth(false), recipeController.listRecipes);
+
 app.get('/recipes/:id', middlewares.auth(false), recipeController.showRecipe);
 
 app.get('/admin', middlewares.auth(), (req, res) => {

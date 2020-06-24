@@ -24,8 +24,9 @@ const login = async (req, res, _next) => {
     });
   }
 
-  const user = await userModel.findByEmail(email);
+  const user = await userModel.findUser(email);
   if (!user || user.password !== password) {
+    console.log(password);
     return res.render('admin/login', {
       message: 'Email ou senha incorretos',
       redirect: null,
