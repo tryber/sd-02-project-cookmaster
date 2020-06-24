@@ -9,7 +9,7 @@ const listRecipes = async (req, res) => {
 const showRecipe = async (req, res) => {
   const { id } = req.params;
   const recipe = await recipeModel.getSingleRecipe(id);
-  if (req.user) return res.render('recipeDetails', { recipe });
+  if (req.user) return res.render('recipeDetails', { recipe, userId: req.user.id });
   return res.render('non-authenticated/recipeDetails', { recipe });
 };
 

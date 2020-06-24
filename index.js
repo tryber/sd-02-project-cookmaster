@@ -19,9 +19,9 @@ app.get('/', middlewares.auth(false), recipeController.listRecipes);
 
 app.get('/recipes/:id', middlewares.auth(false), recipeController.showRecipe);
 
-app.get('/admin', middlewares.auth(), (req, res) => {
-  return res.render('admin/home', { user: req.user });
-});
+app.get('/recipes/:id/edit', middlewares.auth(), (_req, _res) => console.log('edit'));
+
+app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
 app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);

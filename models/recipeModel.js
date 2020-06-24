@@ -23,6 +23,7 @@ const getSingleRecipe = async (idRecipe) =>
     .then((session) => session
       .sql(`SELECT
             r.id,
+            r.user_id,
             r.recipe_name,
             r.ingredients,
             r.instructions,
@@ -32,8 +33,8 @@ const getSingleRecipe = async (idRecipe) =>
       .execute())
     .then((results) => results.fetchAll())
     .then((recipes) => {
-      const [recipeId, recipeName, ingredients, instructions, userName] = recipes[0];
-      return { recipeId, recipeName, ingredients, instructions, userName };
+      const [recipeId, userId, recipeName, ingredients, instructions, userName] = recipes[0];
+      return { recipeId, userId, recipeName, ingredients, instructions, userName };
     });
 
 module.exports = { getAllRecipes, getSingleRecipe };
