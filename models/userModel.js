@@ -29,7 +29,11 @@ const findByEmail = async (email) =>
     )
     .then((results) => results.fetchAll()[0])
     .then(([id, password]) =>
-      ({ id, password }));
+      ({ id, password }))
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
 
 
 /**
@@ -49,7 +53,11 @@ const findById = async (idUser) =>
     )
     .then((results) => results.fetchAll()[0])
     .then(([id, email, name, lastName]) =>
-      ({ id, email, name, lastName }));
+      ({ id, email, name, lastName }))
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
 
 module.exports = {
   findByEmail,

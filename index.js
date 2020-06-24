@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.get('/', middlewares.auth(false), controllers.recipeController);
-
+app.get('/recipes/:id', middlewares.auth(false), controllers.recipeDetails);
 app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
