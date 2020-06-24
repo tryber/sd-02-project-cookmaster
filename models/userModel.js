@@ -9,16 +9,15 @@ const getSchema = require('./getSchema');
 }; */
 
 const findByEmail = async (param) => {
-  const userEmailData = await getSchema()
-    .then((db) =>
-      db
-        .getTable('users')
-        .select(['id', 'email', 'password', 'first_name', 'last_name'])
-        .where('email = :email')
-        .bind('email', param)
-        .execute()
-        .then((results) => results.fetchAll())
-        .then((emails) => emails[0]));
+  const emailSchema = await getSchema();
+  const userEmailData = await emailSchema
+    .getTable('users')
+    .select(['id', 'email', 'password', 'first_name', 'last_name'])
+    .where('email = :email')
+    .bind('email', param)
+    .execute()
+    .then((results) => results.fetchAll())
+    .then((emails) => emails[0]);
 
   if (!userEmailData) return null;
 
