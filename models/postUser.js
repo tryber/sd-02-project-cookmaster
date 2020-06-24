@@ -22,11 +22,8 @@ const postFunction = (paramInsert, paramValues) => (
 const postUser = async ({ email, name, lastName, password }) => {
   if (!validEmail(email)) return 'Email Invalido';
   if (!validParams([name, lastName, password])) return 'Não deve haver campos vazios';
-  return postFunction
-    (
-      ['email', 'pass', 'first_name', 'last_name'],
-      [email, name, lastName, password],
-    )
+  return postFunction(['email', 'pass', 'first_name', 'last_name'],
+    [email, name, lastName, password])
     .then(() => true)
     .catch(() => 'Erro Inesperado! Mão foi possível cadastrar usuario.');
 };
