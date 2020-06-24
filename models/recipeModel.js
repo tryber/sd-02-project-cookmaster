@@ -33,4 +33,19 @@ const findRecipesById = async (param) => {
   return { name, ingredients, prepareMethod, authorId };
 };
 
-module.exports = { getNames, findRecipesById };
+const isValid = (name, ingredients, prepareMethod) => {
+  if (!name || typeof name !== 'string') return false;
+  if (!ingredients || typeof ingredients !== 'string') return false;
+  if (!prepareMethod || typeof prepareMethod !== 'string') return false;
+  return true;
+};
+
+const insertRecipe = async (name, ingredients, prepareMethod, authorId) =>
+  getSchema().then((db) =>
+    db
+      .getTable('recipes')
+      .insert(['name', 'ingredients', 'prepare_method', 'author_id'])
+      .values(name, ingredients, prepareMethod, authorId)
+      .execute());
+
+module.exports = { getNames, findRecipesById, isValid, insertRecipe };

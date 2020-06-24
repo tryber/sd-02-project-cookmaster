@@ -15,7 +15,8 @@ app.set('views', './views');
 
 app.get('/', middlewares.auth(false), controllers.recipeController.listRecipeNameAuthors);
 
-app.get('/recipes/new', middlewares.auth(false), controllers.recipeController.newRecipe);
+app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newRecipe);
+app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
 
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.showRecipe);
 

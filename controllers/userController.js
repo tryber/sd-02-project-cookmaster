@@ -57,7 +57,7 @@ const insertUser = async (req, res) => {
   }
 
   await userModel.insertUser(email, password, firstName, lastName);
-  res.redirect('admin/login');
+  res.redirect('login');
 };
 
 module.exports = {
