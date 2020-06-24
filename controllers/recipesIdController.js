@@ -12,11 +12,12 @@ const newRecipePage = (_req, res) => {
 
 const createRecipe = async (req, res) => {
   const { recipeName, ingredients, howToPrepare } = req.body;
-  if (!recipeName || !ingredients || !howToPrepare)
+  if (!recipeName || !ingredients || !howToPrepare) {
     res.render('newRecipe', { err: true, success: false });
+  }
   await RecipeId.createRecipe(req.user.id, recipeName, ingredients, howToPrepare);
   return res.render('newRecipe', { err: false, success: true });
-}
+};
 
 module.exports = {
   getRecipeInfo,

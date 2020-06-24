@@ -1,5 +1,5 @@
 const { byId } = require('./searchByID.js');
-const { connection } = require('./connection');
+const { insertDb } = require('./insertDB');
 
 const findRecipe = async (id) => {
   try {
@@ -19,13 +19,16 @@ const findRecipe = async (id) => {
 };
 
 const createRecipe = async (id, recipeName, ingredients, howToPrepare) => {
-  const db = await connection();
-  await db.getTable('Recipes')
-    .insert(['recipe_name', 'ingredients', 'how_to_prepare', 'creator_id'])
-    .values(recipeName, ingredients, howToPrepare, id).execute();
-}
+  try {
+    const fields = ['recipe_name', 'ingredients', 'how_to_prepare', 'creator_id'];
+    const params = [recipeName, ingredients, howToPrepare, id];
+    await insertDb('Recipes', fields, params);
+  } catch (error) {
+    console.log(1, error);
+  }
+};
 
 module.exports = {
   findRecipe,
-  createRecipe
+  createRecipe,
 };

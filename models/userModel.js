@@ -1,5 +1,6 @@
 const { connection } = require('./connection');
 const { byId } = require('./searchByID.js');
+const { insertDb } = require('./insertDB');
 
 const findByEmail = async (email) => {
   try {
@@ -32,6 +33,7 @@ const checkEmail = async (email) => {
     return 'E-mail inválido';
   }
   const checkIfEmailExists = await findByEmail(email);
+  console.log(checkIfEmailExists)
   if (checkIfEmailExists) {
     return 'E-mail já cadastrado';
   }
@@ -40,7 +42,8 @@ const checkEmail = async (email) => {
 
 const validadeFormNewUser = async ({ email, password, confirmPass, firstName, lastName }) => {
   const arrayErrors = [];
-  if (checkEmail(email)) arrayErrors.push(checkEmail(email));
+  const check = await checkEmail(email);
+  if (check) arrayErrors.push(check);
   if (!firstName || !lastName) arrayErrors.push('Nome e sobrenome são obrigatórios');
   if (!password || password !== confirmPass) {
     arrayErrors.push('O password é requerido e deve ser igual à confirmação do password');
@@ -49,9 +52,9 @@ const validadeFormNewUser = async ({ email, password, confirmPass, firstName, la
 };
 
 const createNewUserOnDB = async ({ email, password, firstName, lastName }) => {
-  const db = await connection();
-  await db.getTable('Users').insert(['email', 'pass', 'first_name', 'last_name'])
-    .values(email, password, firstName, lastName).execute();
+  const fields = ['email', 'pass', 'first_name', 'last_name'];
+  const params = [email, password, firstName, lastName];
+  await insertDb('Users', fields, params);
 };
 
 module.exports = {
