@@ -25,7 +25,7 @@ const findById = async (id) => {
       .bind('id', id)
       .execute();
     const user = await result.fetchAll();
-    return { name: user[0][3], lastName: user[0][4] };
+    return { name: user[0][3], lastName: user[0][4], id: user[0][2] };
   } catch (e) {
     console.log(e);
   }
