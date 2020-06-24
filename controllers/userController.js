@@ -1,7 +1,7 @@
 const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
 
-const userModel = require('../models/userModel');
+const { findByEmail, validadeFormNewUser, createNewUserOnDB } = require('../models/userModel');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -23,7 +23,7 @@ const login = async (req, res, next) => {
       redirect: null,
     });
 
-  const user = await userModel.findByEmail(email);
+  const user = await findByEmail(email);
   if (!user || user.password !== password)
     return res.render('admin/login', {
       message: 'Email ou senha incorretos',
@@ -43,8 +43,23 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const createNewUserPage = (req, res) => {
+  res.render('new-user', { status: 'waiting', errors: false });
+};
+
+const createNewUser = async (req, res) => {
+  const errArray = await validadeFormNewUser(req.body);
+  if (!errArray.length) {
+    await createNewUserOnDB(req.body);
+    return res.render('new-user', { status: 'success', errors: false })
+  };
+  return res.render('new-user', { status: 'waiting', errors: errArray });
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  createNewUserPage,
+  createNewUser,
 };

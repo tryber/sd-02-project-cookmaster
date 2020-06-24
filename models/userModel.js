@@ -27,7 +27,32 @@ const findById = async (id) => {
   }
 };
 
+const validadeFormNewUser = async ({ email, password, confirmPass, firstName, lastName }) => {
+  const arrayErrors = [];
+  if (!email || !email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i)) {
+    arrayErrors.push('E-mail inválido');
+  } else {
+    const checkIfEmailExists = await findByEmail(email);
+    if (checkIfEmailExists) {
+      arrayErrors.push('E-mail já cadastrado');
+    }
+  }
+  if (!firstName || !lastName) arrayErrors.push('Nome e sobrenome são obrigatórios');
+  if (!password || password !== confirmPass) {
+    arrayErrors.push('O password é requerido e deve ser igual à confirmação do password');
+  }
+  return arrayErrors;
+};
+
+const createNewUserOnDB = async ({ email, password, firstName, lastName }) => {
+  const db = await connection();
+  await db.getTable('Users').insert(['email', 'pass', 'first_name', 'last_name'])
+    .values(email, password, firstName, lastName).execute();
+}
+
 module.exports = {
   findByEmail,
   findById,
+  validadeFormNewUser,
+  createNewUserOnDB,
 };

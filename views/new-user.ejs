@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Home</title>
+  </head>
+  <body>
+    <h1>Criar um novo usuário</h1>
+    <form action="/new-user" method="POST"> 
+      Email:
+      <input name="email" type="text" /> </br>
+      Password:
+      <input name="password" type="password" /> </br>
+      Confirmar password:
+      <input name="confirmPass" type="password" /> </br> 
+      Primeiro nome:
+      <input name="firstName" type="text" /> </br>
+      Último nome:
+      <input name="lastName" type="text" /> </br>
+      <button type="submit">Criar novo usuário!</button> </br>
+    </form>
+    <% if (status === 'success') { %>
+      <p>Usuário Criado!</p>
+    <% } %>
+    <% if (errors) { %>
+      <ul>
+        <% errors.forEach(err => { %>
+          <li><%= err %> </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </body>
+</html>
