@@ -5,6 +5,10 @@ const listRecipeNameAuthors = async (req, res) => {
   res.render('home', { recipes, isLogged: req.user });
 };
 
+const newRecipe = async (req, res) => {
+  res.render('recipes/new', { placeholder: null, isLogged: req.user || {} });
+};
+
 const showRecipe = async (req, res) => {
   const { id } = req.params;
   const recipe = await recipeModel.findRecipesById(id);
@@ -12,4 +16,4 @@ const showRecipe = async (req, res) => {
   res.render('recipes/show', { recipe, isLogged: req.user || {} });
 };
 
-module.exports = { listRecipeNameAuthors, showRecipe };
+module.exports = { listRecipeNameAuthors, newRecipe, showRecipe };
