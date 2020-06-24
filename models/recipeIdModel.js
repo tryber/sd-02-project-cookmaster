@@ -1,4 +1,5 @@
 const { byId } = require('./searchByID.js');
+const { connection } = require('./connection');
 
 const findRecipe = async (id) => {
   try {
@@ -17,6 +18,14 @@ const findRecipe = async (id) => {
   }
 };
 
+const createRecipe = async (id, recipeName, ingredients, howToPrepare) => {
+  const db = await connection();
+  await db.getTable('Recipes')
+    .insert(['recipe_name', 'ingredients', 'how_to_prepare', 'creator_id'])
+    .values(recipeName, ingredients, howToPrepare, id).execute();
+}
+
 module.exports = {
   findRecipe,
+  createRecipe
 };
