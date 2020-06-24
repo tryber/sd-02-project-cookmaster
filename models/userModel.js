@@ -33,7 +33,7 @@ const checkEmail = async (email) => {
     return 'E-mail inválido';
   }
   const checkIfEmailExists = await findByEmail(email);
-  console.log(checkIfEmailExists)
+  console.log(checkIfEmailExists);
   if (checkIfEmailExists) {
     return 'E-mail já cadastrado';
   }

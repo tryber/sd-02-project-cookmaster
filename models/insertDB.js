@@ -5,7 +5,7 @@ const insertDb = async (table, fields, params) => {
   await db.getTable(table)
     .insert(fields)
     .values(...params).execute();
-}
+};
 
 module.exports = {
   insertDb,
