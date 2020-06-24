@@ -46,7 +46,9 @@ const updateRecipe = async (req, res) => {
 
 const deleteRecipe = async (req, res) => {
   const recipeDetails = await RecipeId.findRecipe(req.params.id);
-  if (req.user.id !== recipeDetails[0].creatorId) {
+  const { id } = req.user;
+  const { creatorId } = recipeDetails[0]
+  if (id !== creatorId) {
     return res.redirect(`/recipes/${req.params.id}`);
   }
   const recipe = {
@@ -54,7 +56,7 @@ const deleteRecipe = async (req, res) => {
     id: req.params.id,
   };
   res.render('deleteRecipe', { recipe, fail: false });
-}
+};
 
 const deleteRecipeDB = async (req, res) => {
   if (req.password === req.body.password) {
@@ -68,7 +70,7 @@ const deleteRecipeDB = async (req, res) => {
     id: req.params.id,
   };
   res.render('deleteRecipe', { recipe, fail: true });
-}
+};
 
 module.exports = {
   getRecipeInfo,
