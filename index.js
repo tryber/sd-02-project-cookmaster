@@ -13,11 +13,11 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 app.get('/recipes/new', middlewares.auth(), controllers.getNewRecipe);
-app.post('/recipes/new', middlewares.auth(), controllers.postNewRecipe);
-app.get('/', middlewares.auth(false), controllers.recipeController);
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeDetails);
+app.post('/recipes', middlewares.auth(), controllers.postNewRecipe);
 app.get('/signup', controllers.getNewUser);
 app.post('/signup', controllers.postNewUser);
+app.get('/', middlewares.auth(false), controllers.recipeController);
 
 
 app.get('/admin', middlewares.auth(), (req, res) => {
