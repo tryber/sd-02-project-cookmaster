@@ -51,8 +51,8 @@ const createNewUser = async (req, res) => {
   const errArray = await validadeFormNewUser(req.body);
   if (!errArray.length) {
     await createNewUserOnDB(req.body);
-    return res.render('new-user', { status: 'success', errors: false })
-  };
+    return res.render('new-user', { status: 'success', errors: false });
+  }
   return res.render('new-user', { status: 'waiting', errors: errArray });
 };
 

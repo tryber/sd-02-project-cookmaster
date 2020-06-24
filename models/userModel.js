@@ -27,16 +27,21 @@ const findById = async (id) => {
   }
 };
 
-const validadeFormNewUser = async ({ email, password, confirmPass, firstName, lastName }) => {
-  const arrayErrors = [];
+const checkEmail = async (email) => {
   if (!email || !email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i)) {
-    arrayErrors.push('E-mail inválido');
+    return 'E-mail inválido';
   } else {
     const checkIfEmailExists = await findByEmail(email);
     if (checkIfEmailExists) {
-      arrayErrors.push('E-mail já cadastrado');
+      return 'E-mail já cadastrado';
     }
   }
+  return false;
+};
+
+const validadeFormNewUser = async ({ email, password, confirmPass, firstName, lastName }) => {
+  const arrayErrors = [];
+  await checkEmail(email) ? arrayErrors.push(checkEmail(email)) : '';
   if (!firstName || !lastName) arrayErrors.push('Nome e sobrenome são obrigatórios');
   if (!password || password !== confirmPass) {
     arrayErrors.push('O password é requerido e deve ser igual à confirmação do password');
@@ -48,7 +53,7 @@ const createNewUserOnDB = async ({ email, password, firstName, lastName }) => {
   const db = await connection();
   await db.getTable('Users').insert(['email', 'pass', 'first_name', 'last_name'])
     .values(email, password, firstName, lastName).execute();
-}
+};
 
 module.exports = {
   findByEmail,
