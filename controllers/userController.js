@@ -52,7 +52,6 @@ const registerForm = (req, res) => {
 
   return res.render('admin/register', {
     message: null,
-    redirect: req.query.redirect,
   });
 };
 
@@ -68,14 +67,12 @@ const newUser = async (req, res, _next) => {
   if (!email || !password || !confirmPassword || !firstName || !lastName) {
     return res.render('admin/register', {
       message: 'Preencha todos os campos',
-      redirect: null,
     });
   }
 
   if (password !== confirmPassword) {
     return res.render('admin/register', {
       message: 'Preencha a mesma senha nos dois campos',
-      redirect: null,
     });
   }
 
@@ -83,7 +80,6 @@ const newUser = async (req, res, _next) => {
   if (registeredUser) {
     return res.render('admin/register', {
       message: 'Usuário já cadastrado, faça o login',
-      redirect: null,
     });
   }
 
