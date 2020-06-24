@@ -25,7 +25,7 @@ const editRecipe = async (req, res) => {
   console.log(1, req.user.id);
   console.log(2, recipeDetails);
   if (req.user.id !== recipeDetails[0].creatorId) {
-    return res.redirect(`/recipes/${req.params.id}`)
+    return res.redirect(`/recipes/${req.params.id}`);
   }
   res.render('editRecipe', { id: req.params.id, recipeDetails });
 };
@@ -35,10 +35,10 @@ const updateRecipe = async (req, res) => {
 
   const UPDATE_QUERY =
     `UPDATE Recipes
-	  SET recipe_name = '${recipeName}',
-        ingredients = '${ingredients}',
-        how_to_prepare = '${howToPrepare}'
-    WHERE id = ${req.params.id};`;
+     SET recipe_name = '${recipeName}',
+       ingredients = '${ingredients}',
+       how_to_prepare = '${howToPrepare}'
+     WHERE id = ${req.params.id};`;
 
   if (recipeName && ingredients && howToPrepare) {
     await Root.queryDb(UPDATE_QUERY);
