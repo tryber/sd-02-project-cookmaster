@@ -30,18 +30,17 @@ const findById = async (id) => {
 const checkEmail = async (email) => {
   if (!email || !email.match(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i)) {
     return 'E-mail inválido';
-  } else {
-    const checkIfEmailExists = await findByEmail(email);
-    if (checkIfEmailExists) {
-      return 'E-mail já cadastrado';
-    }
+  }
+  const checkIfEmailExists = await findByEmail(email);
+  if (checkIfEmailExists) {
+    return 'E-mail já cadastrado';
   }
   return false;
 };
 
 const validadeFormNewUser = async ({ email, password, confirmPass, firstName, lastName }) => {
   const arrayErrors = [];
-  await checkEmail(email) ? arrayErrors.push(checkEmail(email)) : '';
+  if (checkEmail(email)) arrayErrors.push(checkEmail(email));
   if (!firstName || !lastName) arrayErrors.push('Nome e sobrenome são obrigatórios');
   if (!password || password !== confirmPass) {
     arrayErrors.push('O password é requerido e deve ser igual à confirmação do password');
