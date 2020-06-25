@@ -5,9 +5,8 @@ const rescue = require('express-rescue');
 
 
 const getAllReceitas = rescue(async (req, res) => {
-  let user;
   const receitas = await receitaModel.getAll();
-  getUser(req).then((data) => user = data);
+  const user =  await getUser(req).then((data) => data);
   return res.render('home', { user, receitas, message: null });
 });
 
@@ -23,21 +22,21 @@ const getReceitaById = rescue(async (req, res) => {
 
 const addReceita = rescue(async (req, res) => {
   const { nome, ingredientes, modo_de_preparar } = req.body;
-  const user_id = req.user.id;
-  await receitaModel.addReceita(nome, ingredientes, modo_de_preparar, user_id);
+  const userId = req.user.id;
+  await receitaModel.addReceita(nome, ingredientes, modo_de_preparar, userId);
 
   res.send('adicionado com sucesso');
 });
 
-const pageNewReceita = rescue(async (_req, res) => {
+const pageNewReceita = async (_req, res) => {
   return res.render('admin/newReceita');
-});
+};
 
 const pageEditReceita = rescue(async (req, res) => {
   const id = req.params.id;
   const receita = await receitaModel.getById(id);
   if (!receita) res.send('Receita não foi encontrado');
-  return res.render('admin/editReceita', { pathRedirect: `/recipes/${id}` } );
+  return res.render('admin/editReceita', { pathRedirect: `/recipes/${id}` });
 });
 
 const updateReceita = rescue(async (req, res) => {
@@ -55,12 +54,12 @@ const pageDelReceita = rescue(async (req, res) => {
 });
 
 const deleteReceita = rescue(async (req, res) => {
-  const { input_password } = req.body;
+  const { inputPassword } = req.body;
   const user_id = req.user.id;
   const user = await userModel.findById(user_id);
   const id = req.params.id;
 
-  if (input_password !== user.senha) {
+  if (inputPassword !== user.senha) {
     return res.render('admin/deleteReceita',
       { pathRedirect: `/recipes/${id}/delete`, message: 'Senha está incorreta' });
   }
@@ -80,8 +79,8 @@ const search = rescue(async (req, res) => {
 });
 
 const minhasReceitas = rescue(async (req, res) => {
-  const user_id = req.user.id;
-  const receitas = await receitaModel.getAllById(user_id);
+  const userId = req.user.id;
+  const receitas = await receitaModel.getAllById(userId);
   return res.render('admin/minhasReceitas', { receitas });
 });
 
@@ -95,5 +94,5 @@ module.exports = {
   pageDelReceita,
   deleteReceita,
   search,
-  minhasReceitas
+  minhasReceitas,
 };

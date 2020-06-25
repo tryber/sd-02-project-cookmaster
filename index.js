@@ -24,7 +24,7 @@ app.post('/login', controllers.userController.login);
 adminRouter.use(middlewares.auth());
 
 adminRouter.get('/admin', (req, res) =>
-  res.render('admin/home', { user: req.user })
+  res.render('admin/home', { user: req.user }),
 );
 
 adminRouter.get('/logout', controllers.userController.logout);
@@ -46,6 +46,9 @@ adminRouter.get('/recipes/:id/delete', controllers.receitasController.pageDelRec
 adminRouter.post('/recipes/:id/delete', controllers.receitasController.deleteReceita);
 
 adminRouter.get('/me/recipes', controllers.receitasController.minhasReceitas);
+
+adminRouter.get('/me/edit', controllers.userController.editUserpage);
+adminRouter.post('/me', controllers.userController.editUser);
 
 app.use('/', adminRouter);
 

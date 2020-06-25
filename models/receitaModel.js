@@ -2,79 +2,79 @@ const { getSession } = require('./conection');
 
 const getAll = async () =>
   getSession()
-  .then(session => session.sql('select u.nome, r.nome from receitas r inner join users u on r.user_id = u.id').execute())
-  .then(results => results.fetchAll())
+  .then((session) => session.sql('select u.nome, r.nome from receitas r inner join users u on r.user_id = u.id').execute())
+  .then((results) => results.fetchAll())
   .then((receitas) => receitas.map(([user_name, receita_name]) => ({ user_name, receita_name })));
 
 const getAllById = async (id) =>
   getSession()
-  .then(session => session.sql('select r.nome from receitas r inner join users u on r.user_id = u.id where u.id = ?')
+  .then((session) => session.sql('select r.nome from receitas r inner join users u on r.user_id = u.id where u.id = ?')
   .bind(id)
-  .execute()
+  .execute(),
   )
-  .then(results => results.fetchAll())
+  .then((results) => results.fetchAll())
   .then((receitas) => receitas.map(([nome]) => ({ nome })));
 
 const getById = async (id) =>
   getSession()
-    .then(session => session.sql(`select u.nome, r.nome, r.ingredientes, r.modo_de_preparar
+    .then((session) => session.sql(`select u.nome, r.nome, r.ingredientes, r.modo_de_preparar
       from receitas r inner join users u on r.user_id = u.id where r.id = ?`)
     .bind(id)
-    .execute()
+    .execute(),
     )
     .then((results) => results.fetchAll()[0])
     .then((receita) => {
       if (!receita) return null;
-      const [user_name, receita_name, ingredientes, modo_de_preparar] = receita;
-      return { user_name, receita_name, ingredientes, modo_de_preparar };
-    })
+      const [userName, receitaName, ingredientes, modoDePreparar] = receita;
+      return { user_name: userName, receita_name: receitaName, ingredientes, modo_de_preparar: modoDePreparar };
+    });
 
-const addReceita = async (nome, ingredientes, modo_de_preparar, user_id) =>
+const addReceita = async (nome, ingredientes, modoDePreparar, userId) =>
   getSession()
-    .then(session => session.sql(`insert into receitas(nome, ingredientes, modo_de_preparar, user_id)
+    .then((session) => session.sql(`insert into receitas(nome, ingredientes, modo_de_preparar, user_id)
       values(?, ?, ?, ?)`)
       .bind(nome)
       .bind(ingredientes)
-      .bind(modo_de_preparar)
-      .bind(user_id)
-      .execute()
+      .bind(modoDePreparar)
+      .bind(userId)
+      .execute(),
     );
 
-const upReceita = async (nome, ingredientes, modo_de_preparar, id) =>
+const upReceita = async (nome, ingredientes, modoDePreparar, id) =>
   getSession()
-    .then(session => session.sql(`update receitas set nome = ?, ingredientes = ?, modo_de_preparar = ?
+    .then((session) => session.sql(`update receitas set nome = ?, ingredientes = ?, modo_de_preparar = ?
       where id = ?`)
       .bind(nome)
       .bind(ingredientes)
-      .bind(modo_de_preparar)
+      .bind(modoDePreparar)
       .bind(id)
-      .execute()
+      .execute(),
     );
 
 const deleteById = async (id) =>
   getSession()
-    .then(session => session.sql(`delete from receitas where id = ?`)
+    .then((session) => session.sql(`delete from receitas where id = ?`)
     .bind(id)
-    .execute()
+    .execute(),
     );
 
 const search = async (query) =>
   getSession()
-    .then(session => session.sql(`select r.nome, u.nome from receitas r
+    .then((session) => session.sql(`select r.nome, u.nome from receitas r
       inner join users u on r.user_id = u.id where r.nome like ?`)
     .bind(query)
-    .execute()
+    .execute(),
     )
     .then((results) => results.fetchAll())
-    .then((receitas) => receitas.map(([user_name, receita_name]) =>
-      ({ user_name, receita_name })));
+    .then((receitas) => receitas.map(([userName, receitaName]) =>
+      ({ userName, receitaName })));
 
 const findByUserId = (id) =>
   getSession()
-    .then(session => session.sql(`select r.nome from receitas r
+    .then((session) => session.sql(`select r.nome from receitas r
       inner join users u on r.user_id = u.id where u.id ?`)
     .bind(id)
-    .execute()
+    .execute(),
     );
 
 
