@@ -62,8 +62,7 @@ const newRecipe = async (req, res, _next) => {
     'recipes',
     ['recipe_name', 'ingredients', 'instructions', 'user_id'],
     { recipe, ingredients, instructions, userId },
-  )
-    .then(({ getAutoIncrementValue }) => getAutoIncrementValue());
+  ).then(({ getAutoIncrementValue }) => getAutoIncrementValue());
 
   return res.redirect(`/recipes/${newRecipeId}`);
 };
