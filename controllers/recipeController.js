@@ -62,9 +62,52 @@ const newRecipe = async (req, res, _next) => {
     });
   }
 
-  await recipeModel.registerNewRecipe({ recipe, ingredients, instructions, userId });
+  const newRecipeId = await recipeModel
+    .registerNewRecipe({ recipe, ingredients, instructions, userId })
+    .then(({ getAutoIncrementValue }) => getAutoIncrementValue());
 
-  return res.redirect('/');
+  return res.redirect(`/recipes/${newRecipeId}`);
+};
+
+const editRecipeForm = async (req, res) => {
+  const { token = '' } = req.cookies || {};
+  const { id: recipeId } = req.params;
+  const recipe = await recipeModel.getSingleRecipe(recipeId);
+
+  const { id: userId, name, lastName } = req.user;
+  if (SESSIONS[token] && recipe.userId === userId) {
+    return res.render('editRecipe', {
+      message: null,
+      recipe,
+      userName: `${name} ${lastName}`,
+    });
+  }
+
+  return res.redirect(`/recipes/${recipeId}`);
+};
+
+const editRecipe = async (req, res) => {
+  const {
+    recipe,
+    ingredients,
+    instructions,
+  } = req.body;
+  const { id: recipeId } = req.params;
+
+  const { name, lastName } = req.user;
+
+  if (!recipe || !ingredients || !instructions) {
+    return res.render('editRecipe', {
+      message: 'Preencha todos os campos',
+      userName: `${name} ${lastName}`,
+    });
+  }
+
+  const updatedRecipeId = await recipeModel
+    .updateRecipe({ recipe, ingredients, instructions, recipeId })
+    .then(({ getAutoIncrementValue }) => getAutoIncrementValue());
+
+  return res.redirect(`/recipes/${updatedRecipeId}`);
 };
 
 module.exports = {
@@ -72,4 +115,6 @@ module.exports = {
   showRecipe,
   newRecipeForm,
   newRecipe,
+  editRecipeForm,
+  editRecipe,
 };

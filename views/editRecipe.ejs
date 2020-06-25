@@ -16,28 +16,16 @@
     <%= message %>
   </p>
   <% } %>
-  <form action="/recipes/new" method="POST">
+  <form action=<%= `/recipes/${recipe.recipeId}/edit` %> method="POST">
     <label for="recipe">Nome da Receita</label>
-    <input id="recipe" name="recipe" type="text" />
+    <input id="recipe" name="recipe" type="text" value="<%= recipe.recipeName %>" />
     <div>
       <label for="ingredients">Ingredientes (separe os ingredientes por vírgula)</label>
-      <textarea
-        id="ingredients"
-        name="ingredients"
-        rows="4"
-        cols="50"
-        placeholder="Digite aqui seus ingredientes separados por vírgula."
-      ></textarea>
+      <textarea id="ingredients" name="ingredients" rows="4" cols="50"><%= recipe.ingredients %></textarea>
     </div>
     <div>
       <label for="instructions">Modo de preparo</label>
-      <textarea
-        id="instructions"
-        name="instructions"
-        rows="10"
-        cols="50"
-        placeholder="Digite o modo de preparo."
-      ></textarea>
+      <textarea id="instructions" name="instructions" rows="10" cols="50"><%= recipe.instructions %></textarea>
     </div>
     <a href="/">Voltar</a>
     <button type="submit">Salvar Receita</button>

@@ -22,7 +22,8 @@ app.get('/recipes/new', middlewares.auth(), recipeController.newRecipeForm);
 app.post('/recipes/new', middlewares.auth(), recipeController.newRecipe);
 
 app.get('/recipes/:id', middlewares.auth(false), recipeController.showRecipe);
-app.get('/recipes/:id/edit', middlewares.auth(), (_req, _res) => console.log('edit'));
+app.get('/recipes/:id/edit', middlewares.auth(), recipeController.editRecipeForm);
+app.post('/recipes/:id/edit', middlewares.auth(), recipeController.editRecipe);
 
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
