@@ -58,17 +58,11 @@ const registerForm = (req, res) => {
 
 const newUser = async (req, res, _next) => {
   const {
-    email,
-    password,
-    confirm_password: confirmPassword,
-    first_name: firstName,
-    last_name: lastName,
+    email, password, confirm_password: confirmPassword, first_name: firstName, last_name: lastName,
   } = req.body;
 
   if (!email || !password || !confirmPassword || !firstName || !lastName) {
-    return res.render('admin/signup', {
-      message: 'Preencha todos os campos',
-    });
+    return res.render('admin/signup', { message: 'Preencha todos os campos' });
   }
 
   if (password !== confirmPassword) {
@@ -83,8 +77,6 @@ const newUser = async (req, res, _next) => {
       message: 'Usuário já cadastrado, faça o login',
     });
   }
-
-  console.log(typeof insertTable);
 
   await insertTable(
     'users',

@@ -38,12 +38,7 @@ const newRecipeForm = async (req, res) => {
 };
 
 const newRecipe = async (req, res, _next) => {
-  const {
-    recipe,
-    ingredients,
-    instructions,
-  } = req.body;
-
+  const { recipe, ingredients, instructions } = req.body;
   const { id: userId, name, lastName } = req.user;
 
   if (!recipe || !ingredients || !instructions) {
