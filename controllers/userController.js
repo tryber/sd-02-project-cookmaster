@@ -3,6 +3,7 @@ const { SESSIONS } = require('../middlewares/auth');
 
 const { findByEmail, validadeFormNewUser, createNewUserOnDB } = require('../models/userModel');
 const { queryDb } = require('../models/rootModel');
+const { byId } = require('../models/searchByID');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -68,6 +69,30 @@ const userRecipes = async (req, res) => {
   return res.render('userRecipes', { results });
 };
 
+const updateDB = async ({ firstName, lastName, password, email }, id) => {
+  const UPDATE_QUERY =
+    `UPDATE Users
+    SET email = '${email}',
+      pass = '${password}',
+      first_name = '${firstName}',
+      last_name = '${lastName}'
+    WHERE id = ${id};`;
+
+  await queryDb(UPDATE_QUERY);
+}
+
+const userEdit = async (req, res) => {
+  const userFields = ['id', 'email', 'pass', 'first_name', 'last_name'];
+  const userInfo = await byId(req.user.id, 'Users', userFields);
+  if (req.body.firstName) {
+    await updateDB(req.body, userInfo[0][0]);
+    const { firstName, lastName, password, email } = req.body;
+    return res.render(`editUser`,
+      { results: [userInfo[0][0], email, password, firstName, lastName], update: true });
+  };
+  return res.render('editUser', { results: userInfo[0], update: false });
+};
+
 module.exports = {
   login,
   loginForm,
@@ -75,4 +100,5 @@ module.exports = {
   createNewUserPage,
   createNewUser,
   userRecipes,
+  userEdit,
 };
