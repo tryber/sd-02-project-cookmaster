@@ -45,9 +45,7 @@ const logout = rescue((req, res) => {
   return res.render('admin/logout');
 });
 
-const pageCadastro = rescue(async (_req, res) => {
-  return res.render('admin/cadastro');
-});
+const pageCadastro = rescue(async (_req, res) => res.render('admin/cadastro'));
 
 const cadastro = rescue(async (req, res) => {
   const { nome, email, senha, lastName } = req.body;
@@ -55,9 +53,7 @@ const cadastro = rescue(async (req, res) => {
   res.send('Cadastrado com sucesso');
 });
 
-const editUserpage = rescue(async (_req, res) => {
-  return res.render('admin/editUser');
-});
+const editUserpage = rescue(async (_req, res) => res.render('admin/editUser'));
 
 const editUser = rescue(async (req, res) => {
   const user_id = req.user.id;

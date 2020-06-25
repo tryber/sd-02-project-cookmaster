@@ -4,7 +4,7 @@ const getAll = async () =>
   getSession()
   .then((session) => session.sql('select u.nome, r.nome from receitas r inner join users u on r.user_id = u.id').execute())
   .then((results) => results.fetchAll())
-  .then((receitas) => receitas.map(([user_name, receita_name]) => ({ user_name, receita_name })));
+  .then((receitas) => receitas.map(([userName, receitaName]) => ({ userName, receitaName })));
 
 const getAllById = async (id) =>
   getSession()
@@ -26,7 +26,7 @@ const getById = async (id) =>
     .then((receita) => {
       if (!receita) return null;
       const [userName, receitaName, ingredientes, modoDePreparar] = receita;
-      return { user_name: userName, receita_name: receitaName, ingredientes, modo_de_preparar: modoDePreparar };
+      return { userName, receitaName, ingredientes, modoDePreparar };
     });
 
 const addReceita = async (nome, ingredientes, modoDePreparar, userId) =>
@@ -53,7 +53,7 @@ const upReceita = async (nome, ingredientes, modoDePreparar, id) =>
 
 const deleteById = async (id) =>
   getSession()
-    .then((session) => session.sql(`delete from receitas where id = ?`)
+    .then((session) => session.sql('delete from receitas where id = ?')
     .bind(id)
     .execute(),
     );

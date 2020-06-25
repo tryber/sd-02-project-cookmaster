@@ -6,7 +6,7 @@ const rescue = require('express-rescue');
 
 const getAllReceitas = rescue(async (req, res) => {
   const receitas = await receitaModel.getAll();
-  const user =  await getUser(req).then((data) => data);
+  const user = await getUser(req).then((data) => data);
   return res.render('home', { user, receitas, message: null });
 });
 
@@ -28,9 +28,8 @@ const addReceita = rescue(async (req, res) => {
   res.send('adicionado com sucesso');
 });
 
-const pageNewReceita = async (_req, res) => {
-  return res.render('admin/newReceita');
-};
+const pageNewReceita = rescue(async (_req, res) => res.render('admin/newReceita'));
+
 
 const pageEditReceita = rescue(async (req, res) => {
   const id = req.params.id;
@@ -40,9 +39,9 @@ const pageEditReceita = rescue(async (req, res) => {
 });
 
 const updateReceita = rescue(async (req, res) => {
-  const { nome, ingredientes, modo_de_preparar } = req.body;
+  const { nome, ingredientes, modoDePreparar } = req.body;
   const id = req.params.id;
-  await receitaModel.upReceita(nome, ingredientes, modo_de_preparar, id);
+  await receitaModel.upReceita(nome, ingredientes, modoDePreparar, id);
 
   res.send('atualizado com sucesso');
 });
@@ -55,8 +54,8 @@ const pageDelReceita = rescue(async (req, res) => {
 
 const deleteReceita = rescue(async (req, res) => {
   const { inputPassword } = req.body;
-  const user_id = req.user.id;
-  const user = await userModel.findById(user_id);
+  const userId = req.user.id;
+  const user = await userModel.findById(userId);
   const id = req.params.id;
 
   if (inputPassword !== user.senha) {
