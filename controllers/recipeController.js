@@ -1,3 +1,4 @@
+const rescue = require('express-rescue');
 const { SESSIONS } = require('../middlewares/auth');
 const recipeModel = require('../models/recipeModel');
 const insertTable = require('../models/insertTable');
@@ -37,17 +38,11 @@ const newRecipeForm = async (req, res) => {
   });
 };
 
-function check(obj) {
-  const { recipe, ingredients, instructions } = obj;
-  if (!recipe || !ingredients || !instructions) return true;
-  return false;
-}
-
 const newRecipe = async (req, res, _next) => {
   const { recipe, ingredients, instructions } = req.body;
   const { id: userId, name, lastName } = req.user;
 
-  if (check(req.body)) {
+  if (!recipe || !ingredients || !instructions) {
     return res.render('newRecipe', {
       message: 'Preencha todos os campos',
       userName: `${name} ${lastName}`,
@@ -100,18 +95,17 @@ const editRecipe = async (req, res) => {
 
   const { name, lastName } = req.user;
 
-  if (check(req.body)) {
+  if (!recipe || !ingredients || !instructions) {
     return res.render('editRecipe', {
       message: 'Preencha todos os campos',
       userName: `${name} ${lastName}`,
     });
   }
 
-  const updatedRecipeId = await recipeModel
-    .updateRecipe({ recipe, ingredients, instructions, recipeId })
-    .then(({ getAutoIncrementValue }) => getAutoIncrementValue());
+  await recipeModel
+    .updateRecipe({ recipe, ingredients, instructions, recipeId });
 
-  return res.redirect(`/recipes/${updatedRecipeId}`);
+  return res.redirect(`/recipes/${recipeId}`);
 };
 
 module.exports = {

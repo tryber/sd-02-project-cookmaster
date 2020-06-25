@@ -50,19 +50,20 @@ const recipeAlreadyRegisteredByUser = async (userId, recipeName) =>
 
 const updateRecipe = async (recipeData) => {
   const { recipe, ingredients, instructions, recipeId } = recipeData;
-  return connection()
-    .then((db) => db
-      .getTable('recipes')
-      .update()
-      .set('recipe_name', recipe)
-      .set('ingredients', ingredients)
-      .set('instructions', instructions)
-      .where('id = :recipeId')
-      .bind('recipeId', recipeId)
-      .bind('recipe', recipe)
-      .bind('ingredients', ingredients)
-      .bind('instructions', instructions)
-      .execute());
+  return useSession()
+    .then((session) =>
+      session
+        .sql(`UPDATE recipes
+              SET
+                recipe_name = ?,
+                ingredients = ?,
+                instructions = ?
+              WHERE id = ?`)
+        .bind(recipe)
+        .bind(ingredients)
+        .bind(instructions)
+        .bind(recipeId)
+        .execute());
 };
 
 module.exports = {
