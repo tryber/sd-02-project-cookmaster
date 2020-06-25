@@ -58,12 +58,11 @@ const createNewUser = async (req, res) => {
 };
 
 const userRecipes = async (req, res) => {
-
   const GET_ALL_RECIPES_FROM_USER_QUERY =
     `SELECT r.id, r.recipe_name, (CONCAT(first_name, ' ', u.last_name)) creator_name, r.creator_id
-     FROM Recipes r
-     INNER JOIN Users u ON u.id = r.creator_id
-     HAVING creator_id = ${req.user.id};`;
+      FROM Recipes r
+      INNER JOIN Users u ON u.id = r.creator_id
+      HAVING creator_id = ${req.user.id};`;
 
   const results = await queryDb(GET_ALL_RECIPES_FROM_USER_QUERY);
   return res.render('userRecipes', { results });
