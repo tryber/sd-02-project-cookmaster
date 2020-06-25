@@ -2,6 +2,7 @@ const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
 
 const { findByEmail, validadeFormNewUser, createNewUserOnDB } = require('../models/userModel');
+const { queryDb } = require('../models/rootModel');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -56,10 +57,23 @@ const createNewUser = async (req, res) => {
   return res.render('new-user', { status: 'waiting', errors: errArray });
 };
 
+const userRecipes = async (req, res) => {
+
+  const GET_ALL_RECIPES_FROM_USER_QUERY =
+    `SELECT r.id, r.recipe_name, (CONCAT(first_name, ' ', u.last_name)) creator_name, r.creator_id
+     FROM Recipes r
+     INNER JOIN Users u ON u.id = r.creator_id
+     HAVING creator_id = ${req.user.id};`;
+
+  const results = await queryDb(GET_ALL_RECIPES_FROM_USER_QUERY);
+  return res.render('userRecipes', { results });
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
   createNewUserPage,
   createNewUser,
+  userRecipes,
 };

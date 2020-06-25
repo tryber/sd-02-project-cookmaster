@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - receitas do usuário</title>
+  </head>
+  <body>
+    <h2>Receitas cadastradas por <%= (results[0][2]) %> </h2>
+    <ul>
+      <% results.forEach(recipe => { %>
+      <li>Receita: <%= (recipe[1]) %> </li>
+      <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
+      <% }) %>
+    </ul>
+  </body>
+</html>

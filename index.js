@@ -30,6 +30,8 @@ app.get('/recipes/:id', middlewares.auth(false), controllers.recipesIdController
 app.get('/new-user/', controllers.userController.createNewUserPage);
 app.post('/new-user/', controllers.userController.createNewUser);
 
+app.get('/me/recipes', middlewares.auth(), controllers.userController.userRecipes)
+
 app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
