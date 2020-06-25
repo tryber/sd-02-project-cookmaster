@@ -20,7 +20,7 @@ app.post('/recipes', middlewares.auth(), controllers.recipeController.insertReci
 
 app.get('/recipes/:id/edit', middlewares.auth(true), controllers.recipeController.showEditRecipe);
 app.get('/recipes/:id/delete', middlewares.auth(true), controllers.recipeController.showDeleteRecipe);
-// app.post('/recipes/:id/delete', middlewares.auth(true), controllers.recipeController.deleteRecipe);
+// app.post('/recipes/:id/delete', middlewares.auth(true), controllers.recipeController.deleteRec);
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.showRecipe);
 app.post('/recipes/:id', middlewares.auth(true), controllers.recipeController.editRecipe);
 

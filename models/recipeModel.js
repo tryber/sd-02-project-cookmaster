@@ -52,7 +52,7 @@ const editRecipe = async (recipeId, recipeName, recipeIngredients, recipePrepare
   connection().then((session) =>
     session.sql(
       `UPDATE project_cookmaster.recipes
-      SET 
+      SET
         name = ?,
         ingredients = ?,
         prepare_method = ?
