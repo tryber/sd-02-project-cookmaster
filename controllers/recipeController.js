@@ -1,6 +1,5 @@
 const { SESSIONS } = require('../middlewares/auth');
 const recipeModel = require('../models/recipeModel');
-const insertTable = require('../models/insertTable');
 
 const listRecipes = async (req, res) => {
   const recipes = await recipeModel.getAllRecipes();
@@ -58,11 +57,9 @@ const newRecipe = async (req, res, _next) => {
     });
   }
 
-  const newRecipeId = await insertTable(
-    'recipes',
-    ['recipe_name', 'ingredients', 'instructions', 'user_id'],
-    { recipe, ingredients, instructions, userId },
-  ).then(({ getAutoIncrementValue }) => getAutoIncrementValue());
+  const newRecipeId = await recipeModel
+    .registerNewRecipe({ recipe, ingredients, instructions, userId })
+    .then(({ getAutoIncrementValue }) => getAutoIncrementValue());
 
   return res.redirect(`/recipes/${newRecipeId}`);
 };

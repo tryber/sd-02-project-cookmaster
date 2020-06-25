@@ -1,4 +1,5 @@
 const useSession = require('./useSession');
+const connection = require('./connection');
 
 const getAllRecipes = async () =>
   useSession()
@@ -47,6 +48,16 @@ const recipeAlreadyRegisteredByUser = async (userId, recipeName) =>
     .then((results) => results.fetchAll())
     .then((recipeCount) => recipeCount[0][0]);
 
+const registerNewRecipe = async (newRecipeData) => {
+  const { recipe, ingredients, instructions, userId } = newRecipeData;
+  return connection()
+    .then((database) => database
+      .getTable('recipes')
+      .insert(['recipe_name', 'ingredients', 'instructions', 'user_id'])
+      .values(recipe, ingredients, instructions, userId)
+      .execute());
+};
+
 const updateRecipe = async (recipeData) => {
   const { recipe, ingredients, instructions, recipeId } = recipeData;
   return useSession()
@@ -69,5 +80,6 @@ module.exports = {
   getAllRecipes,
   getSingleRecipe,
   recipeAlreadyRegisteredByUser,
+  registerNewRecipe,
   updateRecipe,
 };
