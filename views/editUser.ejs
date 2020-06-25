@@ -8,6 +8,11 @@
 </head>
 
 <body>
+
+  <header>
+    <%- include("./header.ejs") %>
+  </header>
+
   <h1>Editar Usuário</h1>
   <h2><%= results[3] %></h2>
   <form action="/me/edit" method="POST">

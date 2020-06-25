@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Nova Receita</title>
-  </head>
-  <body>
-    <h1>Nova Receita</h1>
-    <form action="/recipes/new" method="POST"> 
-      Nome da receita:
-      <input name="recipeName" type="text" /> </br>
-      Ingredientes:
-      <input name="ingredients" type="text" /> </br>
-      Modo de preparo:
-      <input name="howToPrepare" type="text" /> </br> 
-      <button type="submit">Criar nova receita!</button> </br>
-    </form>
-    <% if (err) { %>
-          <p>Preencha todos os campos</p>
-    <% } %>
-    <% if (success) { %>
-      <p>Receita salva com sucesso!</p>
-    <% } %>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Nova Receita</title>
+</head>
+
+<body>
+
+  <header>
+    <%- include("./header.ejs") %>
+  </header>
+
+  <h1>Nova Receita</h1>
+  <form action="/recipes/new" method="POST">
+    Nome da receita:
+    <input name="recipeName" type="text" /> </br>
+    Ingredientes:
+    <input name="ingredients" type="text" /> </br>
+    Modo de preparo:
+    <input name="howToPrepare" type="text" /> </br>
+    <button type="submit">Criar nova receita!</button> </br>
+  </form>
+  <% if (err) { %>
+  <p>Preencha todos os campos</p>
+  <% } %>
+  <% if (success) { %>
+  <p>Receita salva com sucesso!</p>
+  <% } %>
+</body>
+
 </html>
