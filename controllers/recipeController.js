@@ -1,4 +1,3 @@
-const rescue = require('express-rescue');
 const { SESSIONS } = require('../middlewares/auth');
 const recipeModel = require('../models/recipeModel');
 const insertTable = require('../models/insertTable');

@@ -1,13 +1,12 @@
 const connection = require('./connection');
 
 const findUser = async (param) => {
-  const comparator = typeof param === 'number' ? 'id' : 'email';
   const userData = await connection()
     .then((database) => database
       .getTable('users')
       .select(['id', 'email', 'user_password', 'first_name', 'last_name'])
-      .where(`${comparator} = :${comparator}`)
-      .bind(`${comparator}`, param)
+      .where('id = :param OR email = :param')
+      .bind('param', param)
       .execute())
     .then((results) => results.fetchAll())
     .then((users) => users[0]);

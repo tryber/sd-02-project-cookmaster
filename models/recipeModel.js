@@ -1,5 +1,4 @@
 const useSession = require('./useSession');
-const connection = require('./connection');
 
 const getAllRecipes = async () =>
   useSession()
