@@ -37,11 +37,17 @@ const newRecipeForm = async (req, res) => {
   });
 };
 
+function check(obj) {
+  const { recipe, ingredients, instructions } = obj;
+  if (!recipe || !ingredients || !instructions) return true;
+  return false;
+}
+
 const newRecipe = async (req, res, _next) => {
   const { recipe, ingredients, instructions } = req.body;
   const { id: userId, name, lastName } = req.user;
 
-  if (!recipe || !ingredients || !instructions) {
+  if (check(req.body)) {
     return res.render('newRecipe', {
       message: 'Preencha todos os campos',
       userName: `${name} ${lastName}`,
@@ -94,7 +100,7 @@ const editRecipe = async (req, res) => {
 
   const { name, lastName } = req.user;
 
-  if (!recipe || !ingredients || !instructions) {
+  if (check(req.body)) {
     return res.render('editRecipe', {
       message: 'Preencha todos os campos',
       userName: `${name} ${lastName}`,
