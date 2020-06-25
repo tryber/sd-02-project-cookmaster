@@ -4,7 +4,7 @@ USE cookie_master;
 
 CREATE TABLE Users (
     id INT NOT NULL AUTO_INCREMENT,
-    email VARCHAR(30) NOT NULL,
+    email VARCHAR(30) UNIQUE NOT NULL,
     pass VARCHAR(30),
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,

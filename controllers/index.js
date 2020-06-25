@@ -5,6 +5,8 @@ const getNewUser = require('./getNewUser');
 const postNewUser = require('./postNewUser');
 const getNewRecipe = require('./getNewRecipe');
 const postNewRecipe = require('./postNewRecipe');
+const recipeEdit = require('./recipeEdit');
+const postNewEdit = require('./postNewEdit');
 
 module.exports = {
   userController,
@@ -14,4 +16,6 @@ module.exports = {
   postNewUser,
   getNewRecipe,
   postNewRecipe,
+  recipeEdit,
+  postNewEdit,
 };
