@@ -64,4 +64,20 @@ const editRecipe = async (recipeId, recipeName, recipeIngredients, recipePrepare
       .bind(recipeId)
       .execute());
 
-module.exports = { getNames, findRecipesById, isValid, insertRecipe, editRecipe };
+const deleteRecipe = async (param) =>
+  getSchema().then((db) =>
+    db
+      .getTable('recipes')
+      .delete()
+      .where('id = :id')
+      .bind('id', param)
+      .execute());
+
+module.exports = {
+  getNames,
+  findRecipesById,
+  isValid,
+  insertRecipe,
+  editRecipe,
+  deleteRecipe,
+};

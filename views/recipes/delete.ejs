@@ -16,7 +16,7 @@
   </div>
   <% } %>
   <div style="margin-top: 10px">
-    <form action="/recipes/" method="POST">
+    <form action="/recipes/<%= recipe.id %>/delete" method="POST">
       <label for="passwordInput">Senha: </label>
       <input type="password" name="password" id="passwordInput" /><br />
       <button type="submit">Apagar receita</button>
