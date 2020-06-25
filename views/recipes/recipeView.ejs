@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receitas</title>
+  </head>
+  <body>
+    <% if (!recipe) {%>
+      <h1>Não foram encontradas nenhuma receita, verifique o banco de dados</h1>
+    <% } %>
+    <% if (recipe) {%>
+    <ul>
+      <li>ID: <%= recipe.id %></li>
+      <li>Name: <%= recipe.name %></li>
+      <li>ingredientes: <%= recipe.ingredients %></li>
+      <li>Modo de Preparo: <%= recipe.prepare_method %></li>
+      <li>Autor ID: <%= recipe.author_id %></li>
+    </ul>
+    <% } %>
+  </body>
+</html>
