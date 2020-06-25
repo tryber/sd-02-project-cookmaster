@@ -79,7 +79,7 @@ const updateDB = async ({ firstName, lastName, password, email }, id) => {
     WHERE id = ${id};`;
 
   await queryDb(UPDATE_QUERY);
-}
+};
 
 const userEdit = async (req, res) => {
   const userFields = ['id', 'email', 'pass', 'first_name', 'last_name'];
@@ -87,9 +87,9 @@ const userEdit = async (req, res) => {
   if (req.body.firstName) {
     await updateDB(req.body, userInfo[0][0]);
     const { firstName, lastName, password, email } = req.body;
-    return res.render(`editUser`,
+    return res.render('editUser',
       { results: [userInfo[0][0], email, password, firstName, lastName], update: true });
-  };
+  }
   return res.render('editUser', { results: userInfo[0], update: false });
 };
 
