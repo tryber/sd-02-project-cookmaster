@@ -18,7 +18,11 @@ app.get('/', middlewares.auth(false), controllers.recipeController.listRecipeNam
 app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newRecipe);
 app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
 
+app.get('/recipes/:id/edit', middlewares.auth(true), controllers.recipeController.showEditRecipe);
+app.get('/recipes/:id/delete', middlewares.auth(true), controllers.recipeController.showDeleteRecipe);
+// app.post('/recipes/:id/delete', middlewares.auth(true), controllers.recipeController.deleteRecipe);
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.showRecipe);
+app.post('/recipes/:id', middlewares.auth(true), controllers.recipeController.editRecipe);
 
 app.get('/signup', middlewares.auth(false), controllers.userController.newUser);
 app.post('/signup', middlewares.auth(false), controllers.userController.insertUser);

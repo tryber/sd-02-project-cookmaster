@@ -19,7 +19,7 @@ const getNames = async () =>
 const findRecipesById = async (param) => {
   const recipeIdData = await getSchema().then((db) => db
     .getTable('recipes')
-    .select(['name', 'ingredients', 'prepare_method', 'author_id'])
+    .select(['id', 'name', 'ingredients', 'prepare_method', 'author_id'])
     .where('id = :id')
     .bind('id', param)
     .execute()
@@ -28,9 +28,9 @@ const findRecipesById = async (param) => {
 
   if (!recipeIdData) return null;
 
-  const [name, ingredients, prepareMethod, authorId] = recipeIdData;
+  const [id, name, ingredients, prepareMethod, authorId] = recipeIdData;
 
-  return { name, ingredients, prepareMethod, authorId };
+  return { id, name, ingredients, prepareMethod, authorId };
 };
 
 const isValid = (name, ingredients, prepareMethod) => {
@@ -48,4 +48,20 @@ const insertRecipe = async (name, ingredients, prepareMethod, authorId) =>
       .values(name, ingredients, prepareMethod, authorId)
       .execute());
 
-module.exports = { getNames, findRecipesById, isValid, insertRecipe };
+const editRecipe = async (recipeId, recipeName, recipeIngredients, recipePrepareMethod) =>
+  connection().then((session) =>
+    session.sql(
+      `UPDATE project_cookmaster.recipes
+      SET 
+        name = ?,
+        ingredients = ?,
+        prepare_method = ?
+      WHERE id = ?;`,
+    )
+      .bind(recipeName)
+      .bind(recipeIngredients)
+      .bind(recipePrepareMethod)
+      .bind(recipeId)
+      .execute());
+
+module.exports = { getNames, findRecipesById, isValid, insertRecipe, editRecipe };
