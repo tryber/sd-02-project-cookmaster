@@ -73,18 +73,16 @@ const deleteRecipeDB = async (req, res) => {
 };
 
 const searchPage = async (req, res) => {
-  const query = req.query.q || 'Searching';
   if (req.query.q) {
     const FIND_QUERY =
       `SELECT r.id, r.recipe_name, CONCAT(u.first_name, ' ', u.last_name) FROM Recipes r
-       INNER JOIN Users u ON u.id = r.creator_id
-       WHERE recipe_name LIKE '%${req.query.q}%';`;
+      INNER JOIN Users u ON u.id = r.creator_id
+      WHERE recipe_name LIKE '%${req.query.q}%';`;
     const results = await Root.queryDb(FIND_QUERY);
-    console.log(results)
     return res.render('searchPage', { list: results });
   }
   res.render('searchPage', { list: false });
-}
+};
 
 module.exports = {
   getRecipeInfo,
