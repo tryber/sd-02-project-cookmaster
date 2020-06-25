@@ -48,25 +48,15 @@ const recipeAlreadyRegisteredByUser = async (userId, recipeName) =>
     .then((results) => results.fetchAll())
     .then((recipeCount) => recipeCount[0][0]);
 
-const registerNewRecipe = async (newRecipeData) => {
-  const { recipe, ingredients, instructions, userId } = newRecipeData;
-  return connection()
-    .then((database) => database
-      .getTable('recipes')
-      .insert(['recipe_name', 'ingredients', 'instructions', 'user_id'])
-      .values(recipe, ingredients, instructions, userId)
-      .execute());
-};
-
-const updateRecipe = (recipeData) => {
+const updateRecipe = async (recipeData) => {
   const { recipe, ingredients, instructions, recipeId } = recipeData;
   return connection()
     .then((db) => db
       .getTable('recipes')
       .update()
-      .set('recipe_name, :recipe')
-      .set('ingredients, :ingredients')
-      .set('instructions, :instructions')
+      .set('recipe_name', recipe)
+      .set('ingredients', ingredients)
+      .set('instructions', instructions)
       .where('id = :recipeId')
       .bind('recipeId', recipeId)
       .bind('recipe', recipe)
@@ -79,6 +69,5 @@ module.exports = {
   getAllRecipes,
   getSingleRecipe,
   recipeAlreadyRegisteredByUser,
-  registerNewRecipe,
   updateRecipe,
 };

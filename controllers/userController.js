@@ -2,6 +2,7 @@ const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
 
 const userModel = require('../models/userModel');
+const insertTable = require('../models/insertTable');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -83,7 +84,13 @@ const newUser = async (req, res, _next) => {
     });
   }
 
-  await userModel.registerNewUser({ email, password, firstName, lastName });
+  console.log(typeof insertTable);
+
+  await insertTable(
+    'users',
+    ['email', 'user_password', 'first_name', 'last_name'],
+    { email, password, firstName, lastName },
+  );
 
   return login(req, res);
 };
