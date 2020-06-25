@@ -8,11 +8,11 @@ const updateRecipe = async ({ name, ingredients, prepare, id }) =>
         .bind(ingredients)
         .bind(prepare)
         .bind(id)
-        .execute()
+        .execute(),
     )
-    .catch((err) => { 
-      console.error(err)
-      process.exit(1)
+    .catch((err) => {
+      console.error(err);
+      process.exit(1);
     });
 
 module.exports = updateRecipe;
