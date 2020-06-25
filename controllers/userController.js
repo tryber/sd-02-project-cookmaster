@@ -3,6 +3,7 @@ const { SESSIONS } = require('../middlewares/auth');
 
 const userModel = require('../models/userModel');
 
+
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
 
@@ -14,16 +15,16 @@ const loginForm = (req, res) => {
   });
 };
 
-const login = async (req, res, next) => {
+const login = async (req, res, _next) => {
   const { email, password, redirect } = req.body;
-
   if (!email || !password)
     return res.render('admin/login', {
       message: 'Preencha o email e a senha',
       redirect: null,
     });
-
+  
   const user = await userModel.findByEmail(email);
+
   if (!user || user.password !== password)
     return res.render('admin/login', {
       message: 'Email ou senha incorretos',
@@ -43,8 +44,20 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const pageCadastro = async (_req, res) => {
+  res.render('admin/cadastro');
+};
+
+const cadastro = async (req, res) => {
+  const { nome, email, senha, lastName } = req.body;
+  await userModel.addUser({ nome, email, senha, lastName });
+  res.send('success');
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  pageCadastro,
+  cadastro,
 };

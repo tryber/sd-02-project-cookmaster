@@ -10,14 +10,9 @@
     <hr />
     <% for(let i = 0; i < receitas.length; i++) { %>
       <tr>
-        <td><%= receitas[i].user_name %></td>
-        <td><%= receitas[i].receita_name %></td>
+        <td><%= receitas[i].nome %></td>
       </tr>
       <br />
     <% } %>
-  <hr />
-  <% if (user) { %>
-    <button type="button" onclick="window.location.pathname='/recipes/new'">Nova receita</button>
-  <%} %>
   </body>
 </html>

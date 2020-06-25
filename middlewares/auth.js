@@ -2,6 +2,7 @@ const userModel = require('../models/userModel');
 
 const SESSIONS = {};
 
+
 const getUser = async (req) => {
   const { token = '' } = req.cookies || {};
   if (!token) return null;
@@ -14,6 +15,7 @@ const getUser = async (req) => {
 
   return user;
 };
+
 
 const authMiddleware = (required = true) => async (req, res, next) => {
   const user = await getUser(req);
@@ -30,7 +32,9 @@ const authMiddleware = (required = true) => async (req, res, next) => {
   return next();
 };
 
+
 module.exports = {
   SESSIONS,
   authMiddleware,
+  getUser,
 };

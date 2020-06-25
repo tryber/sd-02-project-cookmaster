@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receita detalhes</title>
+  </head>
+  <body>
+    <% if(message) { %>
+    <p><%= message %></p>
+    <% } %>
+
+    <% if(receita) { %>}
+    <h1>Receita detalhes</h1>
+    <label>Autor:</label>
+    <p><%= receita.user_name %></p>
+    <br />
+    <label>Receita:</label>
+    <p><%= receita.receita_name %></p>
+    <br />
+    <label>Ingredientes:</label>
+    <p><%= receita.ingredientes %></p>
+    <br />
+    <label>Modo de preparar:</label>
+    <p><%= receita.modo_de_preparar %></p>
+    <% } %>
+  </body>
+</html>

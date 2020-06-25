@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Admin</title>
+  </head>
+
+  <body>
+    <h1>Painel Administrativo Cookmaster</h1>
+
+    <form action="/cadastro" method="POST">
+      <p>nome</p><input name="nome" type="text" />
+      <p>email</p><input name="email" type="email" />
+      <p>senha</p><input name="senha" type="text" />
+      <p>lastname</p><input name="lastName" type="text" />
+      <button type="submit">Cadastrar usuário</button>
+    </form>
+
+    <button onclick="window.location.pathname='/logout'">Logout</button>
+  </body>
+</html>
