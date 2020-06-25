@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cookmaster - Delete</title>
+  <title>Cookmaster - Search</title>
 </head>
 
 <body>
   </div>
   <form action="/recipes/search" method="GET">
     <label for="searchInput">Digite o texto: </label><br />
-    <input type="text" name="q" id="searchInput" required /><br />
+    <input type="text" name="q" id="searchInput" /><br />
     <button type="submit">Pesquisar</button>
     <% if(recipes) {%>
       <% recipes.forEach((recipe)=> {%>
