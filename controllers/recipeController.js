@@ -1,5 +1,6 @@
 const { SESSIONS } = require('../middlewares/auth');
 const recipeModel = require('../models/recipeModel');
+const userModel = require('../models/userModel');
 
 const listRecipes = async (req, res) => {
   const recipes = await recipeModel.getAllRecipes();
@@ -104,6 +105,41 @@ const editRecipe = async (req, res) => {
   return res.redirect(`/recipes/${recipeId}`);
 };
 
+const deleteRecipeForm = async (req, res) => {
+  const { token = '' } = req.cookies || {};
+  const { id: recipeId } = req.params;
+  const recipe = await recipeModel.getSingleRecipe(recipeId);
+
+  const { id: userId } = req.user;
+  if (SESSIONS[token] && recipe.userId === userId) {
+    return res.render('deleteRecipe', {
+      message: null,
+      recipeId,
+    });
+  }
+
+  return res.redirect('/');
+};
+
+const deleteRecipe = async (req, res) => {
+  const { password } = req.body;
+  const { email } = req.user;
+  const { id: recipeId } = req.params;
+
+  const authorizedUser = await userModel.checkPassword(email, password);
+
+  if (!authorizedUser) {
+    return res.render('deleteRecipe', {
+      message: 'Senha incorreta. Por favor, tente novamente',
+      recipeId,
+    });
+  }
+
+  await recipeModel.deleteRecipeFromTable(recipeId);
+
+  return res.redirect('/');
+};
+
 module.exports = {
   listRecipes,
   showRecipe,
@@ -111,4 +147,6 @@ module.exports = {
   newRecipe,
   editRecipeForm,
   editRecipe,
+  deleteRecipeForm,
+  deleteRecipe,
 };

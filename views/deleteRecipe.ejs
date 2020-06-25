@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>MVC com Express</title>
+</head>
+
+<body>
+  <% if (message) { %>
+  <p><%= message %></p>
+  <% } %>
+  <form action=<%= `/recipes/${recipeId}/delete` %> method="POST">
+    <h3>Confirme a exclusão da receita</h3>
+    <label for="password">Senha</label>
+    <input id="password" name="password" type="password" />
+    <a href=<%= `/recipes/${recipeId}` %>>Cancelar</a>
+    <button type="submit">Confirmar</button>
+  </form>
+</body>
+
+</html>

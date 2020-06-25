@@ -22,8 +22,12 @@ app.get('/recipes/new', middlewares.auth(), recipeController.newRecipeForm);
 app.post('/recipes/new', middlewares.auth(), recipeController.newRecipe);
 
 app.get('/recipes/:id', middlewares.auth(false), recipeController.showRecipe);
+
 app.get('/recipes/:id/edit', middlewares.auth(), recipeController.editRecipeForm);
 app.post('/recipes/:id/edit', middlewares.auth(), recipeController.editRecipe);
+
+app.get('/recipes/:id/delete', middlewares.auth(), recipeController.deleteRecipeForm);
+app.post('/recipes/:id/delete', middlewares.auth(), recipeController.deleteRecipe);
 
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
