@@ -7,6 +7,8 @@ const getNewRecipe = require('./getNewRecipe');
 const postNewRecipe = require('./postNewRecipe');
 const recipeEdit = require('./recipeEdit');
 const postNewEdit = require('./postNewEdit');
+const recipeDelete = require('./recipeDelete');
+const postNewDelete = require('./postNewDelete');
 
 module.exports = {
   userController,
@@ -18,4 +20,6 @@ module.exports = {
   postNewRecipe,
   recipeEdit,
   postNewEdit,
+  recipeDelete,
+  postNewDelete,
 };
