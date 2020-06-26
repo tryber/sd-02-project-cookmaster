@@ -12,10 +12,6 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-// app.get('/', (_req, res) => {
-//   return res.render('home');
-// });
-
 app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
@@ -35,6 +31,8 @@ app.get('/users', async (req, res) => {
   });
 });
 
-app.get('/', controllers.recipeController.findRecipes)
+app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.findRecipeDetail);
+
+app.get('/', middlewares.auth(false), controllers.recipeController.findRecipes);
 
 app.listen(3000, () => console.log('Listening on 3000'));

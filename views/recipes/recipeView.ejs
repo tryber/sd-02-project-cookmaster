@@ -6,17 +6,21 @@
     <title>Receitas</title>
   </head>
   <body>
-    <% if (!recipe) {%>
+    <% if (!recipes) {%>
       <h1>Não foram encontradas nenhuma receita, verifique o banco de dados</h1>
     <% } %>
-    <% if (recipe) {%>
     <ul>
-      <li>ID: <%= recipe.id %></li>
-      <li>Name: <%= recipe.name %></li>
-      <li>ingredientes: <%= recipe.ingredients %></li>
-      <li>Modo de Preparo: <%= recipe.prepare_method %></li>
-      <li>Autor ID: <%= recipe.author_id %></li>
+      <% recipes.map((recipe) => { %>
+      <li>Receita: <%= recipe.recipeName %></li>
+      <li>Autor: <%= `${recipe.userName} ${recipe.userLastName}` %></li><br>
+      <a href='/recipes/<%=recipe.id%>'>Detalhes</a><br><br>
+      <% }) %>
     </ul>
-    <% } %>
+    <%= console.log(logged) %>
+    <% if (logged !== 'empty') { %>
+      <form action="/recipes/new" method="GET">
+      <button type="submit">Nova receita!</button>
+      </form>
+    <% } %> 
   </body>
 </html>
