@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - Nova Receita</title>
-  <link rel="stylesheet" type="text/css" href="/admin.css">
+  <link rel="stylesheet" type="text/css" href="/newUser.css">
   <link rel="stylesheet" type="text/css" href="/header.css">
 </head>
 
@@ -16,14 +16,14 @@
   </header>
 
   <h1>Nova Receita</h1>
-  <form action="/recipes/new" method="POST">
-    Nome da receita:
-    <input name="recipeName" type="text" /> </br>
-    Ingredientes:
-    <input name="ingredients" type="text" /> </br>
-    Modo de preparo:
-    <input name="howToPrepare" type="text" /> </br>
-    <button class="logout-btn" type="submit">Criar nova receita!</button> </br>
+  <form class="container-user" action="/recipes/new" method="POST">
+    <label for="recipeName"> Nome da receita</label>
+    <input name="recipeName" type="text" />
+    <label for="ingredients"> Ingredientes </label>
+    <textarea name="ingredients" type="text"></textarea>
+    <label for="howToPrepare"> Modo de preparo </label>
+    <textarea class="big-txt-area" name="howToPrepare" type="text"></textarea>
+    <button class="sbt-btn" type="submit">Criar nova receita!</button>
   </form>
   <% if (err) { %>
   <p>Preencha todos os campos</p>

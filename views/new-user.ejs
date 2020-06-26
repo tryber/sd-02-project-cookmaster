@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - New User</title>
   <link rel="stylesheet" type="text/css" href="/header.css">
-  <link rel="stylesheet" type="text/css" href="/admin.css">
+  <link rel="stylesheet" type="text/css" href="/newUser.css">
 </head>
 
 <body>
@@ -16,18 +16,18 @@
   </header>
 
   <h1>Criar um novo usuário</h1>
-  <form action="/new-user" method="POST">
-    Email:
-    <input name="email" type="text" /> </br>
-    Password:
-    <input name="password" type="password" /> </br>
-    Confirmar password:
-    <input name="confirmPass" type="password" /> </br>
-    Primeiro nome:
-    <input name="firstName" type="text" /> </br>
-    Último nome:
-    <input name="lastName" type="text" /> </br>
-    <button class="logout-btn" type="submit">Criar novo usuário!</button> </br>
+  <form class="container-user" action="/new-user" method="POST">
+    <label for="email"> Nome do usuário</label>
+    <input name="email" type="text" />
+    <label for="password"> Password </label>
+    <input name="password" type="password" />
+    <label for="confirmPass"> Confirmar password </label>
+    <input name="confirmPass" type="password" />
+    <label for="firstName"> Primeiro nome </label>
+    <input name="firstName" type="text" />
+    <label for="lastName"> Último nome </label>
+    <input name="lastName" type="text" />
+    <button class="sbt-btn" type="submit">Criar novo usuário!</button> </br>
   </form>
   <% if (status === 'success') { %>
   <p>Usuário Criado!</p>

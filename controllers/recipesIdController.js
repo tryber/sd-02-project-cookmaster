@@ -30,7 +30,8 @@ const editRecipe = async (req, res) => {
 
 const updateRecipe = async (req, res) => {
   const { recipeName, ingredients, howToPrepare } = req.body;
-
+  console.log(req.body);
+  console.log(req.params);
   const UPDATE_QUERY =
     `UPDATE Recipes
       SET recipe_name = '${recipeName}',

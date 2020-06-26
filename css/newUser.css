@@ -1,0 +1,35 @@
+body {
+  background-color: rgb(243, 243, 226);
+  text-align: center;
+}
+
+.sbt-btn {
+  background-color: rgb(221, 151, 85);
+  margin: 1.5vh;
+  width: 10%;
+}
+
+.sbt-btn:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.container-user {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.container-user input {
+  margin: 1.5vh;
+  width: 25%;
+}
+
+textarea {
+  margin: 1.5vh;
+  height: 7.5vh;
+  width: 25%;
+}
+
+.big-txt-area {
+  height: 45vh;
+}

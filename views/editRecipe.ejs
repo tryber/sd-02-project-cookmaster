@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editar Receita</title>
   <link rel="stylesheet" type="text/css" href="/header.css">
-  <link rel="stylesheet" type="text/css" href="/admin.css">
+  <link rel="stylesheet" type="text/css" href="/newUser.css">
 </head>
 
 <body>
@@ -17,14 +17,16 @@
 
   <h1>Editar Receita</h1>
   <h2><%= recipeDetails[0].recipeName %></h2>
-  <form action="" method="POST">
-    Nome da receita:
-    <input name="recipeName" type="text" value="<%= recipeDetails[0].recipeName %>" /> </br>
-    Ingredientes:
-    <input name="ingredients" type="text" value="<%= recipeDetails[0].ingredients %>" /> </br>
-    Modo de preparo:
-    <input name="howToPrepare" type="text" value="<%= recipeDetails[0].howToPrepare %>" /> </br>
-    <button class="logout-btn" type="submit">Editar receita!</button> </br>
+  <form class="container-user" action="/recipes/ <%= id %> /edit" method="POST">
+    <label for="recipeName"> Nome da receita</label>
+    <input name="recipeName" type="text" value="<%= recipeDetails[0].recipeName %>" />
+    <label for="ingredients"> Ingredientes </label>
+    <textarea name="ingredients" type="text"><%= recipeDetails[0].ingredients %></textarea>
+    <label for="howToPrepare"> Modo de preparo </label>
+    <textarea class="big-txt-area" name="howToPrepare" type="text">
+<%= recipeDetails[0].howToPrepare %>
+    </textarea>
+    <button class=" sbt-btn" type="submit">Editar receita!</button> </br>
   </form>
 </body>
 
