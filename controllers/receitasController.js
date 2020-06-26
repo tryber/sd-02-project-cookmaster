@@ -13,19 +13,12 @@ const getAllReceitas = rescue(async (req, res) => {
 
 const getReceitaById = rescue(async (req, res) => {
   const id = req.params.id;
-  const user = req.user;
-  let userId;
-  if (user) {
-    userId = user.id;
-  }
-
+  
   const receita = await receitaModel.getById(id);
 
-  if (!receita) {
-    res.send('receita não encontrada');
-  }
+  const userId = (req.user) ? req.user.id : undefined;
 
-  const permission = (receita.userId === userId);
+  const permission = verifyPermission(receita, userId);
   const links = {
     edit: `window.location.pathname="/recipes/${id}/edit"`,
     del: `window.location.pathname="/recipes/${id}/delete"`,
@@ -40,6 +33,13 @@ const getReceitaById = rescue(async (req, res) => {
   return res.render('receitaDetails', { receita, permission, links, message: null });
 });
 
+const verifyPermission = (receita, userId) => {
+  if (!receita) {
+    return false;
+  }
+  return (receita.userId === userId);
+};
+
 const addReceita = rescue(async (req, res) => {
   const { nome, ingredientes, modoDePreparar } = req.body;
   const userId = req.user.id;
@@ -49,7 +49,6 @@ const addReceita = rescue(async (req, res) => {
 });
 
 const pageNewReceita = rescue(async (_req, res) => res.render('admin/newReceita'));
-
 
 const pageEditReceita = rescue(async (req, res) => {
   const id = req.params.id;

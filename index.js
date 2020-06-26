@@ -7,8 +7,6 @@ const controllers = require('./controllers');
 
 const app = express();
 
-const adminRouter = express.Router();
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -21,36 +19,32 @@ app.get('/', controllers.receitasController.getAllReceitas);
 app.get('/login', controllers.userController.loginForm);
 app.post('/login', controllers.userController.login);
 
-adminRouter.use(middlewares.auth());
 
-adminRouter.get('/admin', (req, res) =>
+app.get('/admin', middlewares.auth(), (req, res) =>
   res.render('admin/home', { user: req.user }),
 );
 
-adminRouter.get('/logout', controllers.userController.logout);
+app.get('/logout', middlewares.auth(), controllers.userController.logout);
 
-adminRouter.get('/cadastro', controllers.userController.pageCadastro);
-adminRouter.post('/cadastro', controllers.userController.cadastro);
+app.get('/cadastro', middlewares.auth(), controllers.userController.pageCadastro);
+app.post('/cadastro', middlewares.auth(), controllers.userController.cadastro);
 
+app.get('/recipes/new', middlewares.auth(), controllers.receitasController.pageNewReceita);
+app.post('/recipes', middlewares.auth(), controllers.receitasController.addReceita);
 
-adminRouter.get('/recipes/new', controllers.receitasController.pageNewReceita);
-adminRouter.post('/recipes', controllers.receitasController.addReceita);
+app.get('/recipes/:id/edit', middlewares.auth(), controllers.receitasController.pageEditReceita);
+app.post('/recipes/:id', middlewares.auth(), controllers.receitasController.updateReceita);
 
-app.get('/recipes/search', controllers.receitasController.search);
+app.get('/recipes/:id/delete', middlewares.auth(), controllers.receitasController.pageDelReceita);
+app.post('/recipes/:id/delete', middlewares.auth(), controllers.receitasController.deleteReceita);
 
-adminRouter.get('/recipes/:id', controllers.receitasController.getReceitaById);
+app.get('/me/recipes', middlewares.auth(), controllers.receitasController.minhasReceitas);
 
-adminRouter.get('/recipes/:id/edit', controllers.receitasController.pageEditReceita);
-adminRouter.post('/recipes/:id', controllers.receitasController.updateReceita);
+app.get('/me/edit', middlewares.auth(), controllers.userController.editUserpage);
+app.post('/me', middlewares.auth(), controllers.userController.editUser);
 
-adminRouter.get('/recipes/:id/delete', controllers.receitasController.pageDelReceita);
-adminRouter.post('/recipes/:id/delete', controllers.receitasController.deleteReceita);
+app.get('/recipes/search', middlewares.auth(), controllers.receitasController.search);
 
-adminRouter.get('/me/recipes', controllers.receitasController.minhasReceitas);
-
-adminRouter.get('/me/edit', controllers.userController.editUserpage);
-adminRouter.post('/me', controllers.userController.editUser);
-
-app.use('/', adminRouter);
+app.get('/recipes/:id', middlewares.auth(false), controllers.receitasController.getReceitaById);
 
 app.listen(3000, () => console.log('Listening on 3000'));
