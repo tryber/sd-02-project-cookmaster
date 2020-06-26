@@ -6,8 +6,8 @@ const getAllRecipes = async () =>
     .then((session) => session
       .sql(`SELECT
             r.id,
-            r.recipe_name AS recipeName,
-            CONCAT(u.first_name, ' ', u.last_name) AS userName
+            r.recipe_name,
+            CONCAT(u.first_name, ' ', u.last_name)
             FROM
             recipes r
             INNER JOIN
@@ -86,6 +86,28 @@ const deleteRecipeFromTable = async (recipeId) =>
         .bind('recipeId', recipeId)
         .execute());
 
+const findRecipes = async (searchTerm) =>
+  useSession()
+    .then((session) => session
+      .sql(`SELECT
+        r.id,
+        r.recipe_name,
+        CONCAT(u.first_name, ' ', u.last_name)
+        FROM
+        recipes r
+        INNER JOIN
+        users u
+        WHERE
+        u.id = r.user_id
+        AND
+        r.recipe_name REGEXP ?;`)
+      .bind(searchTerm)
+      .execute())
+    .then((results) => results.fetchAll())
+    .then((recipes) =>
+      recipes.map(([recipeId, recipeName, userName]) =>
+        ({ recipeId, recipeName, userName }) || null));
+
 module.exports = {
   getAllRecipes,
   getSingleRecipe,
@@ -93,4 +115,5 @@ module.exports = {
   registerNewRecipe,
   updateRecipe,
   deleteRecipeFromTable,
+  findRecipes,
 };

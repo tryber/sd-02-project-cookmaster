@@ -11,7 +11,9 @@
     <a href="/login">Fazer login</a>
   </nav>
   <h1>Receitas</h1>
-  <button type="button">Buscar Receitas</button>
+  <a href="/recipes/search">
+    <button type="button">Buscar Receitas</button>
+  </a>
   <% recipes && recipes.forEach((recipe) => { %>
     <p><%= recipe.recipeName %></p>
     <p><%= recipe.userName %></p>

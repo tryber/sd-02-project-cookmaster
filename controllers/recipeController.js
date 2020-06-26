@@ -140,6 +140,42 @@ const deleteRecipe = async (req, res) => {
   return res.redirect('/');
 };
 
+const searchRecipePage = async (req, res, next) => {
+  const { q } = req.query;
+  if (q) return next();
+  if (req.user) {
+    const { name, lastName } = req.user;
+    return res.render('searchRecipe', {
+      message: null,
+      recipes: null,
+      userName: `${name} ${lastName}`,
+    });
+  }
+  return res.render('non-authenticated/searchRecipe', {
+    message: null,
+    recipes: null,
+  });
+};
+
+const searchRecipe = async (req, res) => {
+  const { q } = req.query;
+
+  const recipes = await recipeModel.findRecipes(q);
+
+  if (req.user) {
+    const { name, lastName } = req.user;
+    return res.render('searchRecipe', {
+      message: !recipes.length && 'Nenhuma receita foi encontrada.',
+      recipes,
+      userName: `${name} ${lastName}`,
+    });
+  }
+  return res.render('non-authenticated/searchRecipe', {
+    message: !recipes.length && 'Nenhuma receita foi encontrada.',
+    recipes,
+  });
+};
+
 module.exports = {
   listRecipes,
   showRecipe,
@@ -149,4 +185,6 @@ module.exports = {
   editRecipe,
   deleteRecipeForm,
   deleteRecipe,
+  searchRecipePage,
+  searchRecipe,
 };
