@@ -37,7 +37,7 @@ const newRecipeForm = async (req, res) => {
   });
 };
 
-const newRecipe = async (req, res, _next) => {
+const newRecipe = async (req, res) => {
   const { recipe, ingredients, instructions } = req.body;
   const { id: userId, name, lastName } = req.user;
 
@@ -176,6 +176,18 @@ const searchRecipe = async (req, res) => {
   });
 };
 
+const showUserRecipes = async (req, res) => {
+  const { id, name, lastName } = req.user;
+
+  const recipes = await recipeModel.getUserRecipes(id);
+
+  return res.render('myRecipes', {
+    message: !recipes.length && 'Você ainda não cadastrou nenhuma receita',
+    recipes,
+    userName: `${name} ${lastName}`,
+  });
+};
+
 module.exports = {
   listRecipes,
   showRecipe,
@@ -187,4 +199,5 @@ module.exports = {
   deleteRecipe,
   searchRecipePage,
   searchRecipe,
+  showUserRecipes,
 };

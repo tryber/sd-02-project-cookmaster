@@ -108,6 +108,28 @@ const findRecipes = async (searchTerm) =>
       recipes.map(([recipeId, recipeName, userName]) =>
         ({ recipeId, recipeName, userName }) || null));
 
+const getUserRecipes = (userId) =>
+  useSession()
+    .then((session) => session
+      .sql(`SELECT
+            r.id,
+            r.recipe_name,
+            CONCAT(u.first_name, ' ', u.last_name)
+            FROM
+            recipes r
+            INNER JOIN
+            users u
+            WHERE
+            u.id = r.user_id
+            AND
+            r.user_id = ?;`)
+      .bind(userId)
+      .execute())
+    .then((results) => results.fetchAll())
+    .then((recipes) =>
+      recipes.map(([recipeId, recipeName, userName]) =>
+        ({ recipeId, recipeName, userName } || null)));
+
 module.exports = {
   getAllRecipes,
   getSingleRecipe,
@@ -116,4 +138,5 @@ module.exports = {
   updateRecipe,
   deleteRecipeFromTable,
   findRecipes,
+  getUserRecipes,
 };
