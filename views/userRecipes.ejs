@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - receitas do usuário</title>
+  <link rel="stylesheet" type="text/css" href="/home.css">
+  <link rel="stylesheet" type="text/css" href="/header.css">
 </head>
 
 <body>
@@ -14,10 +16,12 @@
   </header>
 
   <h2>Receitas cadastradas por <%= (results[0][2]) %> </h2>
-  <ul>
+  <ul class="container-flex-recipes">
     <% results.forEach(recipe => { %>
-    <li>Receita: <%= (recipe[1]) %> </li>
-    <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
+    <div class="container-recipe">
+      <li><%= (recipe[1]) %></li>
+      <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
+    </div>
     <% }) %>
   </ul>
 </body>

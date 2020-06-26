@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - Admin</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/admin.css">
 </head>
 
 <body>
@@ -14,8 +16,8 @@
 
   <h1>Painel Administrativo Cookmaster</h1>
   <p>Usuário atual: <%= `${user.name} ${user.lastName}` %></p>
-  <pre><%= JSON.stringify(user, null, 4) %></pre>
-  <button onclick="window.location.pathname='/logout'">Logout</button>
+  <p>Id: <%= user.id %></p>
+  <button class="logout-btn" onclick="window.location.pathname='/logout'">Logout</button>
 </body>
 
 </html>

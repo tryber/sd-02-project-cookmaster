@@ -9,6 +9,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use(express.static(__dirname + '/css'));
+
 app.set('view engine', 'ejs');
 app.set('views', './views');
 

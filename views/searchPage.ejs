@@ -5,6 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - Pesquisar</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/searchPage.css">
+  <link rel="stylesheet" type="text/css" href="/home.css">
 </head>
 
 <body>
@@ -14,8 +17,8 @@
   </header>
 
   <h1>Pesquisar Receita</h1>
-  <form action="/recipes/search?q=" method="GET">
-    <input name="q" type="text" /> </br>
+  <form class="form-search" action="/recipes/search?q=" method="GET">
+    <input class="input-search" name="q" type="text" /> </br>
     <button type="submit">Pesquisar!</button> </br>
   </form>
   <% if (list) { %>
@@ -23,10 +26,13 @@
   <p>Não foram encontrados resultados</p>
   <% } %>
 
-  <ul>
+  <ul class="container-flex-recipes">
     <% list.forEach(recipe => { %>
-    <li>Receita: <%= (recipe[1]) %> - Autor: <%= (recipe[2]) %></li>
-    <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
+    <div class="container-recipe">
+      <li><%= (recipe[1]) %></li>
+      <li>Por: <%= (recipe[2]) %></li>
+      <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
+    </div>
     <% }) %>
   </ul>
   <% } else { %>

@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editar Usuário</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/admin.css">
 </head>
 
 <body>
@@ -24,7 +26,7 @@
     <input name="password" type="text" value="<%= results[2] %>" /> </br>
     Novo e-mail:
     <input name="email" type="text" value="<%= results[1] %>" /> </br>
-    <button type="submit">Editar usuário!</button> </br>
+    <button class="logout-btn" type="submit">Editar usuário!</button> </br>
   </form>
   <% if (update) { %>
   <p>Usuário Editado com sucesso!</p>

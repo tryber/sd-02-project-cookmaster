@@ -1,0 +1,17 @@
+body {
+  background-color: rgb(243, 243, 226);
+  text-align: center;
+}
+
+.body-login {
+  margin-top: 5vh;
+}
+
+.body-login button {
+  background-color: rgb(221, 151, 85);
+  width: 5%;
+}
+
+.body-login button:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}

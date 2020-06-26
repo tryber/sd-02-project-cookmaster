@@ -24,7 +24,9 @@ CREATE TABLE Recipes (
 INSERT INTO Users (email, pass, first_name, last_name)
 VALUES
     ('pedro@gmail.com', '123456', 'Pedro', 'Ferreira'),
-    ('henrique@hotmail.com.', '987654', 'Henrique', 'Tófani');
+    ('henrique@hotmail.com', '987654', 'Henrique', 'Tófani'),
+    ('roz@bol.com', '741852', 'Rogerio', 'Roz');
+    
     
 INSERT INTO Recipes (recipe_name, ingredients, how_to_prepare, creator_id)
 VALUES
@@ -32,4 +34,6 @@ VALUES
     ('Pipoca de microondas', 'pipoca', 'Colocar no microondas', '1'),
     ('Batata frita', 'Batata', 'Fritar a batata', '2'),
     ('Salada', 'Alface e Tomate', 'Cortar o tomate e o alface', '2'),
-    ('Pão de alho ao forno', 'Pão de alho', 'Comprar o pão de alho e colocar no forno', '2');
+    ('Pão de alho ao forno', 'Pão de alho', 'Comprar o pão de alho e colocar no forno', '2'),
+    ('IFood', 'App no celular', 'Pedir a receita e aguardar', '2'),
+    ('Pão com manteiga', 'Pão e manteiga', 'Passar a manteiga gentilmente sobre o pão', '3');

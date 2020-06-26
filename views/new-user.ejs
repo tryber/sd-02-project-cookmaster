@@ -4,7 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cookmaster - Home</title>
+  <title>Cookmaster - New User</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/admin.css">
 </head>
 
 <body>
@@ -25,7 +27,7 @@
     <input name="firstName" type="text" /> </br>
     Último nome:
     <input name="lastName" type="text" /> </br>
-    <button type="submit">Criar novo usuário!</button> </br>
+    <button class="logout-btn" type="submit">Criar novo usuário!</button> </br>
   </form>
   <% if (status === 'success') { %>
   <p>Usuário Criado!</p>

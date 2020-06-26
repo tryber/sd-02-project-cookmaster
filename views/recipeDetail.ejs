@@ -5,6 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - Recipe</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/recipeDetail.css">
+  <link rel="stylesheet" type="text/css" href="/admin.css">
 </head>
 
 <body>
@@ -14,19 +17,23 @@
   </header>
 
   <h1>Detalhes da receita</h1>
-  <p>Receita: <%= (recipeDetails[0].recipeName) %></p>
-  <p>Ingredientes: <%= (recipeDetails[0].ingredients) %></p>
-  <p>Modo de preparo: <%= (recipeDetails[0].howToPrepare) %></p>
-  <p>Receita: <%= (recipeDetails[0].recipeName) %></p>
+  <div class="recipe-detail-card">
+    <p>Receita: <%= (recipeDetails[0].recipeName) %></p>
+    <p>Ingredientes: <%= (recipeDetails[0].ingredients) %></p>
+    <p>Modo de preparo: <%= (recipeDetails[0].howToPrepare) %></p>
+    <p>Receita: <%= (recipeDetails[0].recipeName) %></p>
+  </div>
 
   <% if (recipeDetails[0].creatorId === id) { %>
-  <form action=<%= `/recipes/${recipeDetails[0].id}/delete` %> method="GET">
-    <button type="submit">Excluir receita</button>
-  </form>
+  <div class="btn-edit-delete-container">
+    <form action=<%= `/recipes/${recipeDetails[0].id}/delete` %> method="GET">
+      <button type="submit">Excluir receita</button>
+    </form>
 
-  <form action=<%= `/recipes/${recipeDetails[0].id}/edit` %> method="GET">
-    <button type="submit">Editar receita</button>
-  </form>
+    <form action=<%= `/recipes/${recipeDetails[0].id}/edit` %> method="GET">
+      <button type="submit">Editar receita</button>
+    </form>
+  </div>
   <% } %>
 </body>
 

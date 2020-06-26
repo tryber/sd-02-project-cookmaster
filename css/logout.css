@@ -1,0 +1,14 @@
+body {
+  background-color: rgb(243, 243, 226);
+  text-align: center;
+}
+
+h3 a {
+  color: rgb(182, 28, 28);
+  font-size: 0.75em;
+  text-decoration: none;
+}
+
+h3 a:hover {
+  text-decoration: underline;
+}
