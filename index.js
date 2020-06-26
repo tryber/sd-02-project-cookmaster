@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const middlewares = require('./middlewares');
 const controllers = require('./controllers');
@@ -9,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use(express.static(__dirname + '/css'));
+app.use(express.static(path.join(__dirname, '/css')));
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
