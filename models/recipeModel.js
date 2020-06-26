@@ -73,6 +73,21 @@ const deleteRecipe = async (param) =>
       .bind('id', param)
       .execute());
 
+const searchRecipes = async (param) =>
+  connection().then((session) =>
+    session.sql(
+      `SELECT r.id, r.name, u.first_name, u.last_name
+      FROM project_cookmaster.recipes AS r
+      INNER JOIN users AS u ON u.id = r.author_id
+      WHERE r.name REGEXP ?;`,
+    )
+      .bind(param)
+      .execute())
+    .then((results) => results.fetchAll())
+    .then((recipes) =>
+      recipes.map(([recipeId, recipeName, userFirstName, userLastName]) =>
+        ({ recipeId, recipeName, userFirstName, userLastName }) || null));
+
 module.exports = {
   getNames,
   findRecipesById,
@@ -80,4 +95,5 @@ module.exports = {
   insertRecipe,
   editRecipe,
   deleteRecipe,
+  searchRecipes,
 };

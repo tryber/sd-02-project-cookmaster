@@ -45,6 +45,8 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const showAdmin = (req, res) => res.render('admin/home', { user: req.user });
+
 const newUser = (_req, res) => {
   res.render('users/signup', { message: null });
 };
@@ -64,6 +66,7 @@ module.exports = {
   login,
   loginForm,
   logout,
+  showAdmin,
   newUser,
   insertUser,
 };

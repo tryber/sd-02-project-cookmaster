@@ -18,16 +18,18 @@ app.get('/', middlewares.auth(false), controllers.recipeController.listRecipeNam
 app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newRecipe);
 app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
 
-app.get('/recipes/:id/edit', middlewares.auth(true), controllers.recipeController.showEditRecipe);
-app.get('/recipes/:id/delete', middlewares.auth(true), controllers.recipeController.showDeleteRecipe);
-app.post('/recipes/:id/delete', middlewares.auth(true), controllers.recipeController.deleteRecipe);
+app.get('/recipes/search', middlewares.auth(), controllers.recipeController.searchRecipe);
+
+app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.showEditRecipe);
+app.get('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.showDeleteRecipe);
+app.post('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.deleteRecipe);
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.showRecipe);
-app.post('/recipes/:id', middlewares.auth(true), controllers.recipeController.editRecipe);
+app.post('/recipes/:id', middlewares.auth(), controllers.recipeController.editRecipe);
 
 app.get('/signup', middlewares.auth(false), controllers.userController.newUser);
 app.post('/signup', middlewares.auth(false), controllers.userController.insertUser);
 
-app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
+app.get('/admin', middlewares.auth(), controllers.userController.showAdmin);
 
 app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);

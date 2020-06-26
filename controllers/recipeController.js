@@ -88,6 +88,18 @@ const deleteRecipe = async (req, res) => {
   return res.redirect(`/recipes/${paramsId}`);
 };
 
+const searchRecipe = async (req, res) => {
+  const { id: userId } = req.user;
+  const search = req.query.q || null;
+  const recipes = await recipeModel.searchRecipes(search);
+  if (userId && search) {
+    return res.render('recipes/search', { message: null, recipes });
+  }
+  if (userId) {
+    return res.render('recipes/search', { message: null, recipes: null });
+  }
+};
+
 module.exports = {
   listRecipeNameAuthors,
   showRecipe,
@@ -97,4 +109,5 @@ module.exports = {
   editRecipe,
   showDeleteRecipe,
   deleteRecipe,
+  searchRecipe,
 };

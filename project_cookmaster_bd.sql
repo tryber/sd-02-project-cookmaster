@@ -28,4 +28,7 @@ INSERT INTO users (id, email, password, first_name, last_name) VALUES
 
 INSERT INTO recipes(id, name, ingredients, prepare_method, author_id) VALUES
 ('1', 'Miojo', 'Pacote de miojo e água', 'Esquenta a água, joga o miojo dentro e espera 3 min, depois coloca o sachê', 1),
-('2', 'Batata-frita', 'Batatas e óleo', 'Descasque e corte as batatas em formato de palitos, esquente o óleo até ferver e depois jogue as batatas cortadas dentro.', '2');
+('2', 'Batata-frita', 'Batatas e óleo', 'Descasque e corte as batatas em formato de palitos, esquente o óleo até ferver e depois jogue as batatas cortadas dentro.', '2'),
+('3', 'Batata assada', 'Batatas e sal', 'Asse as batatas fatiadas.', '2'),
+('4', 'Batata cozida', 'Batatas e água', 'Cozinhe as batatas.', '1'),
+('5', 'Purê de Batata', 'Batatas e não sei', 'Amasse as batatas.', '1');
