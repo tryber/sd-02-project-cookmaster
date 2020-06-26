@@ -16,11 +16,15 @@
       <a href='/recipes/<%=recipe.id%>'>Detalhes</a><br><br>
       <% }) %>
     </ul>
-    <%= console.log(logged) %>
-    <% if (logged !== 'empty') { %>
+    <% if (!logged) { %>
+      <a href=/login><button>Login</button></a>
+    <% } %> 
+    <% if (logged) { %>
       <form action="/recipes/new" method="GET">
       <button type="submit">Nova receita!</button>
       </form>
+      <br>
+      <a href=/logout><button>Logout</button></a>
     <% } %> 
   </body>
 </html>
