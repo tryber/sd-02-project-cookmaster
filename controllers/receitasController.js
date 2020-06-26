@@ -14,14 +14,12 @@ const getAllReceitas = rescue(async (req, res) => {
 const getReceitaById = rescue(async (req, res) => {
   const id = req.params.id;
   const user = req.user;
-  console.log(req.user.id)
   let userId;
-  console.log('user', user)
   if (user) {
     userId = user.id;
   }
   const receita = await receitaModel.getById(id);
-  
+  console.log('coisa')
   if (!receita) {
     res.send('receita não encontrada');
   }
@@ -31,8 +29,6 @@ const getReceitaById = rescue(async (req, res) => {
     edit: `window.location.pathname="/recipes/${id}/edit"`,
     del: `window.location.pathname="/recipes/${id}/delete"`,
   };
-
-  console.log('userId', userId)
 
   if (!receita) {
     return res.render('receitaDetails',
@@ -44,9 +40,9 @@ const getReceitaById = rescue(async (req, res) => {
 });
 
 const addReceita = rescue(async (req, res) => {
-  const { nome, ingredientes, modo_de_preparar } = req.body;
+  const { nome, ingredientes, modoDePreparar } = req.body;
   const userId = req.user.id;
-  await receitaModel.addReceita(nome, ingredientes, modo_de_preparar, userId);
+  await receitaModel.addReceita(nome, ingredientes, modoDePreparar, userId);
 
   res.send('adicionado com sucesso');
 });
@@ -64,9 +60,16 @@ const pageEditReceita = rescue(async (req, res) => {
 const updateReceita = rescue(async (req, res) => {
   const { nome, ingredientes, modoDePreparar } = req.body;
   const id = req.params.id;
+
+  const receita = await receitaModel.getById(id);
+  const userId = req.user.id;
+  if (receita.user_id !== userId) {
+    res.redirect('/');
+  }
+
   await receitaModel.upReceita(nome, ingredientes, modoDePreparar, id);
 
-  res.send('atualizado com sucesso');
+  res.redirect(`/recipes/${id}`);
 });
 
 const pageDelReceita = rescue(async (req, res) => {
@@ -88,7 +91,7 @@ const deleteReceita = rescue(async (req, res) => {
 
   await receitaModel.deleteById(id);
 
-  res.send('deletado com sucesso');
+  res.redirect('/');
 });
 
 const search = rescue(async (req, res) => {
