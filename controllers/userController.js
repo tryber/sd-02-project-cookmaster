@@ -10,7 +10,8 @@ const loginForm = (req, res) => {
 
   return res.render('admin/login', {
     message: null,
-    redirect: req.query.redirect,
+    redirect: null,
+    // redirect: req.query.redirect,
   });
 };
 

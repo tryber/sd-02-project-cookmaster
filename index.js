@@ -16,12 +16,12 @@ app.get('/', (_req, res) => {
   return res.render('home');
 });
 
-app.get('/admin', middlewares.auth(), (req, res) => {
-  return res.render('admin/home', { user: req.user });
-});
+// app.get('/admin', middlewares.auth(), (req, res) => {
+//   return res.render('admin/home', { user: req.user });
+// });
 
 app.get('/login', controllers.userController.loginForm);
-app.get('/logout', controllers.userController.logout);
+// app.get('/logout', controllers.userController.logout);
 app.post('/login', controllers.userController.login);
 
 app.listen(3000, () => console.log('Listening on 3000'));

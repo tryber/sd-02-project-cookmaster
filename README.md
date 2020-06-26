@@ -1,10 +1,22 @@
-# Boas vindas ao projeto Cookmaster!
+## Ei garotinha, vamos começar? Fique tranquila, vai dar tudo certo!!! Você é uma gay branca linda e xeirosa e vai conseguir fazer esse projeto com VIGOR!!!
 
-Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por Slack! #vqv 🚀
+## Passos da Gay
 
-Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu projeto a partir deste repositório, utilizando uma branch específica e um Pull Request para colocar seus códigos.
+Strategy: Line by line; Start in index.js;
 
----
+{
+
+index.js: {
+cookieParser: {
+parser: [ data x -> data y]
+}
+}
+{
+
+}
+
+[Lógica login e logout de usuários; Middleware para rotas que precisem de autenticação.]
+}
 
 ## O que deverá ser desenvolvido
 
@@ -16,21 +28,17 @@ A aplicação a ser construída trata-se de um cadastro de receitas, onde será 
 
 ## Desenvolvimento
 
-Você vai desenvolver todas as camadas da aplicação (Models, Views e Controllers) a partir do código deste repositório, que já possui a lógica necessária para realizar login e logout de usuários, bem como um middleware que você pode utilizar em todas as rotas que precisem de autenticação.
+Camadas da aplicação (Models, Views e Controllers);
 
-Através dessa aplicação, será possível realizar as operações básicas que se pode fazer em um determinado banco de dados: Criação, Leitura, Atualização e Exclusão (ou `CRUD`, pros mais íntimos 😜).
+Operações do Banco de Dados: Criação, Leitura, Atualização e Exclusão(CRUD);
 
-Para realizar qualquer tipo de alteração no banco de dados (como cadastro, edição ou exclusão de receitas) será necessário autenticar-se. Para visualizar receitas, a autenticação não é necessária.
+Rotas com autenticação; Rotas sem autenticação;
 
-O código para cadastro de usuários deve ser criado por você utilizando os conhecimentos adiquiridos nesse bloco.
-
-⚠️ **Dicas Importantes** ⚠️:
+Cadastro de Usuários;
 
 - No código deste repositório, utilizamos o middleware `cookie-parser` para realizar a leitura do cookie contendo o token de autenticação. Ele é necessário para que o sistema de login / logout funcione. **Não o remova**!
 
 - Você não precisa alterar a lógica de gerenciamento de sessões (login / logout de usuários).
-
-- No `package.json`, você vai encontrar dois scripts que iniciam sua aplicação: `start` e `start:watch`. O primeiro, apenas inicia o servidor normalmente, enquanto o segundo inicia o servidor e o reinicia a cada alteração no código.
 
 - O arquivo `models/userModel.js` está criado, mas não contém código para conexão com o banco. As funções existentes nele servem para _guardar lugar_ para algumas das funções que você deve criar. O papel de cada uma dessas funções está descrito nos comentários acima delas.
 
