@@ -11,9 +11,16 @@ const getAllReceitas = rescue(async (req, res) => {
   return res.render('home', { user, receitas, links, message: null });
 });
 
+const verifyPermission = (receita, userId) => {
+  if (!receita) {
+    return false;
+  }
+  return (receita.userId === userId);
+};
+
 const getReceitaById = rescue(async (req, res) => {
   const id = req.params.id;
-  
+
   const receita = await receitaModel.getById(id);
 
   const userId = (req.user) ? req.user.id : undefined;
@@ -32,13 +39,6 @@ const getReceitaById = rescue(async (req, res) => {
 
   return res.render('receitaDetails', { receita, permission, links, message: null });
 });
-
-const verifyPermission = (receita, userId) => {
-  if (!receita) {
-    return false;
-  }
-  return (receita.userId === userId);
-};
 
 const addReceita = rescue(async (req, res) => {
   const { nome, ingredientes, modoDePreparar } = req.body;
