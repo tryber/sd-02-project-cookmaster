@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Pesquisar</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/searchPage.css">
+  <link rel="stylesheet" type="text/css" href="/home.css">
+</head>
+
+<body>
+
+  <header>
+    <%- include("./header.ejs") %>
+  </header>
+
+  <h1>Pesquisar Receita</h1>
+  <form class="form-search" action="/recipes/search?q=" method="GET">
+    <input class="input-search" name="q" type="text" /> </br>
+    <button type="submit">Pesquisar!</button> </br>
+  </form>
+  <% if (list) { %>
+  <% if (!list.length) { %>
+  <p>Não foram encontrados resultados</p>
+  <% } %>
+
+  <ul class="container-flex-recipes">
+    <% list.forEach(recipe => { %>
+    <div class="container-recipe">
+      <li><%= (recipe[1]) %></li>
+      <li>Por: <%= (recipe[2]) %></li>
+      <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
+    </div>
+    <% }) %>
+  </ul>
+  <% } else { %>
+  <p>Faça sua busca!</p>
+  <% } %>
+</body>
+
+</html>

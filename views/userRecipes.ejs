@@ -4,36 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cookmaster - Home</title>
+  <title>Cookmaster - receitas do usuário</title>
   <link rel="stylesheet" type="text/css" href="/home.css">
   <link rel="stylesheet" type="text/css" href="/header.css">
 </head>
 
 <body>
+
   <header>
     <%- include("./header.ejs") %>
   </header>
 
-  <h1>Boas vindas ao Cookmaster!</h1>
-  <div class="btn-container">
-    <form action="/recipes/search" method="GET">
-      <button type="submit">Buscar receita!</button>
-    </form>
-    <% if (btn) { %>
-    <form action="/recipes/new" method="GET">
-      <button type="submit">Nova receita!</button>
-    </form>
-    <form action="/me/recipes" method="GET">
-      <button type="submit">Minhas receitas!</button>
-    </form>
-    <% } %>
-  </div>
-
+  <h2>Receitas cadastradas por <%= (results[0][2]) %> </h2>
   <ul class="container-flex-recipes">
     <% results.forEach(recipe => { %>
     <div class="container-recipe">
       <li><%= (recipe[1]) %></li>
-      <li>Por: <%= (recipe[2]) %></li>
       <a href=<%= `/recipes/${recipe[0]}` %>>Ver receita</a>
     </div>
     <% }) %>

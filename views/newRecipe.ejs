@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Nova Receita</title>
+  <link rel="stylesheet" type="text/css" href="/newUser.css">
+  <link rel="stylesheet" type="text/css" href="/header.css">
+</head>
+
+<body>
+
+  <header>
+    <%- include("./header.ejs") %>
+  </header>
+
+  <h1>Nova Receita</h1>
+  <form class="container-user" action="/recipes/new" method="POST">
+    <label for="recipeName"> Nome da receita</label>
+    <input name="recipeName" type="text" />
+    <label for="ingredients"> Ingredientes </label>
+    <textarea name="ingredients" type="text"></textarea>
+    <label for="howToPrepare"> Modo de preparo </label>
+    <textarea class="big-txt-area" name="howToPrepare" type="text"></textarea>
+    <button class="sbt-btn" type="submit">Criar nova receita!</button>
+  </form>
+  <% if (err) { %>
+  <p>Preencha todos os campos</p>
+  <% } %>
+  <% if (success) { %>
+  <p>Receita salva com sucesso!</p>
+  <% } %>
+</body>
+
+</html>

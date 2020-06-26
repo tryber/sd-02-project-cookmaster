@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editar Receita</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/newUser.css">
+</head>
+
+<body>
+
+  <header>
+    <%- include("./header.ejs") %>
+  </header>
+
+  <h1>Editar Receita</h1>
+  <h2><%= recipeDetails[0].recipeName %></h2>
+  <form class="container-user" action="/recipes/ <%= id %> /edit" method="POST">
+    <label for="recipeName"> Nome da receita</label>
+    <input name="recipeName" type="text" value="<%= recipeDetails[0].recipeName %>" />
+    <label for="ingredients"> Ingredientes </label>
+    <textarea name="ingredients" type="text"><%= recipeDetails[0].ingredients %></textarea>
+    <label for="howToPrepare"> Modo de preparo </label>
+    <textarea class="big-txt-area" name="howToPrepare" type="text">
+<%= recipeDetails[0].howToPrepare %>
+    </textarea>
+    <button class=" sbt-btn" type="submit">Editar receita!</button> </br>
+  </form>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Deletar Receita</title>
+  <link rel="stylesheet" type="text/css" href="/admin.css">
+  <link rel="stylesheet" type="text/css" href="/header.css">
+</head>
+
+<body>
+
+  <header>
+    <%- include("./header.ejs") %>
+  </header>
+
+  <h1>Página de deletar receita!</h1>
+  <h2> Receita: <%= recipe.name %> </h2>
+  <h3>Password</h2>
+    <form action="/recipes/<%= recipe.id %>/delete" method="POST">
+      <input name="password" type="password" /> </br>
+      <button class="logout-btn" type="submit">Deletar receita!</button> </br>
+    </form>
+    <% if (fail) { %>
+    <p>Senha incorreta</p>
+    <% } %>
+</body>
+
+</html>

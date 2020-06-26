@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Login</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Login</title>
+  <link rel="stylesheet" type="text/css" href="/header.css">
+  <link rel="stylesheet" type="text/css" href="/login.css">
+</head>
+
+<body>
+
+  <header>
+    <%- include("../header.ejs") %>
+  </header>
+  <div class="body-login">
     <% if (message) {%>
     <div class="message">
       <%= message %>
     </div>
     <% } %>
     <form action="/login" method="POST">
-      <label for="emailInput">Email: </label>
+      <label for="emailInput">E-mail: </label>
       <input type="text" name="email" id="emailInput" /><br />
       <label for="passwordInput">Senha: </label>
       <input type="password" name="password" id="passwordInput" /><br />
       <% if (redirect) { %>
-      <input
-        type="hidden"
-        name="redirect"
-        value="<%= decodeURIComponent(redirect) %>"
-      />
+      <input type="hidden" name="redirect" value="<%= decodeURIComponent(redirect) %>" />
       <% } %>
       <button type="submit">Entrar</button>
     </form>
-  </body>
+  </div>
+</body>
+
 </html>

@@ -8,7 +8,6 @@ const getUser = async (req) => {
 
   const userId = SESSIONS[token];
   if (!userId) return null;
-
   const user = await userModel.findById(userId);
   if (!user) return null;
 
@@ -17,7 +16,6 @@ const getUser = async (req) => {
 
 const authMiddleware = (required = true) => async (req, res, next) => {
   const user = await getUser(req);
-
   if (!user && required)
     return res.redirect(`/login?redirect=${encodeURIComponent(req.url)}`);
 
@@ -26,7 +24,7 @@ const authMiddleware = (required = true) => async (req, res, next) => {
   const { password, ...userData } = user;
 
   req.user = userData;
-
+  req.password = password;
   return next();
 };
 

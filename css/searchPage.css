@@ -1,0 +1,19 @@
+.form-search {
+  align-items: center;
+  /* border: 1px solid red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 2vh;
+  height: 10vh;
+}
+
+.form-search .input-search {
+  border: 1px solid black;
+  width: 30%;
+}
+
+.form-search button {
+  background-color: rgb(221, 151, 85);
+  width: 15%;
+}
