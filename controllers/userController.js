@@ -25,17 +25,18 @@ const login = async (req, res, next) => {
     });
 
   const user = await userModel.findByEmail(email);
-  if (!user || user.password !== password)
-    return res.render('admin/login', {
-      message: 'Email ou senha incorretos',
-      redirect: null,
-    });
 
-  const token = uuid();
-  SESSIONS[token] = user.id;
+  // if (!user || user.password !== password)
+  //   return res.render('admin/login', {
+  //     message: 'Email ou senha incorretos',
+  //     redirect: null,
+  //   });
 
-  res.cookie('token', token, { httpOnly: true, sameSite: true });
-  res.redirect(redirect || '/admin');
+  // const token = uuid();
+  // SESSIONS[token] = user.id;
+
+  // res.cookie('token', token, { httpOnly: true, sameSite: true });
+  // res.redirect(redirect || '/admin');
 };
 
 const logout = (req, res) => {

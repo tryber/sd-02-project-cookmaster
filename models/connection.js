@@ -1,19 +1,19 @@
-const mysqlx = require("@mysql/xdevapi");
+const mysqlx = require('@mysql/xdevapi');
 
 const config = {
-  user: "root",
-  password: "password",
-  host: "localhost",
+  user: 'root',
+  password: 'password',
+  host: 'localhost',
   port: 33060,
-  schema: "cep_lookup",
-  socketPath: "/var/run/mysqld/mysqld.sock",
+  schema: 'cookmaster',
+  socketPath: '/var/run/mysqld/mysqld.sock',
 };
 
 const connection = () => {
   return mysqlx
     .getSession(config)
     .then((session) => {
-      return session.getSchema("cep_lookup");
+      return session.getSchema('cookmaster');
     })
     .catch((err) => {
       console.error(err);

@@ -9,3 +9,8 @@ CREATE TABLE user (
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL
 );
+
+INSERT INTO user (email, password, first_name, last_name)
+VALUES
+    ('taylor.mycat@hotmail.com', 'blankspace13', 'Taylor', 'Swift'),
+    ('lanaLolita@gmail.com', 'ultraviolence', 'Lana', 'Del Rey')
