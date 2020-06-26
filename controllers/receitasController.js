@@ -7,7 +7,7 @@ const rescue = require('express-rescue');
 const getAllReceitas = rescue(async (req, res) => {
   const receitas = await receitaModel.getAll();
   const user = await getUser(req).then((data) => data);
-  const links = receitas.map((receita) => `/recipes/${receita.receitaId}`)
+  const links = receitas.map((receita) => `/recipes/${receita.receitaId}`);
   return res.render('home', { user, receitas, links, message: null });
 });
 
@@ -18,13 +18,14 @@ const getReceitaById = rescue(async (req, res) => {
   if (user) {
     userId = user.id;
   }
+
   const receita = await receitaModel.getById(id);
-  console.log('coisa')
+
   if (!receita) {
     res.send('receita não encontrada');
   }
 
-  const permission = (receita.user_id === userId);
+  const permission = (receita.userId === userId);
   const links = {
     edit: `window.location.pathname="/recipes/${id}/edit"`,
     del: `window.location.pathname="/recipes/${id}/delete"`,
@@ -63,7 +64,7 @@ const updateReceita = rescue(async (req, res) => {
 
   const receita = await receitaModel.getById(id);
   const userId = req.user.id;
-  if (receita.user_id !== userId) {
+  if (receita.userId !== userId) {
     res.redirect('/');
   }
 

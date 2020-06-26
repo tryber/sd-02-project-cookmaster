@@ -26,8 +26,8 @@ const getById = async (id) =>
     .then((results) => results.fetchAll()[0])
     .then((receita) => {
       if (!receita) return null;
-      const [userName, receitaName, ingredientes, modoDePreparar, user_id] = receita;
-      return { userName, receitaName, ingredientes, modoDePreparar, user_id };
+      const [userName, receitaName, ingredientes, modoDePreparar, userId] = receita;
+      return { userName, receitaName, ingredientes, modoDePreparar, userId };
     });
 
 const addReceita = async (nome, ingredientes, modoDePreparar, userId) =>
