@@ -3,19 +3,18 @@ const { SESSIONS } = require('../middlewares/auth');
 
 const userModel = require('../models/userModel');
 
-const loginForm = (req, res) => {
+function loginForm(req, res) {
   const { token = '' } = req.cookies || {};
 
   if (SESSIONS[token]) return res.redirect('/');
 
   return res.render('admin/login', {
     message: null,
-    redirect: null,
-    // redirect: req.query.redirect,
+    redirect: req.query.redirect,
   });
-};
+}
 
-const login = async (req, res, next) => {
+async function login(req, res) {
   const { email, password, redirect } = req.body;
 
   if (!email || !password)
@@ -26,24 +25,35 @@ const login = async (req, res, next) => {
 
   const user = await userModel.findByEmail(email);
 
-  // if (!user || user.password !== password)
-  //   return res.render('admin/login', {
-  //     message: 'Email ou senha incorretos',
-  //     redirect: null,
-  //   });
+  if (!user)
+    return res.render('admin/login', {
+      message: 'Usuário não cadastrado',
+      redirect: null,
+    });
 
-  // const token = uuid();
-  // SESSIONS[token] = user.id;
+  if (user.password !== password)
+    return res.render('admin/login', {
+      message: 'Email ou senha incorretos',
+      redirect: null,
+    });
 
-  // res.cookie('token', token, { httpOnly: true, sameSite: true });
-  // res.redirect(redirect || '/admin');
-};
+  const token = uuid();
 
-const logout = (req, res) => {
+  SESSIONS[token] = user.id;
+
+  res.cookie('token', token, {
+    httpOnly: true,
+    sameSite: true,
+  });
+
+  res.redirect(redirect || '/admin');
+}
+
+function logout(req, res) {
   res.clearCookie('token');
   if (!req.cookies || !req.cookies.token) return res.redirect('/login');
   res.render('admin/logout');
-};
+}
 
 module.exports = {
   login,

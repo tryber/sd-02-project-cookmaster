@@ -17,11 +17,7 @@
       <label for="passwordInput">Senha: </label>
       <input type="password" name="password" id="passwordInput" /><br />
       <% if (redirect) { %>
-      <input
-        type="hidden"
-        name="redirect"
-        value="<%= decodeURIComponent(redirect) %>"
-      />
+      <input type="hidden" name="redirect" value="<%= decodeURIComponent(redirect) %>" />
       <% } %>
       <button type="submit">Entrar</button>
     </form>

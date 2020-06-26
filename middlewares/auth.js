@@ -2,7 +2,7 @@ const userModel = require('../models/userModel');
 
 const SESSIONS = {};
 
-const getUser = async (req) => {
+async function getUser(req) {
   const { token = '' } = req.cookies || {};
   if (!token) return null;
 
@@ -10,24 +10,27 @@ const getUser = async (req) => {
   if (!userId) return null;
 
   const user = await userModel.findById(userId);
+
   if (!user) return null;
 
   return user;
-};
+}
 
-const authMiddleware = (required = true) => async (req, res, next) => {
-  const user = await getUser(req);
+function authMiddleware(required = true) {
+  return async (req, res, next) => {
+    const user = await getUser(req);
 
-  if (!user && required) return res.redirect(`/login?redirect=${encodeURIComponent(req.url)}`);
+    if (!user && required) return res.redirect(`/login?redirect=${encodeURIComponent(req.url)}`);
 
-  if (!user && !required) return next();
+    if (!user && !required) return next();
 
-  const { password, ...userData } = user;
+    const { password, ...userData } = user;
 
-  req.user = userData;
+    req.user = userData;
 
-  return next();
-};
+    return next();
+  };
+}
 
 module.exports = {
   SESSIONS,
