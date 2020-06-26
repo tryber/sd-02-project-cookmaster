@@ -2,9 +2,10 @@ const { getSession } = require('./conection');
 
 const getAll = async () =>
   getSession()
-  .then((session) => session.sql('select u.nome, r.nome from receitas r inner join users u on r.user_id = u.id').execute())
+  .then((session) => session.sql('select r.id, u.nome, r.nome from receitas r inner join users u on r.user_id = u.id').execute())
   .then((results) => results.fetchAll())
-  .then((receitas) => receitas.map(([userName, receitaName]) => ({ userName, receitaName })));
+  .then((receitas) => receitas.map(([receitaId, userName, receitaName]) =>
+    ({ receitaId, userName, receitaName })));
 
 const getAllById = async (id) =>
   getSession()
@@ -17,7 +18,7 @@ const getAllById = async (id) =>
 
 const getById = async (id) =>
   getSession()
-    .then((session) => session.sql(`select u.nome, r.nome, r.ingredientes, r.modo_de_preparar
+    .then((session) => session.sql(`select u.nome, r.nome, r.ingredientes, r.modo_de_preparar, r.user_id
       from receitas r inner join users u on r.user_id = u.id where r.id = ?`)
     .bind(id)
     .execute(),
@@ -25,8 +26,8 @@ const getById = async (id) =>
     .then((results) => results.fetchAll()[0])
     .then((receita) => {
       if (!receita) return null;
-      const [userName, receitaName, ingredientes, modoDePreparar] = receita;
-      return { userName, receitaName, ingredientes, modoDePreparar };
+      const [userName, receitaName, ingredientes, modoDePreparar, user_id] = receita;
+      return { userName, receitaName, ingredientes, modoDePreparar, user_id };
     });
 
 const addReceita = async (nome, ingredientes, modoDePreparar, userId) =>

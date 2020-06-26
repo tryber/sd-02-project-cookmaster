@@ -7,17 +7,40 @@ const rescue = require('express-rescue');
 const getAllReceitas = rescue(async (req, res) => {
   const receitas = await receitaModel.getAll();
   const user = await getUser(req).then((data) => data);
-  return res.render('home', { user, receitas, message: null });
+  const links = receitas.map((receita) => `/recipes/${receita.receitaId}`)
+  return res.render('home', { user, receitas, links, message: null });
 });
 
 const getReceitaById = rescue(async (req, res) => {
   const id = req.params.id;
-
-  const receita = await receitaModel.getById(id);
-  if (!receita) {
-    return res.render('receitaDetails', { receita, message: 'Nenhuma receita foi encontrada!' });
+  const user = req.user;
+  console.log(req.user.id)
+  let userId;
+  console.log('user', user)
+  if (user) {
+    userId = user.id;
   }
-  return res.render('receitaDetails', { receita, message: null });
+  const receita = await receitaModel.getById(id);
+  
+  if (!receita) {
+    res.send('receita não encontrada');
+  }
+
+  const permission = (receita.user_id === userId);
+  const links = {
+    edit: `window.location.pathname="/recipes/${id}/edit"`,
+    del: `window.location.pathname="/recipes/${id}/delete"`,
+  };
+
+  console.log('userId', userId)
+
+  if (!receita) {
+    return res.render('receitaDetails',
+      { receita, permission, links, message: 'Nenhuma receita foi encontrada!' },
+    );
+  }
+
+  return res.render('receitaDetails', { receita, permission, links, message: null });
 });
 
 const addReceita = rescue(async (req, res) => {

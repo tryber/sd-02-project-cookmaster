@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Receita detalhes</title>
-  </head>
+  <%- include('admin/header') %>
   <body>
     <% if(message) { %>
     <p><%= message %></p>
     <% } %>
 
-    <% if(receita) { %>}
+    <% if(receita) { %>
     <h1>Receita detalhes</h1>
     <label>Autor:</label>
     <p><%= receita.userName %></p>
@@ -23,6 +19,11 @@
     <br />
     <label>Modo de preparar:</label>
     <p><%= receita.modoDePreparar %></p>
+    <% } %>
+
+    <% if(permission) { %>
+      <button onclick=<%= links.edit %>>Editar receita</button>
+      <button onclick=<%= links.del %>>Deletar receita</button>
     <% } %>
   </body>
 </html>

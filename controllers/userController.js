@@ -56,10 +56,10 @@ const cadastro = rescue(async (req, res) => {
 const editUserpage = rescue(async (_req, res) => res.render('admin/editUser'));
 
 const editUser = rescue(async (req, res) => {
-  const user_id = req.user.id;
+  const userId = req.user.id;
   const { nome, senha, email, lastName } = req.body;
 
-  await userModel.update(nome, email, senha, lastName, user_id);
+  await userModel.update(nome, email, senha, lastName, userId);
 
   res.send('Usuário atualizado com sucesso');
 });

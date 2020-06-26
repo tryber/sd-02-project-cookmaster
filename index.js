@@ -35,9 +35,9 @@ adminRouter.post('/cadastro', controllers.userController.cadastro);
 adminRouter.get('/recipes/new', controllers.receitasController.pageNewReceita);
 adminRouter.post('/recipes', controllers.receitasController.addReceita);
 
-adminRouter.get('/recipes/search', controllers.receitasController.search);
+app.get('/recipes/search', controllers.receitasController.search);
 
-adminRouter.get('/recipes/:id', controllers.receitasController.getReceitaById);
+app.get('/recipes/:id', controllers.receitasController.getReceitaById);
 
 adminRouter.get('/recipes/:id/edit', controllers.receitasController.pageEditReceita);
 adminRouter.post('/recipes/:id', controllers.receitasController.updateReceita);
