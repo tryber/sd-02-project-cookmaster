@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cookmaster - Home</title>
 </head>
-
 <body>
-  <%- include('navbar/usernavbar', { userName }) %>
+  <%- include('navbar/guestnavbar') %>
   <h1>Receitas</h1>
-  <a href="/me/recipes">
-    <button type="button">Minhas Receitas</button>
-  </a>
   <a href="/recipes/search">
     <button type="button">Buscar Receitas</button>
   </a>
-  <a href="/recipes/new">
-    <button type="button">Nova Receita</button>
-  </a>
   <% recipes && recipes.forEach((recipe) => { %>
-  <p><%= recipe.recipeName %></p>
-  <p><%= recipe.userName %></p>
-  <a href=<%= `/recipes/${recipe.recipeId}` %>>Ver detalhes</a>
+    <p><%= recipe.recipeName %></p>
+    <p><%= recipe.userName %></p>
+    <a href=<%= `/recipes/${recipe.recipeId}` %>>Ver detalhes</a>
   <% }) %>
 </body>
 

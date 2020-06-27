@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>MVC com Express</title>
+</head>
+
+<body>
+  <%- include('navbar/guestnavbar') %>
+  <% if (message) { %>
+    <p><%= message %></p>
+  <% } %>
+  <form action="/recipes/search" method="GET">
+    <label for="search">Buscar Receitas</label>
+    <input id="search" name="q" type="text" />
+    <button type="submit">Buscar</button>
+  </form>
+  <div>
+    <% recipes && recipes.forEach((recipe) => { %>
+      <p><%= recipe.recipeName %></p>
+      <p><%= recipe.userName %></p>
+      <a href=<%= `/recipes/${recipe.recipeId}` %>>Ver mais</a>
+    <% }) %>
+  </div>
+</body>
+
+</html>

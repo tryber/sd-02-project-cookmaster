@@ -1,32 +1,74 @@
-/* Quando você implementar a conexão com o banco, não deve mais precisar desse objeto */
-const TEMP_USER = {
-  id: 'd2a667c4-432d-4dd5-8ab1-b51e88ddb5fe',
-  email: 'taylor.doe@company.com',
-  password: 'password',
-  name: 'Taylor',
-  lastName: 'Doe',
+const connection = require('./connection');
+const useSession = require('./useSession');
+
+const findUser = async (tableColumn) => {
+  const userData = await connection()
+    .then((database) => database
+      .getTable('users')
+      .select(['id', 'email', 'user_password', 'first_name', 'last_name'])
+      .where('id = :tableColumn OR email = :tableColumn')
+      .bind('tableColumn', tableColumn)
+      .execute())
+    .then((results) => results.fetchAll())
+    .then((users) => users[0]);
+
+  if (!userData) return null;
+
+  const [id, email, password, name, lastName] = userData;
+
+  return { id, email, password, name, lastName };
 };
 
-/* Substitua o código das funções abaixo para que ela,
-de fato, realize a busca no banco de dados */
-
-/**
- * Busca um usuário através do seu email e, se encontrado, retorna-o.
- * @param {string} email Email do usuário a ser encontrado
- */
-const findByEmail = async (email) => {
-  return TEMP_USER;
+const registerNewUser = async (newUserData) => {
+  const { email, password, firstName, lastName } = newUserData;
+  return connection()
+    .then((database) => database
+      .getTable('users')
+      .insert(['email', 'user_password', 'first_name', 'last_name'])
+      .values(email, password, firstName, lastName)
+      .execute());
 };
 
-/**
- * Busca um usuário através do seu ID
- * @param {string} id ID do usuário
- */
-const findById = async (id) => {
-  return TEMP_USER;
+const checkPassword = async (email, password) => {
+  const passwordChecking = await connection()
+    .then((database) =>
+      database
+        .getTable('users')
+        .select(['id'])
+        .where('email = :email AND user_password = :password')
+        .bind('email', email)
+        .bind('password', password)
+        .execute())
+    .then((results) => results.fetchAll())
+    .then((users) => users[0]);
+
+  if (!passwordChecking) return false;
+  return true;
+};
+
+const updateUser = async (userData) => {
+  const { email, password, firstName, lastName, id } = userData;
+  useSession()
+    .then((session) =>
+      session
+        .sql(`UPDATE users
+              SET
+              email = ?,
+              user_password = ?,
+              first_name = ?,
+              last_name = ?
+              WHERE id = ?`)
+        .bind(email)
+        .bind(password)
+        .bind(firstName)
+        .bind(lastName)
+        .bind(id)
+        .execute());
 };
 
 module.exports = {
-  findByEmail,
-  findById,
+  findUser,
+  registerNewUser,
+  checkPassword,
+  updateUser,
 };

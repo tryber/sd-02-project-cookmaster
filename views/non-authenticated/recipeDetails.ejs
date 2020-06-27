@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Home</title>
+</head>
+<body>
+  <%- include('navbar/guestnavbar') %>
+  <h1><%= recipe.recipeName %></h1>
+  <h3>Enviada por <%= recipe.userName %></h3>
+  <h2>Ingredientes</h2>
+  <ul>
+    <% recipe.ingredients.split(',').forEach((ingredient) => { %>
+     <li><%= ingredient %></li>
+    <% }) %>
+  </ul>
+  <h2>Modo de Preparo</h2>
+  <p><%= recipe.instructions %></p>
+</body>
+</html>
