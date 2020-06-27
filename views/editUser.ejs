@@ -6,11 +6,7 @@
 </head>
 
 <body>
-  <nav>
-    <h3>Cookmaster</h3>
-    <h4><%= user.name %></h4>
-    <a href="/logout">Logout</a>
-  </nav>
+  <%- include('navbar/usernavbar', { userName: `${user.name} ${user.lastName}` }) %>
   <% if (message) { %>
   <p>
     <%= message %>

@@ -8,11 +8,7 @@
 </head>
 
 <body>
-  <nav>
-    <h3>Cookmaster</h3>
-    <h4><%= userName %></h4>
-    <a href="/logout">Logout</a>
-  </nav>
+  <%- include('navbar/usernavbar', { userName }) %>
   <h1>Minhas Receitas</h1>
   <a href="/recipes/new">
     <button type="button">Nova Receita</button>

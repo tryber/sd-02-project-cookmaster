@@ -6,10 +6,7 @@
 </head>
 
 <body>
-  <nav>
-    <h3>Cookmaster</h3>
-    <a href="/login">Fazer login</a>
-  </nav>
+  <%- include('navbar/guestnavbar') %>
   <% if (message) { %>
     <p><%= message %></p>
   <% } %>

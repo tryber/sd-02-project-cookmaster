@@ -6,10 +6,7 @@
   <title>Cookmaster - Home</title>
 </head>
 <body>
-  <nav>
-    <h3>Cookmaster</h3>
-    <a href="/login">Login</a>
-  </nav>
+  <%- include('navbar/guestnavbar') %>
   <h1><%= recipe.recipeName %></h1>
   <h3>Enviada por <%= recipe.userName %></h3>
   <h2>Ingredientes</h2>
