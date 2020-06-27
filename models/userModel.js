@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const useSession = require('./useSession');
 
 const findUser = async (tableColumn) => {
   const userData = await connection()
@@ -45,8 +46,29 @@ const checkPassword = async (email, password) => {
   return true;
 };
 
+const updateUser = async (userData) => {
+  const { email, password, firstName, lastName, id } = userData;
+  useSession()
+    .then((session) =>
+      session
+        .sql(`UPDATE users
+              SET
+              email = ?,
+              user_password = ?,
+              first_name = ?,
+              last_name = ?
+              WHERE id = ?`)
+        .bind(email)
+        .bind(password)
+        .bind(firstName)
+        .bind(lastName)
+        .bind(id)
+        .execute());
+};
+
 module.exports = {
   findUser,
   registerNewUser,
   checkPassword,
+  updateUser,
 };

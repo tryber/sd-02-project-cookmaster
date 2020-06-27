@@ -12,7 +12,7 @@ const getAllRecipes = async () =>
             recipes r
             INNER JOIN
             users u
-            WHERE
+            ON
             u.id = r.user_id;`)
       .execute())
     .then((results) => results.fetchAll())
@@ -97,7 +97,7 @@ const findRecipes = async (searchTerm) =>
         recipes r
         INNER JOIN
         users u
-        WHERE
+        ON
         u.id = r.user_id
         AND
         r.recipe_name REGEXP ?;`)
@@ -119,7 +119,7 @@ const getUserRecipes = (userId) =>
             recipes r
             INNER JOIN
             users u
-            WHERE
+            ON
             u.id = r.user_id
             AND
             r.user_id = ?;`)

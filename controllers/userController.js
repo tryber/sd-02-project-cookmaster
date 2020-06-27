@@ -55,7 +55,7 @@ const registerForm = (req, res) => {
   });
 };
 
-const newUser = async (req, res, _next) => {
+const newUser = async (req, res) => {
   const {
     email, password, confirm_password: confirmPassword, first_name: firstName, last_name: lastName,
   } = req.body;
@@ -82,10 +82,59 @@ const newUser = async (req, res, _next) => {
   return login(req, res);
 };
 
+const editUserForm = async (req, res) => {
+  const { id } = req.user;
+
+  const user = await userModel.findUser(id);
+
+  return res.render('editUser', { user, message: null });
+};
+
+const editUser = async (req, res) => {
+  const { id } = req.user;
+  const {
+    email, password, confirm_password: confirmPassword, first_name: firstName, last_name: lastName,
+  } = req.body;
+
+  const user = await userModel.findUser(id);
+
+  if (!email || !password || !confirmPassword || !firstName || !lastName) {
+    return res.render('editUser', {
+      message: 'Preencha todos os campos',
+      user,
+    });
+  }
+
+  if (password !== confirmPassword) {
+    return res.render('editUser', {
+      message: 'Preencha a mesma senha nos dois campos',
+      user,
+    });
+  }
+
+  const searchTypedEmail = await userModel.findUser(email);
+
+  const { email: loggedUserEmail } = user;
+  const { email: alreadyRegisteredEmail } = searchTypedEmail;
+
+  if (alreadyRegisteredEmail && alreadyRegisteredEmail !== loggedUserEmail) {
+    return res.render('editUser', {
+      message: 'Email já cadastrado, escolha outro',
+      user,
+    });
+  }
+
+  await userModel.updateUser({ id, email, password, firstName, lastName });
+
+  return res.redirect('/admin');
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
   newUser,
   registerForm,
+  editUserForm,
+  editUser,
 };

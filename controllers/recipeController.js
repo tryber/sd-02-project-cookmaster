@@ -126,9 +126,9 @@ const deleteRecipe = async (req, res) => {
   const { email } = req.user;
   const { id: recipeId } = req.params;
 
-  const authorizedUser = await userModel.checkPassword(email, password);
+  const correctPassword = await userModel.checkPassword(email, password);
 
-  if (!authorizedUser) {
+  if (!correctPassword) {
     return res.render('deleteRecipe', {
       message: 'Senha incorreta. Por favor, tente novamente',
       recipeId,
@@ -142,7 +142,9 @@ const deleteRecipe = async (req, res) => {
 
 const searchRecipePage = async (req, res, next) => {
   const { q } = req.query;
+
   if (q) return next();
+
   if (req.user) {
     const { name, lastName } = req.user;
     return res.render('searchRecipe', {

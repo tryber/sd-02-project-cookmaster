@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 const middlewares = require('./middlewares');
-const controllers = require('./controllers');
 const recipeController = require('./controllers/recipeController');
 const userController = require('./controllers/userController');
 
@@ -37,12 +36,14 @@ app.get('/recipes/:id/delete', middlewares.auth(), recipeController.deleteRecipe
 app.post('/recipes/:id/delete', middlewares.auth(), recipeController.deleteRecipe);
 
 app.get('/me/recipes', middlewares.auth(), recipeController.showUserRecipes);
+app.get('/me/edit', middlewares.auth(), userController.editUserForm);
+app.post('/me/edit', middlewares.auth(), userController.editUser);
 
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
-app.get('/login', controllers.userController.loginForm);
-app.get('/logout', controllers.userController.logout);
-app.post('/login', controllers.userController.login);
+app.get('/login', userController.loginForm);
+app.get('/logout', userController.logout);
+app.post('/login', userController.login);
 
 app.get('/signup', userController.registerForm);
 app.post('/signup', userController.newUser);
