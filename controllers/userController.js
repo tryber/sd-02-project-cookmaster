@@ -99,10 +99,7 @@ const editUser = async (req, res) => {
   const user = await userModel.findUser(id);
 
   if (!email || !password || !confirmPassword || !firstName || !lastName) {
-    return res.render('editUser', {
-      message: 'Preencha todos os campos',
-      user,
-    });
+    return res.render('editUser', { message: 'Preencha todos os campos', user });
   }
 
   if (password !== confirmPassword) {
