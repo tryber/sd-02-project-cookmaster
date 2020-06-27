@@ -8,7 +8,29 @@
   <body>
     <header>
       <h1>Cookmaster</h1>
-      <a href="/login">Login</a>
+      <% if (name) {%>
+      <div class="message">
+        <%= name %>
+      </div>
+      <% } %>
+      <a href="<%= endpoint %>"><%= endpoint %></a>
     </header>
+    <section>
+      <h2>Receitas</h2>
+      <% if (name) {%>
+      <button>Minhas Receitas</button>
+      <% } %>
+      <button>Buscar Receita</button>
+      <% if (name) {%>
+      <button>Nova Receita</button>
+      <% } %>
+    </section>
+    <seciton>
+      <% recipes.forEach((recipe) => { %>
+      <div><%= recipe.recipeName %></div>
+      <div><%= recipe.userName %></div>
+      <a href=<%= `/recipes/${recipe.id}` %>>Ver mais</a>
+      <% }) %>
+    </seciton>
   </body>
 </html>

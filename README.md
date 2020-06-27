@@ -1,22 +1,4 @@
-## Ei garotinha, vamos começar? Fique tranquila, vai dar tudo certo!!! Você é uma gay branca linda e xeirosa e vai conseguir fazer esse projeto com VIGOR!!!
-
-## Passos da Gay
-
-Strategy: Line by line; Start in index.js;
-
-{
-
-index.js: {
-cookieParser: {
-parser: [ data x -> data y]
-}
-}
-{
-
-}
-
-[Lógica login e logout de usuários; Middleware para rotas que precisem de autenticação.]
-}
+## Ei garotinha, vamos começar? Fique tranquila, vai dar tudo certo!!! Você é uma gay branca tóxica linda e xeirosa e vai conseguir fazer esse projeto com VIGOR!!!
 
 ## O que deverá ser desenvolvido
 
@@ -34,36 +16,7 @@ Operações do Banco de Dados: Criação, Leitura, Atualização e Exclusão(CRU
 
 Rotas com autenticação; Rotas sem autenticação;
 
-Cadastro de Usuários;
-
-- No código deste repositório, utilizamos o middleware `cookie-parser` para realizar a leitura do cookie contendo o token de autenticação. Ele é necessário para que o sistema de login / logout funcione. **Não o remova**!
-
-- Você não precisa alterar a lógica de gerenciamento de sessões (login / logout de usuários).
-
-- O arquivo `models/userModel.js` está criado, mas não contém código para conexão com o banco. As funções existentes nele servem para _guardar lugar_ para algumas das funções que você deve criar. O papel de cada uma dessas funções está descrito nos comentários acima delas.
-
-- O middleware `authMiddleware`, presente em `middlewares/auth.js` pode ser usado nas rotas que exigem autenticação.
-
-  - Quando você utiliza o `authMiddleware` em uma rota, ele cria a propriedade `req.user`, que contém as informações do usuário atual, conforme retornadas pelo `userModel`.
-  - O `authMiddleware` está disponível no `index.js` da aplicação através de `middlewares.auth`.
-
-- Você pode modificar o layout das views que já existem. No entando, deve garantir que a funcionalidade continua a mesma.
-
 - Nas aulas ao vivo e no conteúdo, você viu como realizar um `INSERT` no banco. Para realizar um `UPDATE` a lógica é a mesma. O que muda são os métodos a serem utilizados para construir o comando que será enviado ao MySQL.
-
-- Quando o atributo `method` de um formulário é definido para `GET`, o navegador utiliza o atributo `name` de cada campo para montar a query string. Isso quer dizer que, se você quiser um atributo chamado `search` na query string, precisa de um input com `name="search"` no seu formulário.
-
-- Toda vez que uma view precisar saber se existe ou não um usuário logado, você pode, no controller, passar o conteúdo de `req.user` para essa view. Depois, na view, basta verificar se esse campo veio preenchido ou não, utilizando algo como `<% if (user) { %> \<\!-- Utiliza os dados do usuário --\> <% } %>`.
-
-- O middleware `authMiddleware` recebe um único parâmetro chamado `required`. Quando verdadeiro, esse parâmetro faz com que uma rota só possa ser acessada por pessoas logadas. Em alguns casos, uma página precisa ter acesso aos dados do usuário, caso essa pessoa esteja logada, mas deve continuar podendo ser acessada por pessoas que não estejam autenticadas. Para esse caso, passe `false` no parâmetro required para a função `authMiddleware`. Ex.: `middlewares.auth(false)`.
-
-### Protótipo e telas
-
-Você pode acessar um protótipo da aplicação com todas as telas (tanto obrigatórias quanto bônus) [neste link](https://www.figma.com/file/CAEkOBX1n3mpVXr4kjgvY8/Project-Cookmaster?node-id=0%3A1).
-
-Não estamos avaliando o **estilo** da página. Cores, tamanhos de texto e afins não serão avaliados.
-
----
 
 ## Requisitos do projeto
 
@@ -72,14 +25,6 @@ Não estamos avaliando o **estilo** da página. Cores, tamanhos de texto e afins
 #### Funcionalidades de visualização
 
 > Páginas que podem ser acessadas sem login
-
-### 1 - Crie uma tela de listagem de receitas
-
-A página deve ser acessível através da rota principal (`/`).
-
-Para cada receita, deve ser mostrado apenas o nome da receita e o nome da pessoa que cadastrou aquela receita, bem como um link para ver seus detalhes.
-
-Um botão "Nova receita" deve ser exibido **apenas quando houver um usuário logado**.
 
 ### 2 - Crie uma tela para visualizar uma receita específica
 
@@ -90,14 +35,6 @@ Caso o ID da pessoa logada na aplicação seja o mesmo ID da pessoa que criou a 
 Esta página deve exibir o título, os ingredientes, e a forma de preparo da receita.
 
 > Dica: esse é um dos casos no qual você pode utilizar o `authMiddleware` passando `false` para o parâmetro `required`, e passar o conteúdo de `req.user` para a view, o que o permitirá determinar se existe um usuário logado e, portanto, se os botões devem ser exibidos.
-
-### 3 - Crie uma página de cadastro de usuários
-
-Um usuário precisa ter os campos ID, E-mail, Senha, Nome e Sobrenome. Todos os campos são obrigatórios. O ID deve ser gerado automaticamente, não devendo ser preenchido pelo usuário no momento do cadastro.
-
-A validação dos campos deve acontecer no backend, e uma mensagem deve ser enviada ao frontend através de uma propriedade passada para o EJS, da mesma forma que acontece com a view `users/login`.
-
-**⚠️ Atenção ⚠️**: O sistema de autenticação espera que as funções `findUserByEmail` e `findUserById` retornem um objeto com, pelo menos, os campos `email`, `password` e `id`. Se você alterar o nome desses campos, precisará alterar o código de login.
 
 #### Funções administrativas
 

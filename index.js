@@ -13,18 +13,12 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/', (_req, res) => {
-  return res.render('home');
-});
+app.get('/', middlewares.auth(false), controllers.recipesController.list);
 
 app.get('/login', controllers.userController.loginForm);
 app.post('/login', controllers.userController.login);
 
 app.get('/logout', controllers.userController.logout);
-
-app.get('/admin', middlewares.auth(), (req, res) => {
-  return res.render('admin/home', { user: req.user });
-});
 
 app.get('/register', middlewares.auth(false), (_req, res) => {
   return res.render('admin/register', {

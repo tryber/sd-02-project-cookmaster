@@ -4,7 +4,7 @@ async function findUser({ key, value }) {
   const userData = await connection()
     .then((db) =>
       db
-        .getTable('user')
+        .getTable('users')
         .select(['id', 'email', 'password', 'first_name', 'last_name'])
         .where(`${key} = :${key}`)
         .bind(key, value)

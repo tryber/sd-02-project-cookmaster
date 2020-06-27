@@ -46,7 +46,7 @@ async function login(req, res) {
     sameSite: true,
   });
 
-  res.redirect(redirect || '/admin');
+  return res.redirect(redirect || '/');
 }
 
 function logout(req, res) {
