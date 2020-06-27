@@ -29,7 +29,9 @@
       <% recipes.forEach((recipe) => { %>
       <div><%= recipe.recipeName %></div>
       <div><%= recipe.userName %></div>
-      <a href=<%= `/recipes/${recipe.id}` %>>Ver mais</a>
+      <button onclick="window.location.pathname='/recipes/<%= recipe.recipeId %>'">
+        Ver Mais
+      </button>
       <% }) %>
     </seciton>
   </body>

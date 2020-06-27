@@ -17,7 +17,9 @@ async function findUser({ key, value }) {
 
   [id, email, password, firstName, lastName] = userData;
 
-  return { id, email, password, firstName, lastName };
+  const fullName = `${firstName} ${lastName}`;
+
+  return { id, email, password, firstName, lastName, fullName };
 }
 
 module.exports = {
