@@ -23,7 +23,7 @@ async function login(req, res) {
       redirect: null,
     });
 
-  const user = await userModel.findByEmail(email);
+  const user = await userModel.findUser({ key: 'email', value: email });
 
   if (!user)
     return res.render('admin/login', {

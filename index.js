@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const rescue = require('express-rescue');
 
 const middlewares = require('./middlewares');
 const controllers = require('./controllers');
@@ -26,7 +27,11 @@ app.get('/admin', middlewares.auth(), (req, res) => {
 });
 
 app.get('/register', middlewares.auth(false), (_req, res) => {
-  return res.render('admin/register', { message: null });
+  return res.render('admin/register', {
+    error: { email: null, password: null, confirm: null, firstName: null, lastName: null },
+  });
 });
+
+app.post('/register', middlewares.auth(false), rescue(controllers.registerController.register));
 
 app.listen(3000, () => console.log('Listening on 3000'));

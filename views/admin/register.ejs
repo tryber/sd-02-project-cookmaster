@@ -7,22 +7,42 @@
   </head>
 
   <body>
-    <% if (message) {%>
-    <div class="message">
-      <%= message %>
-    </div>
-    <% } %>
     <form action="/register" method="POST">
       <label for="emailInput">Email: </label>
       <input type="text" name="email" id="emailInput" /><br />
-      <label for="passwordInput">Senha: </label>
-      <input type="password" name="passwordInput" id="passwordInput" /><br />
-      <label for="passwordConfirm">Senha: </label>
-      <input type="password" name="passwordConfirm" id="passwordConfirm" /><br />
+      <% if (error.email) {%>
+      <p class="message">
+        <%= error.email %>
+      </p>
+      <% } %>
+      <label for="password">Senha: </label>
+      <input type="password" name="password" id="password" /><br />
+      <% if (error.password) {%>
+      <p class="message">
+        <%= error.password %>
+      </p>
+      <% } %>
+      <label for="confirm">Confirmar a Senha: </label>
+      <input type="password" name="confirm" id="confirm" /><br />
+      <% if (error.confirm) {%>
+      <p class="message">
+        <%= error.confirm %>
+      </p>
+      <% } %>
       <label for="firstName">Nome: </label>
       <input type="text" name="firstName" id="firstName" /><br />
+      <% if (error.firstName) {%>
+      <p class="message">
+        <%= error.firstName %>
+      </p>
+      <% } %>
       <label for="lastName">Sobrenome: </label>
       <input type="text" name="lastName" id="lastName" /><br />
+      <% if (error.lastName) {%>
+      <p class="message">
+        <%= error.lastName %>
+      </p>
+      <% } %>
       <button type="submit">Cadastre-se</button>
     </form>
     <button onclick="window.location.pathname='/login'">Fazer Login</button>
