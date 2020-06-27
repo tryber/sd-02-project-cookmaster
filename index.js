@@ -25,4 +25,8 @@ app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
 
+app.get('/register', middlewares.auth(false), (_req, res) => {
+  return res.render('admin/register', { message: null });
+});
+
 app.listen(3000, () => console.log('Listening on 3000'));
