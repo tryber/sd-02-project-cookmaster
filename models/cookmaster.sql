@@ -20,9 +20,5 @@ CREATE TABLE recipes (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-INSERT INTO recipes (user_id, user, name, ingredients, instructions)
-VALUES
-    ('1', 'Taylor Swift.', 'Cookies', 'milk chocolate flour', 'shake the milk');
-
 SELECT * FROM users;
 SELECT * FROM recipes;

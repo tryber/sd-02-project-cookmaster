@@ -1,4 +1,5 @@
 const recipesModels = require('../models/recipesModel');
+const recipesModel = require('../models/recipesModel');
 
 async function details(req, res) {
   const { user } = req;
@@ -51,4 +52,21 @@ async function list(req, res) {
   });
 }
 
-module.exports = { list, details };
+async function newRecipe(req, res) {
+  try {
+    const {
+      user: { id, fullName },
+      body,
+    } = req;
+
+    await recipesModel.createRecipe({ ...body, id, fullName });
+
+    const recipes = await recipesModels.getRecipes();
+
+    return res.redirect('/');
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+module.exports = { list, details, newRecipe };

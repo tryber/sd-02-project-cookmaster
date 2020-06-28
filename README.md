@@ -40,14 +40,6 @@ Esta página deve exibir o título, os ingredientes, e a forma de preparo da rec
 
 > Páginas que **não** podem ser acessadas sem login. Para essas páginas, utilize o `authMiddleware` sem passar parâmetro algum.
 
-### 4 - Crie uma página de cadastro de receitas
-
-A página deve ser acessível através do endpoint `/recipes/new`, e o formulário deve ser enviado para o endpoint `POST /recipes`
-
-A receita deve ter os campos ID, Nome, Ingredientes, Modo de preparo e Autor. Sinta-se à vontade para modelar o banco da forma que achar melhor. O ID deve ser gerado automaticamente, não devendo ser preenchido no formulário de cadastro de receita.
-
-O campo dos ingredientes pode ser um campo de texto aberto.
-
 ### 5 - Crie uma página de edição de receitas
 
 A página deve ser acessível através do endpoint `/recipes/:id/edit`, e o formulário deve ser enviado para o endpoint `POST /recipes/:id`.

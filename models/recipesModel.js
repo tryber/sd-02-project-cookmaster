@@ -48,4 +48,14 @@ async function getRecipes() {
     );
 }
 
-module.exports = { getRecipes, findRecipe };
+async function createRecipe({ id: userId, fullName, name, ingredients, instructions }) {
+  return connection().then((db) =>
+    db
+      .getTable('recipes')
+      .insert(['user_id', 'user', 'name', 'ingredients', 'instructions'])
+      .values(userId, fullName, name, ingredients, instructions)
+      .execute(),
+  );
+}
+
+module.exports = { getRecipes, findRecipe, createRecipe };

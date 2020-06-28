@@ -13,7 +13,7 @@
         <%= name %>
       </div>
       <% } %>
-      <a href="<%= endpoint %>"><%= endpoint %></a>
+      <a href="/<%= endpoint %>"><%= endpoint %></a>
     </header>
     <section>
       <h2>Receitas</h2>
@@ -22,7 +22,7 @@
       <% } %>
       <button>Buscar Receita</button>
       <% if (name) {%>
-      <button>Nova Receita</button>
+      <button onclick="window.location.pathname='/recipes/new'">Nova Receita</button>
       <% } %>
     </section>
     <seciton>
