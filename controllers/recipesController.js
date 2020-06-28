@@ -7,7 +7,7 @@ async function details(req, res) {
 
   const recipe = await recipesModels.findRecipe(id);
 
-  if (recipe) return res.redirect('/');
+  if (!recipe) return res.redirect('/');
 
   if (!user)
     return res.render('admin/details', {
@@ -17,7 +17,7 @@ async function details(req, res) {
       recipe,
     });
 
-  if (id === recipe.userId)
+  if (user.id === recipe.userId)
     return res.render('admin/details', {
       name: null,
       endpoint: 'logout',
@@ -61,7 +61,37 @@ async function newRecipe(req, res) {
 
     await recipesModel.createRecipe({ ...body, id, fullName });
 
-    const recipes = await recipesModels.getRecipes();
+    return res.redirect('/');
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+async function editRecipe(req, res) {
+  try {
+    const { id } = req.params;
+
+    const recipe = await recipesModel.searchRecipe(id);
+
+    return res.render('admin/newRecipe', { recipe });
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+async function deleteRecipe(req, res) {
+  try {
+    const { id } = req.params;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+async function updateRecipe(req, res) {
+  try {
+    const { id } = req.params;
+
+    await recipesModel.updateRecipe({ id, ...req.body });
 
     return res.redirect('/');
   } catch (err) {
@@ -69,4 +99,4 @@ async function newRecipe(req, res) {
   }
 }
 
-module.exports = { list, details, newRecipe };
+module.exports = { list, details, newRecipe, editRecipe, deleteRecipe, updateRecipe };

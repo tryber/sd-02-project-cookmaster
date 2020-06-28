@@ -29,7 +29,7 @@
       <% recipes.forEach((recipe) => { %>
       <div><%= recipe.recipeName %></div>
       <div><%= recipe.userName %></div>
-      <button onclick="window.location.pathname='/recipes/<%= recipe.recipeId %>'">
+      <button onclick="window.location.pathname='<%= `/recipes/${recipe.recipeId}` %>'">
         Ver Mais
       </button>
       <% }) %>

@@ -30,11 +30,19 @@ app.get('/register', middlewares.auth(false), (_req, res) => {
 app.post('/register', middlewares.auth(false), rescue(controllers.registerController.register));
 
 app.get('/recipes/new', middlewares.auth(), (_req, res) => {
-  return res.render('admin/newRecipe');
+  return res.render('admin/newRecipe', {
+    recipe: { name: null, ingredients: null, instructions: null, id: null },
+  });
 });
 
 app.post('/recipes/new', middlewares.auth(), controllers.recipesController.newRecipe);
 
+app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipesController.editRecipe);
+
+app.get('/recipes/:id/delete', middlewares.auth(), controllers.recipesController.deleteRecipe);
+
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipesController.details);
+
+app.post('/recipes/:id', middlewares.auth(), controllers.recipesController.updateRecipe);
 
 app.listen(3000, () => console.log('Listening on 3000'));

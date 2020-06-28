@@ -58,4 +58,38 @@ async function createRecipe({ id: userId, fullName, name, ingredients, instructi
   );
 }
 
-module.exports = { getRecipes, findRecipe, createRecipe };
+async function searchRecipe(recipeId) {
+  const recipeData = await connection()
+    .then((db) =>
+      db
+        .getTable('recipes')
+        .select(['id', 'name', 'ingredients', 'instructions'])
+        .where('id = :id')
+        .bind('id', recipeId)
+        .execute(),
+    )
+    .then((results) => results.fetchAll())
+    .then((recipe) => recipe[0]);
+
+  if (!recipeData) return null;
+
+  const [id, name, ingredients, instructions] = recipeData;
+
+  return { name, ingredients, instructions, id };
+}
+
+async function updateRecipe({ id, name, ingredients, instructions }) {
+  return connection().then((db) =>
+    db
+      .getTable('recipes')
+      .update()
+      .set('name', name)
+      .set('ingredients', ingredients)
+      .set('instructions', instructions)
+      .where('id = :id')
+      .bind('id', id)
+      .execute(),
+  );
+}
+
+module.exports = { getRecipes, findRecipe, createRecipe, searchRecipe, updateRecipe };
