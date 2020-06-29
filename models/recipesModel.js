@@ -97,9 +97,13 @@ async function deleteRecipe({ recipeId, userId, password }) {
   const { password: userPassword } = await userModel.findUser({ key: 'id', value: userId });
 
   if (password !== userPassword) return false;
-  console.log(recipeId, typeof recipeId);
+
   await connection().then((db) =>
-    db.getTable('recipes').delete().where('id = :id').bind('id', recipeId).execute(),
+    db.getTable('recipes')
+      .delete()
+      .where('id = :id')
+      .bind('id', recipeId)
+      .execute(),
   );
 
   return true;
