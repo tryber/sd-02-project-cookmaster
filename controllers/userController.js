@@ -14,16 +14,16 @@ const loginForm = (req, res) => {
   });
 };
 
-const registerForm = (req, res) => {
+const registerForm = (req, res) => (
   // const { token = '' } = req.cookies || {};
 
   // if (SESSIONS[token]) return res.redirect('/');
 
-  return res.render(
+  res.render(
     'admin/register',
     { message: null, redirect: req.query.redirect },
-  );
-};
+  )
+);
 
 const login = async (req, res, next) => {
   const { email, password, redirect } = req.body;
