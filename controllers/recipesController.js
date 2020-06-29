@@ -2,59 +2,67 @@ const recipesModels = require('../models/recipesModel');
 const recipesModel = require('../models/recipesModel');
 
 async function details(req, res) {
-  const { user } = req;
-  const { id } = req.params;
+  try {
+    const { user } = req;
+    const { id } = req.params;
 
-  const recipe = await recipesModels.findRecipe(id);
+    const recipe = await recipesModels.findRecipe(id);
 
-  if (!recipe) {
-    return res.redirect('/');
-  }
+    if (!recipe) {
+      return res.redirect('/');
+    }
 
-  if (!user) {
+    if (!user) {
+      return res.render('admin/details', {
+        name: null,
+        endpoint: 'login',
+        isUser: false,
+        recipe,
+      });
+    }
+
+    if (user.id === recipe.userId) {
+      return res.render('admin/details', {
+        name: null,
+        endpoint: 'logout',
+        isUser: true,
+        recipe,
+      });
+    }
+
     return res.render('admin/details', {
-      name: null,
-      endpoint: 'login',
+      name: user.fullName,
+      endpoint: 'logout',
       isUser: false,
       recipe,
     });
+  } catch (err) {
+    throw new Error(err);
   }
-
-  if (user.id === recipe.userId) {
-    return res.render('admin/details', {
-      name: null,
-      endpoint: 'logout',
-      isUser: true,
-      recipe,
-    });
-  }
-
-  return res.render('admin/details', {
-    name: user.fullName,
-    endpoint: 'logout',
-    isUser: false,
-    recipe,
-  });
 }
 
 async function list(req, res) {
-  const { user } = req;
+  try {
+    const { user } = req;
 
-  const recipes = await recipesModels.getRecipes();
+    const recipes = await recipesModels.getRecipes();
 
-  if (!user) {
+    if (!user) {
+      return res.render('home', {
+        endpoint: 'login',
+        name: null,
+        recipes,
+      });
+    }
+
     return res.render('home', {
-      endpoint: 'login',
-      name: null,
+      endpoint: 'logout',
+      name: user.fullName,
       recipes,
     });
+  } catch (err) {
+    throw new Error(err);
   }
-
-  return res.render('home', {
-    endpoint: 'logout',
-    name: user.fullName,
-    recipes,
-  });
 }
 
 async function newRecipe(req, res) {
@@ -117,15 +125,19 @@ async function updateRecipe(req, res) {
 }
 
 async function searchRecipe(req, res) {
-  const search = req.query.q || null;
+  try {
+    const search = req.query.q || null;
 
-  if (!search) {
-    return res.render('admin/search', { recipes: [] });
+    if (!search) {
+      return res.render('admin/search', { recipes: [] });
+    }
+
+    const recipes = await recipesModel.searchRecipe(search);
+
+    return res.render('admin/search', { recipes });
+  } catch (err) {
+    throw new Error(err);
   }
-
-  const recipes = await recipeModel.searchRecipe(search);
-
-  return res.render('admin/search', { recipes });
 }
 
 module.exports = { list, details, newRecipe, editRecipe, deleteRecipe, updateRecipe, searchRecipe };

@@ -15,7 +15,7 @@ async function findUser({ key, value }) {
 
   if (!userData) return null;
 
-  [id, email, password, firstName, lastName] = userData;
+  const [id, email, password, firstName, lastName] = userData;
 
   const fullName = `${firstName} ${lastName}`;
 
