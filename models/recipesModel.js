@@ -59,14 +59,14 @@ async function createRecipe({ id: userId, fullName, name, ingredients, instructi
   );
 }
 
-async function searchRecipe(recipeId) {
+async function searchRecipe({ key, value }) {
   const recipeData = await connection()
     .then((db) =>
       db
         .getTable('recipes')
         .select(['id', 'name', 'ingredients', 'instructions'])
-        .where('id = :id')
-        .bind('id', recipeId)
+        .where(`${key} = :${key}`)
+        .bind(key, value)
         .execute(),
     )
     .then((results) => results.fetchAll())
@@ -99,11 +99,7 @@ async function deleteRecipe({ recipeId, userId, password }) {
   if (password !== userPassword) return false;
 
   await connection().then((db) =>
-    db.getTable('recipes')
-      .delete()
-      .where('id = :id')
-      .bind('id', recipeId)
-      .execute(),
+    db.getTable('recipes').delete().where('id = :id').bind('id', recipeId).execute(),
   );
 
   return true;

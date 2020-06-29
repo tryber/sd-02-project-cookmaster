@@ -74,7 +74,7 @@ async function editRecipe(req, res) {
   try {
     const { id } = req.params;
 
-    const recipe = await recipesModel.searchRecipe(id);
+    const recipe = await recipesModel.searchRecipe({ key: 'id', value: id });
 
     return res.render('admin/newRecipe', { recipe });
   } catch (err) {
@@ -122,7 +122,7 @@ async function searchRecipe(req, res) {
       return res.render('admin/search', { recipes: [] });
     }
 
-    const recipes = await recipesModel.searchRecipe(search);
+    const recipes = await recipesModel.searchRecipe({ key: 'name', value: search });
 
     return res.render('admin/search', { recipes });
   } catch (err) {
