@@ -81,7 +81,17 @@ async function editRecipe(req, res) {
 
 async function deleteRecipe(req, res) {
   try {
-    const { id } = req.params;
+    const {
+      params: { id: recipeId },
+      body: { password },
+      user: { id: userId },
+    } = req;
+
+    const status = await recipesModel.deleteRecipe({ recipeId, userId, password });
+
+    if (!status) return res.render('admin/delete', { message: 'senha incorreta' });
+
+    return res.redirect('/');
   } catch (err) {
     throw new Error(err);
   }

@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const userModel = require('./userModel');
 
 async function findRecipe(id) {
   const recipeData = await connection()
@@ -92,4 +93,16 @@ async function updateRecipe({ id, name, ingredients, instructions }) {
   );
 }
 
-module.exports = { getRecipes, findRecipe, createRecipe, searchRecipe, updateRecipe };
+async function deleteRecipe({ recipeId, userId, password }) {
+  const { password: userPassword } = await userModel.findUser({ key: 'id', value: userId });
+
+  if (password !== userPassword) return false;
+  console.log(recipeId, typeof recipeId);
+  await connection().then((db) =>
+    db.getTable('recipes').delete().where('id = :id').bind('id', recipeId).execute(),
+  );
+
+  return true;
+}
+
+module.exports = { getRecipes, findRecipe, createRecipe, searchRecipe, updateRecipe, deleteRecipe };
