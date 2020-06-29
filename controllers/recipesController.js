@@ -7,23 +7,27 @@ async function details(req, res) {
 
   const recipe = await recipesModels.findRecipe(id);
 
-  if (!recipe) return res.redirect('/');
+  if (!recipe) {
+    return res.redirect('/');
+  }
 
-  if (!user)
+  if (!user) {
     return res.render('admin/details', {
       name: null,
       endpoint: 'login',
       isUser: false,
       recipe,
     });
+  }
 
-  if (user.id === recipe.userId)
+  if (user.id === recipe.userId) {
     return res.render('admin/details', {
       name: null,
       endpoint: 'logout',
       isUser: true,
       recipe,
     });
+  }
 
   return res.render('admin/details', {
     name: user.fullName,
@@ -38,12 +42,13 @@ async function list(req, res) {
 
   const recipes = await recipesModels.getRecipes();
 
-  if (!user)
+  if (!user) {
     return res.render('home', {
       endpoint: 'login',
       name: null,
       recipes,
     });
+  }
 
   return res.render('home', {
     endpoint: 'logout',
@@ -89,7 +94,9 @@ async function deleteRecipe(req, res) {
 
     const status = await recipesModel.deleteRecipe({ recipeId, userId, password });
 
-    if (!status) return res.render('admin/delete', { message: 'senha incorreta' });
+    if (!status) {
+      return res.render('admin/delete', { message: 'senha incorreta' });
+    }
 
     return res.redirect('/');
   } catch (err) {
@@ -109,4 +116,16 @@ async function updateRecipe(req, res) {
   }
 }
 
-module.exports = { list, details, newRecipe, editRecipe, deleteRecipe, updateRecipe };
+async function searchRecipe(req, res) {
+  const search = req.query.q || null;
+
+  if (!search) {
+    return res.render('admin/search', { recipes: [] });
+  }
+
+  const recipes = await recipeModel.searchRecipe(search);
+
+  return res.render('admin/search', { recipes });
+}
+
+module.exports = { list, details, newRecipe, editRecipe, deleteRecipe, updateRecipe, searchRecipe };

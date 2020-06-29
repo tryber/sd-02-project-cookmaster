@@ -37,6 +37,8 @@ app.get('/recipes/new', middlewares.auth(), (_req, res) => {
 
 app.post('/recipes/new', middlewares.auth(), controllers.recipesController.newRecipe);
 
+app.get('/recipes/search', middlewares.auth(false), controllers.recipesController.searchRecipe);
+
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipesController.details);
 
 app.post('/recipes/:id', middlewares.auth(), controllers.recipesController.updateRecipe);

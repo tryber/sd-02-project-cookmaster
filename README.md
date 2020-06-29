@@ -26,16 +26,6 @@ Rotas com autenticação; Rotas sem autenticação;
 
 > Páginas que **não** podem ser acessadas sem login. Para essas páginas, utilize o `authMiddleware` sem passar parâmetro algum.
 
-### 6 - Crie uma página de exclusão de uma receita
-
-A página deve ser acessível através do endpoint `/recipes/:id/delete`, e só pode ser acessada pela pessoa que cadastrou a receita.
-
-Ao acessar a página, um formulário deve ser exibido, solicitando a senha da pessoa para confirmar a operação. Esse formulário deve ser enviado para o endpoint `POST /recipes/:id/delete`.
-
-A receita só deve ser excluída caso a senha esteja correta. Caso ela esteja incorreta, a pessoa deve ser redirecionada à página de exclusão da receita com a mensagem "Senha incorreta. Por favor, tente novamente".
-
-Caso a receita seja excluída com sucesso, a pessoa deve ser redirecionada à página de listagem de receitas.
-
 ### 7 - Cria uma página de pesquisa de receitas
 
 A página deve estar acessível através do endpoint `/recipes/search`.

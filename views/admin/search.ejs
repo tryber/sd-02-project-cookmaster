@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Search</title>
+  </head>
+
+  <body>
+    <section>
+      <h2>Buscar Receitas</h2>
+      <form action="/recipes/search>" method="GET">
+        <input type="text" name="q" /><br />
+        <button type="submit">Buscar</button>
+      </form>
+    </section>
+    <seciton>
+      <% recipes.forEach((recipe) => { %>
+      <div><%= recipe.recipeName %></div>
+      <div><%= recipe.userName %></div>
+      <button onclick="window.location.pathname='<%= `/recipes/${recipe.recipeId}` %>'">
+        Ver Mais
+      </button>
+      <% }) %>
+    </seciton>
+  </body>
+</html>
