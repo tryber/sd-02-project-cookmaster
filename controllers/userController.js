@@ -71,7 +71,8 @@ const register = async (req, res, next) => {
     res.render('admin/register', {
       message: 'Novo cadastro realizado com sucesso!',
     });
-  } catch {
+  } catch (e) {
+    console.error(e);
     res.render('admin/register', {
       message: 'Ocorreu um erro, tente outra vez',
     });

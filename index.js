@@ -6,13 +6,6 @@ const app = express();
 
 // app.get('/', recipeController.listRecipes);
 
-const connection = require('./models/connection');
-
-connection().then((session) => {
-    console.log('Conectado ao MySQL!');
-  });
-
-
 // const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');

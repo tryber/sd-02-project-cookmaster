@@ -1,7 +1,7 @@
 const mysqlx = require('@mysql/xdevapi');
 
-const connection = () => {
-  return mysqlx.getSession({
+const connection = () => (
+  mysqlx.getSession({
     user: 'root',
     password: 'password',
     host: 'localhost',
@@ -15,7 +15,7 @@ const connection = () => {
   .catch((err) => {
     console.error(err);
     process.exit(1);
-  });
-};
+  })
+);
 
 module.exports = connection;

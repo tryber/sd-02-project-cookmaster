@@ -1,7 +1,9 @@
-const connection = require("./connection");
+const connection = require('./connection');
 
 const getNewRecipe = (recipeData) => {
-  const { id, title, ingredients, directions, authorId, authorFirstName, authorLastName } = recipeData;
+  const {
+    id, title, ingredients, directions, authorId, authorFirstName, authorLastName,
+  } = recipeData;
 
   const authorFullName = [authorFirstName, authorLastName].join(' ');
 
@@ -35,11 +37,13 @@ const getAll = async () =>
           INNER JOIN cookmaster.users AS U
           ON R.author_id = U.id;
         `)
-        .execute()
+        .execute(),
     )
     .then((results) => results.fetchAll())
     .then((recipes) =>
-      recipes.map(([id, title, ingredients, directions, authorId, authorFirstName, authorLastName]) =>
+      recipes.map(([
+        id, title, ingredients, directions, authorId, authorFirstName, authorLastName,
+      ]) =>
         getNewRecipe({
           id,
           title,
@@ -47,9 +51,9 @@ const getAll = async () =>
           directions,
           authorId,
           authorFirstName,
-          authorLastName
-        })
-      )
+          authorLastName,
+        }),
+      ),
     )
     .catch((err) => {
       console.error(err);
