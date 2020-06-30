@@ -32,5 +32,6 @@ const authMiddleware = (required = true) => async (req, res, next) => {
 
 module.exports = {
   SESSIONS,
+  getUser,
   authMiddleware,
 };

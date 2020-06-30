@@ -12,9 +12,9 @@ CREATE TABLE users (
 
 CREATE TABLE recipes (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(50) NOT NULL,
-  ingredients TEXT NOT NULL,
-  directions TEXT NOT NULL,
+  title VARCHAR(50),
+  ingredients TEXT,
+  directions TEXT,
   author_id INT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES users(id)
 );

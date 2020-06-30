@@ -12,6 +12,11 @@
         <button>Nova receita</button>
       </a>
     <% } %>
+    <% if (message) { %>
+      <p>
+        <%= message %>
+      </p>
+    <% } %>
     <ul>
       <% recipes.forEach(({ id, title, authorName }) => { %>
         <div>

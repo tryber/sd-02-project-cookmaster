@@ -24,9 +24,6 @@ app.set('views', './views');
 //   return res.render('home');
 // });
 
-app.get('/', middlewares.auth(false), recipeController.listRecipes);
-app.get('/recipes/:id', middlewares.auth(false), recipeController.showRecipeDetails);
-
 app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
@@ -37,6 +34,12 @@ app.post('/login', controllers.userController.login);
 
 app.get('/register', controllers.userController.registerForm);
 app.post('/register', controllers.userController.register);
+
+app.get('/', middlewares.auth(false), recipeController.listRecipes);
+
+app.get('/recipes/new', middlewares.auth(), recipeController.newRecipeForm);
+app.post('/recipes', middlewares.auth(), recipeController.newRecipe);
+app.get('/recipes/:id', middlewares.auth(false), recipeController.showRecipeDetails);
 
 // app.get('/register', (req, res) => {
 //   return res.render('admin/register');
