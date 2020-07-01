@@ -3,20 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Home</title>
+    <title>Cookmaster - Search</title>
   </head>
   <body>
-    <h1>Receitas</h1>
-    <% if (user) { %>
-      <a href="/recipes/new">
-        <button>Nova receita</button>
-      </a>
-    <% } %>
-    <% if (message) { %>
-      <p>
-        <%= message %>
-      </p>
-    <% } %>
+    <h1>Buscar Receitas</h1>
+    <form action="/recipes/search" method="GET">
+      <input type="text" name="q" />
+      <button type="submit">Pesquisar</button>
+    </form>
     <ul>
       <% recipes.forEach(({ id, title, authorName }) => { %>
         <div>

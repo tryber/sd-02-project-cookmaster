@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Details</title>
+  </head>
+  <body>
+    <h1>
+      <%= recipe.title %>
+    </h1>
+    <p>
+      Enviada por <%= recipe.authorName %>
+    </p>
+    <% if (message) { %>
+      <p>
+        <%= message %>
+      </p>
+    <% } %>
+    <% if (user && user.id === recipe.authorId) { %>
+      <div>
+        <a href=<%= `/recipes/${recipe.id}/edit` %>>
+          <button>Editar receita</button>
+        </a>
+        <a href=<%= `/recipes/${recipe.id}/delete` %>>
+            <button>Excluir receita</button>
+        </a>
+    </div>
+    <% } %>
+    <h2>Ingredientes</h2>
+    <p>
+      <%= recipe.ingredients %>
+    </p>
+    <h2>Modo de Preparo</h2>
+    <p>
+      <%= recipe.directions %>
+    </p>
+  </body>
+</html>
