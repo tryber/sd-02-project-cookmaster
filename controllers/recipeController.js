@@ -113,7 +113,58 @@ const editRecipe = async (req, res) => {
     res.render('recipe/details', {
       recipe: recipeBefore,
       user: req.user,
-      message: 'Ocorreu um erro na edição da receita, é necessário preencher todos os campos',
+      message: 'Ocorreu um erro na edição da receita...',
+    });
+  }
+};
+
+const deleteRecipeForm = async (req, res) => {
+  const idFromUrl = req.url.split('/')[2];
+
+  const recipe = await Recipe.getById(idFromUrl);
+
+  const { authorId } = recipe;
+  const { id: userId } = req.user;
+
+  if (authorId !== userId) {
+    return res.redirect('/');
+  }
+
+  res.render('recipe/delete', {
+    message: null,
+    action: `/recipes/${idFromUrl}/delete`,
+  });
+};
+
+const deleteRecipe = async (req, res) => {
+  const { userPassword, body: { password } } = req;
+
+  const idFromUrl = Number(req.url.split('/')[2]);
+
+  if (password !== userPassword) {
+    return res.render('recipe/delete', {
+      message: 'Senha incorreta. Por favor, tente novamente',
+      action: `/recipes/${idFromUrl}/delete`,
+    });
+  }
+
+  const recipesBefore = await Recipe.getAll();
+
+  try {
+    await Recipe.deleteOne(idFromUrl);
+
+    const recipesAfter = await Recipe.getAll();
+
+    res.render('home', {
+      recipes: recipesAfter,
+      user: req.user,
+      message: 'Receita excluída com sucesso!',
+    });
+  } catch (_e) {
+    res.render('home', {
+      recipes: recipesBefore,
+      user: req.user,
+      message: 'Ocorreu um erro na exclusão da receita...',
     });
   }
 };
@@ -125,4 +176,6 @@ module.exports = {
   newRecipe,
   editRecipeForm,
   editRecipe,
+  deleteRecipeForm,
+  deleteRecipe,
 };

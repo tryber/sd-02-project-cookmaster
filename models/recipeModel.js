@@ -20,7 +20,7 @@ const getNewRecipe = (recipeData) => {
 /**
  * Busca todas as receitas do banco.
  */
-const getAll = async () =>
+const getAll = async () => (
   connection()
     .then((session) =>
       session
@@ -57,7 +57,8 @@ const getAll = async () =>
     )
     .catch((err) => {
       console.error(err);
-    });
+    })
+);
 
 const getById = async (id) => {
   const allRecipes = await getAll();
@@ -66,7 +67,7 @@ const getById = async (id) => {
     .find((recipe) => recipe.id === Number(id));
 };
 
-const createOne = async ({ title, ingredients, directions, authorId }) =>
+const createOne = async ({ title, ingredients, directions, authorId }) => (
   connection()
     .then((session) =>
       session
@@ -78,9 +79,10 @@ const createOne = async ({ title, ingredients, directions, authorId }) =>
     )
     .catch((err) => {
       console.error(err);
-    });
+    })
+);
 
-const editOne = async ({ id, title, ingredients, directions }) =>
+const editOne = async ({ id, title, ingredients, directions }) => (
   connection()
     .then((session) =>
       session
@@ -96,11 +98,29 @@ const editOne = async ({ id, title, ingredients, directions }) =>
     )
     .catch((err) => {
       console.error(err);
-    });
+    })
+);
+
+const deleteOne = async (id) => (
+  connection()
+    .then((session) =>
+      session
+        .getSchema('cookmaster')
+        .getTable('recipes')
+        .delete()
+        .where('id = :id')
+        .bind('id', id)
+        .execute(),
+    )
+    .catch((err) => {
+      console.error(err);
+    })
+);
 
 module.exports = {
   getAll,
   getById,
   createOne,
   editOne,
+  deleteOne,
 };

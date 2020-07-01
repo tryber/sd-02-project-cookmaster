@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookmaster - Delete Recipe</title>
+  </head>
+  <body>
+    <% if (message) { %>
+      <p>
+        <%= message %>
+      </p><br />
+    <% } %>
+    <p>Confirme a exclusão da receita</p>
+    <form action="<%= action %>" method="POST">
+      <label for="passwordInput">Senha</label><br />
+      <input type="password" name="password" id="passwordInput" /><br />
+      <button type="submit">Confirmar</button>
+    </form>
+  </body>
+</html>
