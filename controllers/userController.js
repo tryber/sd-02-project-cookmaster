@@ -43,8 +43,15 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const getAllRecipes = async (req, res) => {
+  console.log(req.user);
+  const recipes = await userModel.getAll();
+  res.render('home', { recipes })
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  getAllRecipes,
 };

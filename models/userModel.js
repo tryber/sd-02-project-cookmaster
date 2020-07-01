@@ -1,3 +1,5 @@
+const { connection } = require("./connections");
+
 /* Quando você implementar a conexão com o banco, não deve mais precisar desse objeto */
 const TEMP_USER = {
   id: 'd2a667c4-432d-4dd5-8ab1-b51e88ddb5fe',
@@ -26,7 +28,21 @@ const findById = async (id) => {
   return TEMP_USER;
 };
 
+const getAll = async () => {
+  return connection()
+    .then((db) =>
+      db
+        .sql(
+          `SELECT rcp.id, rcp.recipe_name, us.first_name FROM recipes as rcp
+          INNER JOIN users as us ON us.id = rcp.author_id;`
+        )
+        .execute()
+    )
+    .then((results) => results.fetchAll())
+}
+
 module.exports = {
   findByEmail,
   findById,
+  getAll,
 };
