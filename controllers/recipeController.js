@@ -34,13 +34,12 @@ const newRecipeForm = (req, res) => (
 const newRecipe = async (req, res) => {
   const { title, ingredients, directions } = req.body;
 
+  const recipesBefore = await Recipe.getAll();
+
   if (!title || !ingredients || !directions) {
-
-    const recipes = await Recipe.getAll();
-
     return res.render('home', {
       user: req.user,
-      recipes,
+      recipes: recipesBefore,
       message: 'Ocorreu um erro no cadastro da nova receita, é necessário preencher todos os campos',
     });
   }
@@ -50,21 +49,17 @@ const newRecipe = async (req, res) => {
   try {
     await Recipe.createOne({ title, ingredients, directions, authorId });
 
-    const recipes = await Recipe.getAll();
+    const recipesAfter = await Recipe.getAll();
 
     res.render('home', {
       user: req.user,
-      recipes,
+      recipes: recipesAfter,
       message: 'Nova receita cadastrada com sucesso!',
     });
-  } catch (err) {
-    console.error(err);
-
-    const recipes = await Recipe.getAll();
-
+  } catch (_e) {
     res.render('home', {
       user: req.user,
-      recipes,
+      recipes: recipesBefore,
       message: 'Ocorreu um erro no cadastro da nova receita...',
     });
   }
@@ -78,7 +73,7 @@ const editRecipeForm = async (req, res) => {
   const { authorId } = recipe;
   const { id: userId } = req.user;
 
-  if (authorId !==  userId) {
+  if (authorId !== userId) {
     return res.redirect('/');
   }
 
