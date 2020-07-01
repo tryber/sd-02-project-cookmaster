@@ -86,6 +86,17 @@ const getRecipeDetails = (id) => {
     .then((results) => results.fetchAll())
 }
 
+const createNewUser = (firstName, lastName, email, pass) => {
+  schema()
+    .then((db) =>
+      db
+        .getTable('users')
+        .insert(['first_name', 'last_name', 'email', 'pass'])
+        .values(firstName, lastName, email, pass)
+        .execute()
+    )
+}
+
 /*const getRecipeDetails = (id) => {
   return schema()
     .then((db) => 
@@ -102,4 +113,5 @@ module.exports = {
   findById,
   getAll,
   getRecipeDetails,
+  createNewUser,
 };

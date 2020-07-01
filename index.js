@@ -22,6 +22,10 @@ app.get('/', middlewares.auth(false), controllers.userController.getAllRecipes);
 
 app.get('/recipes/:id', middlewares.auth(false), controllers.userController.findRecipeById);
 
+app.get('/user/register', middlewares.auth(false), controllers.userController.registerForm);
+
+app.post('/user/register', middlewares.auth(false), controllers.userController.createUser);
+
 app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });

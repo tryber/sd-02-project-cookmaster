@@ -2,6 +2,7 @@ const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
 
 const userModel = require('../models/userModel');
+const { createNewUser } = require('../models/userModel');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -55,7 +56,28 @@ const findRecipeById = async (req, res) => {
   if (req.user) recipeUser = (req.user.id === recipe[0][4])
   res.render('recipes/details', { recipe, recipeUser })
   //const details = await userModel.getRecipeDetails()
-}
+};
+
+const createUser = async (req, res) => {
+  const { email, password, name, lastName } = req.body;
+  if (!email || !password || !name || !lastName)
+    return res.render('user/register', {
+      message: 'Todos os campos são obrigatórios',
+      error: true,
+    });
+  await createNewUser(name, lastName, email, password);
+  return res.render('user/register', {
+    message: 'Usuario criado com sucesso',
+    error: true,
+  })
+};
+
+const registerForm = async (req, res) => {
+  res.render('user/register', {
+    message: '',
+    error: false,
+  });
+};
 
 module.exports = {
   login,
@@ -63,4 +85,6 @@ module.exports = {
   logout,
   getAllRecipes,
   findRecipeById,
+  createUser,
+  registerForm,
 };
