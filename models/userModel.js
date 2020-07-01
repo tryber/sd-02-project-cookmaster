@@ -1,4 +1,4 @@
-const { connection, schema } = require("./connections");
+const { connection, schema } = require('./connections');
 
 /* Substitua o código das funções abaixo para que ela,
 de fato, realize a busca no banco de dados */
@@ -15,9 +15,9 @@ const findByEmail = async (email) => {
         .select(['id', 'email', 'pass', 'first_name', 'last_name'])
         .where('email = :email')
         .bind('email', email)
-        .execute()
+        .execute(),
     )
-    .then((results) => results.fetchAll())
+    .then((results) => results.fetchAll());
   return {
     id: user[0][0],
     email: user[0][1],

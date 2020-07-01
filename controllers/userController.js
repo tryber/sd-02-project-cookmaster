@@ -52,7 +52,7 @@ const getAllRecipes = async (req, res) => {
 const findRecipeById = async (req, res) => {
   const recipe = await userModel.getRecipeDetails(req.params.id);
   let recipeUser = false;
-  if (req.user) recipeUser = (req.user.id === recipe[0][4])
+  if (req.user) recipeUser = (req.user.id === recipe[0][4]);
   res.render('recipes/details', { recipe, recipeUser });
   // const details = await userModel.getRecipeDetails()
 };
