@@ -16,23 +16,34 @@ const showRecipeDetails = async (req, res) => {
   const recipe = await Recipe.getById(idFromUrl);
 
 
-  res.render('recipe/details', { recipe, user: req.user });
+  res.render('recipe/details', {
+    recipe,
+    user: req.user,
+    message: null,
+  });
 };
 
 const newRecipeForm = (req, res) => (
-  res.render(
-    'recipe/new',
-    { message: null },
-  )
+  res.render('recipe/form', {
+    recipe: { title: '', ingredients: '', directions: '' },
+    pageTitle: 'Nova Receita',
+    action: '/recipes',
+  })
 );
 
 const newRecipe = async (req, res) => {
   const { title, ingredients, directions } = req.body;
 
-  // if (!title || !ingredients || !directions)
-  //   return res.render('recipe/new', {
-  //     message: 'Preencha todos os campos',
-  //   });
+  if (!title || !ingredients || !directions) {
+
+    const recipes = await Recipe.getAll();
+
+    return res.render('home', {
+      user: req.user,
+      recipes,
+      message: 'Ocorreu um erro no cadastro da nova receita, é necessário preencher todos os campos',
+    });
+  }
 
   const { id: authorId } = req.user;
 
@@ -57,26 +68,59 @@ const newRecipe = async (req, res) => {
       message: 'Ocorreu um erro no cadastro da nova receita...',
     });
   }
+};
 
-  // const user = await userModel.findByEmail(email);
+const editRecipeForm = async (req, res) => {
+  const idFromUrl = req.url.split('/')[2];
 
-  // if (user)
-  //   return res.render('admin/register', {
-  //     message: 'Email já está cadastrado, insira outro',
-  //   });
+  const recipe = await Recipe.getById(idFromUrl);
 
-  // try {
-  //   await userModel.registerNewUser({ email, password, firstName, lastName });
+  const { authorId } = recipe;
+  const { id: userId } = req.user;
 
-  //   res.render('admin/register', {
-  //     message: 'Novo cadastro realizado com sucesso!',
-  //   });
-  // } catch (e) {
-  //   console.error(e);
-  //   res.render('admin/register', {
-  //     message: 'Ocorreu um erro, tente outra vez',
-  //   });
-  // }
+  if (authorId !==  userId) {
+    return res.redirect('/');
+  }
+
+  res.render('recipe/form', {
+    recipe,
+    pageTitle: 'Editar Receita',
+    action: `/recipes/${idFromUrl}`,
+  });
+};
+
+const editRecipe = async (req, res) => {
+  const { title, ingredients, directions } = req.body;
+
+  const idFromUrl = Number(req.url.split('/')[2]);
+
+  const recipeBefore = await Recipe.getById(idFromUrl);
+
+  if (!title || !ingredients || !directions) {
+    return res.render('recipe/details', {
+      recipe: recipeBefore,
+      user: req.user,
+      message: 'Ocorreu um erro na edição da receita, é necessário preencher todos os campos',
+    });
+  }
+
+  try {
+    await Recipe.editOne({ id: idFromUrl, title, ingredients, directions });
+
+    const recipeAfter = await Recipe.getById(idFromUrl);
+
+    res.render('recipe/details', {
+      recipe: recipeAfter,
+      user: req.user,
+      message: 'Receita editada com sucesso!',
+    });
+  } catch (_e) {
+    res.render('recipe/details', {
+      recipe: recipeBefore,
+      user: req.user,
+      message: 'Ocorreu um erro na edição da receita, é necessário preencher todos os campos',
+    });
+  }
 };
 
 module.exports = {
@@ -84,4 +128,6 @@ module.exports = {
   showRecipeDetails,
   newRecipeForm,
   newRecipe,
+  editRecipeForm,
+  editRecipe,
 };

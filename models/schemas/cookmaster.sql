@@ -22,7 +22,7 @@ CREATE TABLE recipes (
 INSERT INTO users (first_name, last_name, email, password)
   VALUES
     ('Miguel', 'Miranda', 'miguel@gmail.com', '123'),
-    ('M', 'M', 'm', 'm');
+    ('m', 'm', 'm', 'm');
 
 INSERT INTO recipes (title, ingredients, directions, author_id)
   VALUES
@@ -33,14 +33,14 @@ INSERT INTO recipes (title, ingredients, directions, author_id)
       1
     ),
     (
-      'Ovo cozido',
-      '1 ovo, água, sal a gosto',
-      'Cozinhe o ovo em água numa panela por 7 minutos. Adicione sal a gosto.',
-      1
-    ),
-    (
       'Miojo',
       '1 miojo, água',
       'Cozinhe o miojo em água numa panela por 3 minutos. Adicione o sachê de tempero.',
       2
+    ),
+    (
+      'Ovo cozido',
+      '1 ovo, água, sal a gosto',
+      'Cozinhe o ovo em água numa panela por 7 minutos. Adicione sal a gosto.',
+      1
     );

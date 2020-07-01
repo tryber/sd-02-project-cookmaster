@@ -39,7 +39,9 @@ app.get('/', middlewares.auth(false), recipeController.listRecipes);
 
 app.get('/recipes/new', middlewares.auth(), recipeController.newRecipeForm);
 app.post('/recipes', middlewares.auth(), recipeController.newRecipe);
+app.get('/recipes/:id/edit', middlewares.auth(), recipeController.editRecipeForm);
 app.get('/recipes/:id', middlewares.auth(false), recipeController.showRecipeDetails);
+app.post('/recipes/:id', middlewares.auth(), recipeController.editRecipe);
 
 // app.get('/register', (req, res) => {
 //   return res.render('admin/register');

@@ -12,6 +12,11 @@
     <p>
       Enviada por <%= recipe.authorName %>
     </p>
+    <% if (message) { %>
+      <p>
+        <%= message %>
+      </p>
+    <% } %>
     <% if (user && user.id === recipe.authorId) { %>
       <div>
         <a href=<%= `/recipes/${recipe.id}/edit` %>>

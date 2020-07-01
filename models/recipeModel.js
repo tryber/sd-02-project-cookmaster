@@ -70,41 +70,30 @@ const createOne = async ({ title, ingredients, directions, authorId }) =>
   connection()
     .then((session) =>
       session
-        // .sql(`
-        //   SELECT
-        //     R.id,
-        //     R.title,
-        //     R.ingredients,
-        //     R.directions,
-        //     R.author_id,
-        //     U.first_name,
-        //     U.last_name
-        //   FROM cookmaster.recipes AS R
-        //   INNER JOIN cookmaster.users AS U
-        //   ON R.author_id = U.id;
-        // `)
         .getSchema('cookmaster')
         .getTable('recipes')
         .insert(['title', 'ingredients', 'directions', 'author_id'])
         .values(title, ingredients, directions, authorId)
         .execute(),
     )
-    // .then((results) => results.fetchAll())
-    // .then((recipes) =>
-    //   recipes.map(([
-    //     id, title, ingredients, directions, authorId, authorFirstName, authorLastName,
-    //   ]) =>
-    //     getNewRecipe({
-    //       id,
-    //       title,
-    //       ingredients,
-    //       directions,
-    //       authorId,
-    //       authorFirstName,
-    //       authorLastName,
-    //     }),
-    //   ),
-    // )
+    .catch((err) => {
+      console.error(err);
+    });
+
+const editOne = async ({ id, title, ingredients, directions }) =>
+  connection()
+    .then((session) =>
+      session
+        .getSchema('cookmaster')
+        .getTable('recipes')
+        .update()
+        .where('id = :id')
+        .bind('id', id)
+        .set('title', title)
+        .set('ingredients', ingredients)
+        .set('directions', directions)
+        .execute(),
+    )
     .catch((err) => {
       console.error(err);
     });
@@ -113,4 +102,5 @@ module.exports = {
   getAll,
   getById,
   createOne,
+  editOne,
 };
