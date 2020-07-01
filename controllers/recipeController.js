@@ -179,7 +179,6 @@ const searchRecipes = async (req, res) => {
   const { q } = req.query;
 
   const recipes = await Recipe.searchByTitle(q);
-console.log(recipes)
 
   res.render('recipe/search', {
     recipes,
