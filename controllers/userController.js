@@ -65,7 +65,7 @@ const createUser = async (req, res) => {
       message: 'Todos os campos são obrigatórios',
       error: true,
     });
-  await createNewUser(name, lastName, email, password);
+  await userModel.createNewUser(name, lastName, email, password);
   return res.render('user/register', {
     message: 'Usuario criado com sucesso',
     error: true,
@@ -79,6 +79,28 @@ const registerForm = async (req, res) => {
   });
 };
 
+const createRecipe = async (req, res) => {
+  const { recipeName, ingredients, recipe, author } = req.body;
+  console.log(recipeName, ingredients, recipe, req.user.id);
+  if (!recipeName || !ingredients || !recipe || !author)
+    return res.render('recipes/new', {
+      message: 'Todos os campos são obrigatórios',
+      error: true,
+    });
+  await userModel.createNewRecipe(recipeName, ingredients, recipe, req.user.id);
+  return res.render('recipes/new', {
+    message: 'Cadastro Feito Com sucesso',
+    error: true,
+  });
+};
+
+const registerRecipeForm = async (req, res) => {
+  res.render('recipes/new', {
+    message: '',
+    error: false,
+  });
+};
+
 module.exports = {
   login,
   loginForm,
@@ -87,4 +109,6 @@ module.exports = {
   findRecipeById,
   createUser,
   registerForm,
+  createRecipe,
+  registerRecipeForm,
 };

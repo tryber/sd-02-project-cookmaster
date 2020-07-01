@@ -71,7 +71,7 @@ const getAll = async () => {
         .execute()
     )
     .then((results) => results.fetchAll())
-}
+};
 
 const getRecipeDetails = (id) => {
   return schema()
@@ -84,7 +84,7 @@ const getRecipeDetails = (id) => {
         .execute()
     )
     .then((results) => results.fetchAll())
-}
+};
 
 const createNewUser = (firstName, lastName, email, pass) => {
   schema()
@@ -95,7 +95,18 @@ const createNewUser = (firstName, lastName, email, pass) => {
         .values(firstName, lastName, email, pass)
         .execute()
     )
-}
+};
+
+const createNewRecipe = (recipeName, ingredients, recipe, authorId) => {
+  schema()
+    .then((db) =>
+      db
+        .getTable('recipes')
+        .insert(['recipe_name', 'ingredients', 'recipe', 'author_id'])
+        .values(recipeName, ingredients, recipe, authorId)
+        .execute()
+    )
+};
 
 /*const getRecipeDetails = (id) => {
   return schema()
@@ -114,4 +125,5 @@ module.exports = {
   getAll,
   getRecipeDetails,
   createNewUser,
+  createNewRecipe,
 };
