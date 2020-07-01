@@ -7,7 +7,7 @@ const controllers = require('./controllers');
 
 const { schema } = require('./models/connections');
 
-schema().then((session) => {
+schema().then(() => {
   console.log('Conectado ao MySQL!');
 });
 

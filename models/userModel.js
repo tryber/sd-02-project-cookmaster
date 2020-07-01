@@ -1,14 +1,5 @@
 const { connection, schema } = require("./connections");
 
-/* Quando você implementar a conexão com o banco, não deve mais precisar desse objeto */
-const TEMP_USER = {
-  id: 'd2a667c4-432d-4dd5-8ab1-b51e88ddb5fe',
-  email: 'taylor.doe@company.com',
-  password: 'password',
-  name: 'Taylor',
-  lastName: 'Doe',
-};
-
 /* Substitua o código das funções abaixo para que ela,
 de fato, realize a busca no banco de dados */
 
@@ -48,9 +39,9 @@ const findById = async (id) => {
         .select(['id', 'email', 'pass', 'first_name', 'last_name'])
         .where('id = :id')
         .bind('id', id)
-        .execute()
+        .execute(),
     )
-    .then((results) => results.fetchAll())
+    .then((results) => results.fetchAll());
   return {
     id: user[0][0],
     email: user[0][1],
@@ -66,11 +57,11 @@ const getAll = async () => {
       db
         .sql(
           `SELECT rcp.id, rcp.recipe_name, us.first_name FROM recipes as rcp
-          INNER JOIN users as us ON us.id = rcp.author_id;`
+          INNER JOIN users as us ON us.id = rcp.author_id;`,
         )
-        .execute()
+        .execute(),
     )
-    .then((results) => results.fetchAll())
+    .then((results) => results.fetchAll());
 };
 
 const getRecipeDetails = (id) => {
@@ -81,9 +72,9 @@ const getRecipeDetails = (id) => {
         .select(['id', 'recipe_name', 'ingredients', 'recipe', 'author_id'])
         .where('id = :id')
         .bind('id', id)
-        .execute()
+        .execute(),
     )
-    .then((results) => results.fetchAll())
+    .then((results) => results.fetchAll());
 };
 
 const createNewUser = (firstName, lastName, email, pass) => {
@@ -93,8 +84,8 @@ const createNewUser = (firstName, lastName, email, pass) => {
         .getTable('users')
         .insert(['first_name', 'last_name', 'email', 'pass'])
         .values(firstName, lastName, email, pass)
-        .execute()
-    )
+        .execute(),
+    );
 };
 
 const createNewRecipe = (recipeName, ingredients, recipe, authorId) => {
@@ -104,20 +95,20 @@ const createNewRecipe = (recipeName, ingredients, recipe, authorId) => {
         .getTable('recipes')
         .insert(['recipe_name', 'ingredients', 'recipe', 'author_id'])
         .values(recipeName, ingredients, recipe, authorId)
-        .execute()
-    )
+        .execute(),
+    );
 };
 
-/*const getRecipeDetails = (id) => {
+/* const getRecipeDetails = (id) => {
   return schema()
-    .then((db) => 
+    .then((db) =>
       db
       .getTable('recipes')
       .select(['id', 'recipe', 'author_id'])
       .execute()
     )
     .then((results) => results.fetchAll())
-}*/
+} */
 
 module.exports = {
   findByEmail,
