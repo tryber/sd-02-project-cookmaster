@@ -7,8 +7,16 @@
   </head>
   <body>
     <h1>Boas vindas ao Cookmaster!</h1>
-    <div>
-      <%= JSON.stringify(recipes) %>
-    </div>
+    <ul>
+      <% recipes.map((recipe) => { %>
+        <li>
+          <%= `${recipe[1]} - ${recipe[2]} -` %>
+          <a href=<%=`/recipes/${recipe[0]}`%>>Ver Detalhes</a>
+        </li>
+      <% }) %>
+    </ul>
+    <% if(user) { %>
+    <button>Nova Receita</button>
+    <% } %>
   </body>
 </html>

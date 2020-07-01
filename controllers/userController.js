@@ -44,14 +44,23 @@ const logout = (req, res) => {
 };
 
 const getAllRecipes = async (req, res) => {
-  console.log(req.user);
+  const user = req.user;
   const recipes = await userModel.getAll();
-  res.render('home', { recipes })
+  res.render('home', { recipes, user })
 };
+
+const findRecipeById = async (req, res) => {
+  const recipe = await userModel.getRecipeDetails(req.params.id);
+  let recipeUser = false;
+  if (req.user) recipeUser = (req.user.id === recipe[0][4])
+  res.render('recipes/details', { recipe, recipeUser })
+  //const details = await userModel.getRecipeDetails()
+}
 
 module.exports = {
   login,
   loginForm,
   logout,
   getAllRecipes,
+  findRecipeById,
 };

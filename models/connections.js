@@ -14,7 +14,7 @@ const connection = () => {
 const schema = () =>
   connection()
     .then((session) => {
-      return session;
+      return session.getSchema('cookmaster');
     })
     .catch((err) => {
       console.error(err);

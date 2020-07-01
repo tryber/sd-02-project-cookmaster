@@ -1,4 +1,4 @@
-const { connection } = require("./connections");
+const { connection, schema } = require("./connections");
 
 /* Quando você implementar a conexão com o banco, não deve mais precisar desse objeto */
 const TEMP_USER = {
@@ -17,7 +17,23 @@ de fato, realize a busca no banco de dados */
  * @param {string} email Email do usuário a ser encontrado
  */
 const findByEmail = async (email) => {
-  return TEMP_USER;
+  const user = await schema()
+    .then((db) =>
+      db
+        .getTable('users')
+        .select(['id', 'email', 'pass', 'first_name', 'last_name'])
+        .where('email = :email')
+        .bind('email', email)
+        .execute()
+    )
+    .then((results) => results.fetchAll())
+  return {
+    id: user[0][0],
+    email: user[0][1],
+    password: user[0][2],
+    name: user[0][3],
+    lastName: user[0][4],
+  };
 };
 
 /**
@@ -25,7 +41,23 @@ const findByEmail = async (email) => {
  * @param {string} id ID do usuário
  */
 const findById = async (id) => {
-  return TEMP_USER;
+  const user = await schema()
+    .then((db) =>
+      db
+        .getTable('users')
+        .select(['id', 'email', 'pass', 'first_name', 'last_name'])
+        .where('id = :id')
+        .bind('id', id)
+        .execute()
+    )
+    .then((results) => results.fetchAll())
+  return {
+    id: user[0][0],
+    email: user[0][1],
+    password: user[0][2],
+    name: user[0][3],
+    lastName: user[0][4],
+  };
 };
 
 const getAll = async () => {
@@ -41,8 +73,33 @@ const getAll = async () => {
     .then((results) => results.fetchAll())
 }
 
+const getRecipeDetails = (id) => {
+  return schema()
+    .then((db) =>
+      db
+        .getTable('recipes')
+        .select(['id', 'recipe_name', 'ingredients', 'recipe', 'author_id'])
+        .where('id = :id')
+        .bind('id', id)
+        .execute()
+    )
+    .then((results) => results.fetchAll())
+}
+
+/*const getRecipeDetails = (id) => {
+  return schema()
+    .then((db) => 
+      db
+      .getTable('recipes')
+      .select(['id', 'recipe', 'author_id'])
+      .execute()
+    )
+    .then((results) => results.fetchAll())
+}*/
+
 module.exports = {
   findByEmail,
   findById,
   getAll,
+  getRecipeDetails,
 };
