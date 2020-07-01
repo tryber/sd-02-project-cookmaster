@@ -117,10 +117,22 @@ const deleteOne = async (id) => (
     })
 );
 
+const searchByTitle = async (q) => {
+  if (q === '') {
+    return [];
+  }
+
+  const allRecipes = await getAll();
+
+  return allRecipes
+    .filter(({ title }) => title.includes(q));
+};
+
 module.exports = {
   getAll,
   getById,
   createOne,
   editOne,
   deleteOne,
+  searchByTitle,
 };

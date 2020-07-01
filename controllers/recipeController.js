@@ -23,7 +23,7 @@ const showRecipeDetails = async (req, res) => {
   });
 };
 
-const newRecipeForm = (req, res) => (
+const newRecipeForm = (_req, res) => (
   res.render('recipe/form', {
     recipe: { title: '', ingredients: '', directions: '' },
     pageTitle: 'Nova Receita',
@@ -169,6 +169,23 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+// const searchRecipesForm = (_req, res) => {
+//   res.render('recipe/search', {
+//     recipes: [],
+//   });
+// };
+
+const searchRecipes = async (req, res) => {
+  const { q } = req.query;
+
+  const recipes = await Recipe.searchByTitle(q);
+console.log(recipes)
+
+  res.render('recipe/search', {
+    recipes,
+  });
+};
+
 module.exports = {
   listRecipes,
   showRecipeDetails,
@@ -178,4 +195,5 @@ module.exports = {
   editRecipe,
   deleteRecipeForm,
   deleteRecipe,
+  searchRecipes,
 };

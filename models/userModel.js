@@ -72,18 +72,8 @@ const registerNewUser = async (userData) => {
         .getTable('users')
         .insert(['first_name', 'last_name', 'email', 'password'])
         .values([firstName, lastName, email, password])
-        // .bind('firstName', firstName)
-        // .bind('lastName', lastName)
-        // .bind('email', email)
-        // .bind('password', password)
         .execute()
     ));
-    // .then((results) => results.fetchAll())
-    // .then((users) => (
-    //   users.map(([id, firstName, lastName, email, password]) =>
-    //     getNewUser({ id, firstName, lastName, email, password })
-    //   )[0]
-    // ));
 };
 
 module.exports = {
