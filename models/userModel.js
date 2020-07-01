@@ -19,16 +19,15 @@ const findByEmail = async (email) => {
         .bind('email', email)
         .execute(),
     )
-    .then((results) => results.fetchAll());
-  const results = {
-    id: user[0][0],
-    email: user[0][1],
-    password: user[0][2],
-    name: user[0][3],
-    lastName: user[0][4],
-  };
-  
-  return results;
+    .then((results) => results.fetchAll())
+    .then((value) => ({
+      id: value[0][0],
+      email: value[0][1],
+      password: value[0][2],
+      name: value[0][3],
+      lastName: value[0][4],
+    }));
+  return user;
 };
 
 /**
@@ -92,17 +91,6 @@ const createNewUser = (firstName, lastName, email, pass) => {
 };
 
 const createNewRecipe = (recipeName, ingredients, recipe, authorId) => {
-  schema()
-    .then((db) =>
-      db
-        .getTable('recipes')
-        .insert(['recipe_name', 'ingredients', 'recipe', 'author_id'])
-        .values(recipeName, ingredients, recipe, authorId)
-        .execute(),
-    );
-};
-
-const createNew = (recipeName, ingredients, recipe, authorId) => {
   schema()
     .then((db) =>
       db
