@@ -15,42 +15,38 @@ function loginForm(req, res) {
 }
 
 async function login(req, res) {
-  try {
-    const { email, password, redirect } = req.body;
+  const { email, password, redirect } = req.body;
 
-    if (!email || !password)
-      return res.render('pages/login', {
-        message: 'Preencha o email e a senha',
-        redirect: null,
-      });
-
-    const user = await userModel.findUser({ key: 'email', value: email });
-
-    if (!user)
-      return res.render('pages/login', {
-        message: 'Usuário não cadastrado',
-        redirect: null,
-      });
-
-    if (user.password !== password)
-      return res.render('pages/login', {
-        message: 'Email ou senha incorretos',
-        redirect: null,
-      });
-
-    const token = uuid();
-
-    SESSIONS[token] = user.id;
-
-    res.cookie('token', token, {
-      httpOnly: true,
-      sameSite: true,
+  if (!email || !password)
+    return res.render('pages/login', {
+      message: 'Preencha o email e a senha',
+      redirect: null,
     });
 
-    return res.redirect(redirect || '/');
-  } catch (err) {
-    throw new Error(err);
-  }
+  const user = await userModel.findUser({ key: 'email', value: email });
+
+  if (!user)
+    return res.render('pages/login', {
+      message: 'Usuário não cadastrado',
+      redirect: null,
+    });
+
+  if (user.password !== password)
+    return res.render('pages/login', {
+      message: 'Email ou senha incorretos',
+      redirect: null,
+    });
+
+  const token = uuid();
+
+  SESSIONS[token] = user.id;
+
+  res.cookie('token', token, {
+    httpOnly: true,
+    sameSite: true,
+  });
+
+  return res.redirect(redirect || '/');
 }
 
 function logout(req, res) {
