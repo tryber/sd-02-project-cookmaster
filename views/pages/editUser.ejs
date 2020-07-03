@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/index.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <title>Cookmaster - Editar Usuário</title>
+  </head>
+
+  <body id="body" class="box flex-column">
+    <section class="box box60-90 flex-column flex-font">
+      <form action="/me/edit" class="box flex-row box90" method="POST">
+        <div class="box form-group">
+          <label for="email">
+            Email
+            <input
+              class="box form-control"
+              id="email"
+              name="email"
+              type="text"
+              value="<%= email %>"
+            />
+          </label>
+          <% if (error.email) {%>
+          <p><%= error.email %></p>
+          <% } %>
+        </div>
+        <div class="box form-group">
+          <label for="password">
+            Senha
+            <input
+              class="box form-control"
+              id="password"
+              type="password"
+              name="password"
+              value="<%= password %>"
+            />
+          </label>
+          <% if (error.password) {%>
+          <p><%= error.password %></p>
+          <% } %>
+        </div>
+        <div class="box form-group">
+          <label for="confirm">
+            Confirmar a Senha
+            <input class="box form-control" id="confirm" type="password" name="confirm" />
+          </label>
+          <% if (error.confirm) {%>
+          <p><%= error.confirm %></p>
+          <% } %>
+        </div>
+        <div class="box form-group">
+          <label for="firstName">
+            Nome
+            <input
+              class="box form-control"
+              id="firstName"
+              type="text"
+              name="firstName"
+              value="<%= firstName %>"
+            />
+          </label>
+          <% if (error.firstName) {%>
+          <p><%= error.firstName %></p>
+          <% } %>
+        </div>
+        <div class="box form-group">
+          <label for="lastName">
+            Sobrenome
+            <input
+              class="box form-control"
+              id="lastName"
+              type="text"
+              name="lastName"
+              value="<%= lastName %>"
+            />
+          </label>
+          <% if (error.lastName) {%>
+          <p><%= error.lastName %></p>
+          <% } %>
+        </div>
+        <section class="box box90 flex-column">
+          <section class="box box60 flex-row">
+            <button class="box btn btn-warning" type="submit">Entrar</button>
+            <button
+              class="box btn btn-warning"
+              type="button"
+              onclick="window.location.pathname='/'"
+            >
+              Cancelar
+            </button>
+          </section>
+        </section>
+      </form>
+    </section>
+  </body>
+</html>

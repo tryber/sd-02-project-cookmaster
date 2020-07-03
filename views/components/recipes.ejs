@@ -1,0 +1,18 @@
+<section class="box box90 flex-row">
+  <% recipes.forEach((recipe) => {%>
+  <section class="box box30 box-border flex-column">
+    <h2><%= recipe.recipeName %></h2>
+    <h3><%= recipe.userName %></h3>
+    <% if(recipe.isNull) { %>
+    <p>Nenhuma receita encontrada para esta busca</p>
+    <% } else {%>
+    <button
+      class="box btn btn-danger"
+      onclick="window.location.pathname='<%= `/recipes/${recipe.recipeId}` %>'"
+    >
+      Detalhes
+    </button>
+    <%} %>
+  </section>
+  <% }) %>
+</section>

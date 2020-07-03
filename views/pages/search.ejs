@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/index.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <title>Cookmaster - Search</title>
+  </head>
+
+  <body id="body" class="box flex-column">
+    <%- include("../components/header", {endpoint: endpoint, name: name}); %>
+
+    <section class="box box90 flex-column flex-font">
+      <h1>Buscar Receitas</h1>
+      <section class="box box90 flex-column flex-font">
+        <form action="/recipes/search" class="box flex-row box90" method="GET">
+          <label for="recipe">
+            Receita
+            <input class="box form-control" id="recipe" type="text" name="q" />
+          </label>
+          <section class="box flex-row box60">
+            <button class="box btn btn-warning" type="submit">Buscar</button>
+            <button
+              class="box btn btn-warning"
+              type="button"
+              onclick="window.location.pathname='/'"
+            >
+              Home
+            </button>
+          </section>
+        </form>
+      </section>
+    </section>
+    <%-include("../components/recipes", {recipes: recipes}); %>
+  </body>
+</html>
