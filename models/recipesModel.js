@@ -22,8 +22,8 @@ async function getRecipes() {
     );
 }
 
-async function findRecipe({ key, value }) {
-  const recipeData = await connection()
+async function find({ key, value }) {
+  return connection()
     .then((db) =>
       db
         .getTable('recipes')
@@ -32,8 +32,11 @@ async function findRecipe({ key, value }) {
         .bind(key, value)
         .execute(),
     )
-    .then((results) => results.fetchAll())
-    .then((recipe) => recipe[0]);
+    .then((results) => results.fetchAll());
+}
+
+async function findRecipe({ key, value }) {
+  const recipeData = await find({ key, value }).then((recipe) => recipe[0]);
 
   if (!recipeData) return null;
 
@@ -50,16 +53,7 @@ async function findRecipe({ key, value }) {
 }
 
 async function findRecipes({ key, value }) {
-  const recipesData = await connection()
-    .then((db) =>
-      db
-        .getTable('recipes')
-        .select(['id', 'user_id', 'user', 'name', 'ingredients', 'instructions'])
-        .where(`${key} = :${key}`)
-        .bind(key, value)
-        .execute(),
-    )
-    .then((results) => results.fetchAll());
+  const recipesData = await find({ key, value });
 
   if (!recipesData) return null;
 

@@ -120,9 +120,9 @@ async function deleteRecipe(req, res) {
       user: { id: userId },
     } = req;
 
-    const { userId: user_id } = await recipesModel.findRecipe({ key: 'id', value: recipeId });
+    const { userId: id } = await recipesModel.findRecipe({ key: 'id', value: recipeId });
 
-    if (user_id === userId) {
+    if (id === userId) {
       const status = await recipesModel.deleteRecipe({ recipeId, userId, password });
 
       if (!status) {
@@ -166,12 +166,13 @@ async function searchRecipe(req, res) {
       }
     }
 
-    if (!user)
+    if (!user) {
       return res.render('pages/search', {
         recipes: recipes || [],
         name: null,
         endpoint: 'login',
       });
+    }
 
     return res.render('pages/search', { recipes, name: user.fullName, endpoint: 'logout' });
   } catch (err) {
@@ -201,7 +202,7 @@ function createIngredients({ ingredients, add, remove }) {
   }
 
   if (add) {
-    newIngredients += add + ',';
+    newIngredients += `${add},`;
   }
 
   return newIngredients;
