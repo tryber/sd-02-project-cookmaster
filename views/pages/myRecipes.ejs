@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="index.css" type="text/css" />
+    <link rel="stylesheet" href="/index.css" type="text/css" />
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -17,6 +17,9 @@
     <section class="box flex-column flex-font">
       <%- include("../components/header", {endpoint: endpoint, name: name}); %> <%-
       include("../components/recipes", {recipes: recipes}); %>
+      <button class="box btn btn-warning" type="button" onclick="window.location.pathname='/'">
+        Home
+      </button>
     </section>
   </body>
 </html>

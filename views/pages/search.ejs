@@ -18,13 +18,22 @@
 
     <section class="box box90 flex-column flex-font">
       <h1>Buscar Receitas</h1>
-      <section class="box box60-90 flex-column flex-font">
+      <section class="box box90 flex-column flex-font">
         <form action="/recipes/search" class="box flex-row box90" method="GET">
           <label for="recipe">
             Receita
             <input class="box form-control" id="recipe" type="text" name="q" />
           </label>
-          <button class="box btn btn-warning" type="submit">Buscar</button>
+          <section class="box flex-row box60">
+            <button class="box btn btn-warning" type="submit">Buscar</button>
+            <button
+              class="box btn btn-warning"
+              type="button"
+              onclick="window.location.pathname='/'"
+            >
+              Home
+            </button>
+          </section>
         </form>
       </section>
     </section>

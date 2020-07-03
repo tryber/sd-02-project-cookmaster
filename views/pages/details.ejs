@@ -20,27 +20,35 @@
         <h1><%= recipe.recipeName %></h1>
         <p>Enviada por <%= recipe.userName %></p>
         <% if (isUser) {%>
-        <button
-          class="box btn btn-danger"
-          onclick="window.location.pathname='<%= `/recipes/${recipe.recipeId}/edit` %>'"
-        >
-          Editar Receita
-        </button>
-        <button
-          class="box btn btn-danger"
-          onclick="window.location.pathname='<%= `/recipes/${recipe.recipeId}/delete` %>'"
-        >
-          Excluir Receita
-        </button>
+        <section class="box box90">
+          <button
+            class="box btn btn-danger"
+            onclick="window.location.pathname='<%= `/recipes/${recipe.recipeId}/edit` %>'"
+          >
+            Editar Receita
+          </button>
+          <button
+            class="box btn btn-danger"
+            onclick="window.location.pathname='<%= `/recipes/${recipe.recipeId}/delete` %>'"
+          >
+            Excluir Receita
+          </button>
+        </section>
         <% } %>
-        <h2>Ingredientes</h2>
-        <ul>
-          <% recipe.ingredients.split(",").forEach((ingredient) => { if (ingredient !== '') { %>
-          <li><%= ingredient %></li>
-          <% }}) %>
-        </ul>
-        <h2>Modo de Preparo</h2>
-        <p><%= recipe.instructions %></p>
+        <section class="box box90 flex-column">
+          <h2>Ingredientes</h2>
+          <ul class="list-group box flex-row">
+            <% recipe.ingredients.split(",").forEach((ingredient) => { if (ingredient !== '') { %>
+            <li class="list-group-item list-group-item-action list-group-item-danger">
+              <%= ingredient %>
+            </li>
+            <% }}) %>
+          </ul>
+        </section>
+        <section class="box box90 flex-column">
+          <h2>Modo de Preparo</h2>
+          <p><%= recipe.instructions %></p>
+        </section>
       </section>
       <button class="box btn btn-danger" onclick="window.location.pathname='/'">
         Home

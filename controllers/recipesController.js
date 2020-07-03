@@ -1,5 +1,29 @@
 const recipesModel = require('../models/recipesModel');
 
+async function list(req, res) {
+  try {
+    const { user } = req;
+
+    const recipes = await recipesModel.getRecipes();
+
+    if (!user) {
+      return res.render('pages/home', {
+        endpoint: 'login',
+        name: null,
+        recipes,
+      });
+    }
+
+    return res.render('pages/home', {
+      endpoint: 'logout',
+      name: user.fullName,
+      recipes,
+    });
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 async function details(req, res) {
   try {
     const { user } = req;
@@ -34,30 +58,6 @@ async function details(req, res) {
       endpoint: 'logout',
       isUser: false,
       recipe,
-    });
-  } catch (err) {
-    throw new Error(err);
-  }
-}
-
-async function list(req, res) {
-  try {
-    const { user } = req;
-
-    const recipes = await recipesModel.getRecipes();
-
-    if (!user) {
-      return res.render('pages/home', {
-        endpoint: 'login',
-        name: null,
-        recipes,
-      });
-    }
-
-    return res.render('pages/home', {
-      endpoint: 'logout',
-      name: user.fullName,
-      recipes,
     });
   } catch (err) {
     throw new Error(err);
