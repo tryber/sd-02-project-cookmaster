@@ -124,22 +124,28 @@ async function updateRecipe(req, res) {
   return res.redirect('/');
 }
 
-async function searchRecipe(req, res) {
-  const search = req.query.q || null;
-  const { user } = req;
-
+async function getRecipe(search) {
   let recipes;
 
   if (!search) {
     recipes = await recipesModel.getRecipes();
   } else {
     const recipe = await recipesModel.findRecipe({ key: 'name', value: search });
+
     if (recipe) {
       recipes = [recipe];
     } else {
       recipes = [];
     }
   }
+
+  return recipes;
+}
+
+async function searchRecipe(req, res) {
+  const search = req.query.q || null;
+  const { user } = req;
+  const recipes = await getRecipe(search);
 
   if (!user) {
     return res.render('pages/search', {
