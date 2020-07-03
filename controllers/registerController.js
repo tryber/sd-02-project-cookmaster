@@ -2,31 +2,27 @@ const registerModel = require('../models/registerModel');
 const userModel = require('../models/userModel');
 
 async function register(req, res) {
-  try {
-    const {
-      ok,
-      error: { email, password, confirm, firstName, lastName },
-    } = await registerModel.register(req.body);
+  const {
+    ok,
+    error: { email, password, confirm, firstName, lastName },
+  } = await registerModel.register(req.body);
 
-    if (ok) {
-      return res.render('pages/login', {
-        message: 'Cadastro efetuado com sucesso!',
-        redirect: null,
-      });
-    }
-
-    return res.render('pages/register', {
-      error: {
-        email,
-        password,
-        confirm,
-        firstName,
-        lastName,
-      },
+  if (ok) {
+    return res.render('pages/login', {
+      message: 'Cadastro efetuado com sucesso!',
+      redirect: null,
     });
-  } catch (err) {
-    throw new Error(err);
   }
+
+  return res.render('pages/register', {
+    error: {
+      email,
+      password,
+      confirm,
+      firstName,
+      lastName,
+    },
+  });
 }
 
 async function userForm(req, res) {

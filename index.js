@@ -18,11 +18,11 @@ app.use(cookieParser());
 
 app.use(express.static(`${__dirname}/public`));
 
-app.get('/', middlewares.auth(false), rescue(controllers.recipesController.list));
+app.get('/', middlewares.auth(false), controllers.recipesController.list);
 
 app.get('/login', controllers.userController.loginForm);
 
-app.post('/login', rescue(controllers.userController.login));
+app.post('/login', controllers.userController.login);
 
 app.get('/logout', controllers.userController.logout);
 
@@ -32,7 +32,7 @@ app.get('/register', middlewares.auth(false), (_req, res) => {
   });
 });
 
-app.post('/register', middlewares.auth(false), rescue(controllers.registerController.register));
+app.post('/register', middlewares.auth(false), controllers.registerController.register);
 
 app.get('/recipes/search', middlewares.auth(false), controllers.recipesController.searchRecipe);
 
@@ -46,7 +46,7 @@ app.get('/recipes/:id/delete', middlewares.auth(), controllers.recipesController
 
 app.post('/recipes/:id/delete', middlewares.auth(), controllers.recipesController.deleteRecipe);
 
-app.get('/recipes/:id', middlewares.auth(false), rescue(controllers.recipesController.details));
+app.get('/recipes/:id', middlewares.auth(false), controllers.recipesController.details);
 
 app.post('/recipes/:id', middlewares.auth(), controllers.recipesController.updateRecipe);
 
