@@ -32,27 +32,18 @@ async function details(req, res) {
 
   if (!user) {
     return res.render('pages/details', {
-      name: null,
-      endpoint: 'login',
-      isUser: false,
-      recipe,
+      name: null, endpoint: 'login', isUser: false, recipe,
     });
   }
 
   if (user.id === recipe.userId) {
     return res.render('pages/details', {
-      name: user.fullName,
-      endpoint: 'logout',
-      isUser: true,
-      recipe,
+      name: user.fullName, endpoint: 'logout', isUser: true, recipe,
     });
   }
 
   return res.render('pages/details', {
-    name: user.fullName,
-    endpoint: 'logout',
-    isUser: false,
-    recipe,
+    name: user.fullName, endpoint: 'logout', isUser: false, recipe,
   });
 }
 
