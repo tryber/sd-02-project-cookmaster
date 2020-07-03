@@ -97,7 +97,12 @@ async function deleteRecipe({ recipeId, userId, password }) {
   if (password !== userPassword) return false;
 
   await connection().then((db) =>
-    db.getTable('recipes').delete().where('id = :id').bind('id', recipeId).execute(),
+    db
+      .getTable('recipes')
+      .delete()
+      .where('id = :id')
+      .bind('id', recipeId)
+      .execute(),
   );
 
   return true;
