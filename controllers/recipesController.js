@@ -188,15 +188,12 @@ function createIngredients({ ingredients, add, remove }) {
     const ingredientsArr = ingredients.split(',');
 
     ingredientsArr
-      .filter(
-        (ingredient_n, n) =>
-          (n !== Number(index) || ingredient_n !== ingredient) && ingredient_n !== '',
-      )
-      .forEach((each_ingredient, i) => {
+      .filter((ing, n) => (n !== Number(index) || ing !== ingredient) && ing !== '')
+      .forEach((eachIngredient, i) => {
         if (i < ingredientsArr.length - 1) {
-          newIngredients += each_ingredient + ',';
+          newIngredients += `${eachIngredient},`;
         } else {
-          newIngredients += each_ingredient;
+          newIngredients += eachIngredient;
         }
       });
   } else {
