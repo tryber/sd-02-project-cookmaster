@@ -1,0 +1,12 @@
+<header class="box box90 flex-row">
+  <h1>Cookmaster</h1>
+  <% if (name) {%>
+  <h2><%= name %></h2>
+  <% } %>
+  <button
+    class="box box10-20 btn btn-warning"
+    onclick="window.location.pathname='/<%= endpoint %>'"
+  >
+    <%= endpoint %>
+  </button>
+</header>

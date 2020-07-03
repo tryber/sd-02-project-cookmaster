@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <title>Cookmaster - Login</title>
+  </head>
+
+  <body id="body" class="box flex-column">
+    <section class="box box60-90 flex-column flex-font">
+      <form action="/login" class="box flex-row box90" method="POST">
+        <div class="box form-group">
+          <label for="email">
+            Email
+            <input class="box form-control" id="email" name="email" type="text" />
+          </label>
+        </div>
+        <div class="box form-group">
+          <label for="password">
+            Senha
+            <input class="box form-control" id="password" type="password" name="password" />
+          </label>
+        </div>
+        <section class="box box90 flex-column">
+          <% if (message) {%>
+          <p><%= message %></p>
+          <% } %>
+          <section class="box box60 flex-row">
+            <section class="box flex-column">
+              <% if (redirect) { %>
+              <input type="hidden" name="redirect" value="<%= decodeURIComponent(redirect) %>" />
+              <% } %>
+              <button class="box btn btn-warning" type="submit">Entrar</button>
+            </section>
+            <button
+              class="box btn btn-warning"
+              type="button"
+              onclick="window.location.pathname='/register'"
+            >
+              Cadastre-se
+            </button>
+            <button
+              class="box btn btn-warning"
+              type="button"
+              onclick="window.location.pathname='/'"
+            >
+              Entrar sem Login
+            </button>
+          </section>
+        </section>
+      </form>
+    </section>
+  </body>
+</html>

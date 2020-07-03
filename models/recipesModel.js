@@ -1,33 +1,6 @@
 const connection = require('./connection');
 const userModel = require('./userModel');
 
-async function findRecipe(id) {
-  const recipeData = await connection()
-    .then((db) =>
-      db
-        .getTable('recipes')
-        .select(['id', 'user_id', 'user', 'name', 'ingredients', 'instructions'])
-        .where('id = :id')
-        .bind('id', id)
-        .execute(),
-    )
-    .then((results) => results.fetchAll())
-    .then((recipe) => recipe[0]);
-
-  if (!recipeData) return null;
-
-  const [recipeId, userId, userName, recipeName, ingredients, instructions] = recipeData;
-
-  return {
-    recipeId,
-    userId,
-    userName,
-    recipeName,
-    ingredients: ingredients.split(' '),
-    instructions,
-  };
-}
-
 async function getRecipes() {
   return connection()
     .then((db) =>
@@ -49,22 +22,12 @@ async function getRecipes() {
     );
 }
 
-async function createRecipe({ id: userId, fullName, name, ingredients, instructions }) {
-  return connection().then((db) =>
-    db
-      .getTable('recipes')
-      .insert(['user_id', 'user', 'name', 'ingredients', 'instructions'])
-      .values(userId, fullName, name, ingredients, instructions)
-      .execute(),
-  );
-}
-
-async function searchRecipe({ key, value }) {
+async function findRecipe({ key, value }) {
   const recipeData = await connection()
     .then((db) =>
       db
         .getTable('recipes')
-        .select(['id', 'name', 'ingredients', 'instructions'])
+        .select(['id', 'user_id', 'user', 'name', 'ingredients', 'instructions'])
         .where(`${key} = :${key}`)
         .bind(key, value)
         .execute(),
@@ -74,9 +37,50 @@ async function searchRecipe({ key, value }) {
 
   if (!recipeData) return null;
 
-  const [id, name, ingredients, instructions] = recipeData;
+  const [recipeId, userId, userName, recipeName, ingredients, instructions] = recipeData;
 
-  return { name, ingredients, instructions, id };
+  return {
+    recipeId,
+    userId,
+    userName,
+    recipeName,
+    ingredients,
+    instructions,
+  };
+}
+
+async function findRecipes({ key, value }) {
+  const recipesData = await connection()
+    .then((db) =>
+      db
+        .getTable('recipes')
+        .select(['id', 'user_id', 'user', 'name', 'ingredients', 'instructions'])
+        .where(`${key} = :${key}`)
+        .bind(key, value)
+        .execute(),
+    )
+    .then((results) => results.fetchAll());
+
+  if (!recipesData) return null;
+
+  return recipesData.map(([recipeId, userId, userName, recipeName, ingredients, instructions]) => ({
+    recipeId,
+    userId,
+    userName,
+    recipeName,
+    ingredients,
+    instructions,
+  }));
+}
+
+async function createRecipe({ id: userId, fullName, name, ingredients, instructions }) {
+  return connection().then((db) =>
+    db
+      .getTable('recipes')
+      .insert(['user_id', 'user', 'name', 'ingredients', 'instructions'])
+      .values(userId, fullName, name, ingredients, instructions)
+      .execute(),
+  );
 }
 
 async function updateRecipe({ id, name, ingredients, instructions }) {
@@ -99,15 +103,10 @@ async function deleteRecipe({ recipeId, userId, password }) {
   if (password !== userPassword) return false;
 
   await connection().then((db) =>
-    db
-      .getTable('recipes')
-      .delete()
-      .where('id = :id')
-      .bind('id', recipeId)
-      .execute(),
+    db.getTable('recipes').delete().where('id = :id').bind('id', recipeId).execute(),
   );
 
   return true;
 }
 
-module.exports = { getRecipes, findRecipe, createRecipe, searchRecipe, updateRecipe, deleteRecipe };
+module.exports = { getRecipes, findRecipe, createRecipe, updateRecipe, deleteRecipe, findRecipes };

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <script type="text/javascript">
+      function setFields() {
+        const name = document.getElementsByClassName('name');
+        const instructions = document.getElementsByClassName('instructions');
+
+        for (let i = 0; i < name.length; i += 1) {
+          name[i].value = document.getElementById('name').value;
+        }
+
+        for (let i = 0; i < instructions.length; i += 1) {
+          instructions[i].value = document.getElementById('instructions').value;
+        }
+      }
+    </script>
+    <title>Cookmaster - New Recipe</title>
+  </head>
+
+  <body id="body" cslass="box flex-column">
+    <section class="box box60-90 flex-row flex-font">
+      <%- include("../components/header", { endpoint, name: fullName }); %>
+      <h1>Nova Receita</h1>
+      <form
+        action="<%= recipeId ? `/recipes/${recipeId}` : '/recipes/new' %>"
+        method="POST"
+        id="postRecipe"
+      ></form>
+      <form action="/recipes/new" method="GET" id="addIngredients"></form>
+      <%- include("../components/inputs", { ingredients, recipeId }); %>
+      <div class="box form-group">
+        <label for="name">
+          Nome da Receita
+          <input
+            class="box form-control"
+            id="name"
+            type="text"
+            name="name"
+            value="<%= name %>"
+            form="postRecipe"
+          />
+        </label>
+      </div>
+      <section>
+        Ingredientes
+        <ul>
+          <% ingredients && ingredients.split(",").forEach((ingredient, index) => { if (ingredient
+          !== "") { %>
+          <li><%= ingredient %></li>
+          <form action="/recipes/new" method="GET">
+            <input
+              class="box form-control"
+              id="ingredient"
+              type="hidden"
+              name="remove"
+              value="<%= `${ingredient},${index}`  %>"
+            />
+            <input type="hidden" class="name" name="name" />
+            <input type="hidden" class="instructions" name="instructions" />
+            <input type="hidden" name="recipeId" value="<%= recipeId %>" />
+            <input
+              class="box form-control"
+              type="hidden"
+              name="ingredients"
+              value="<%= ingredients %>"
+            />
+            <button class="box btn btn-warning" onmouseover="setFields()" type="submit">
+              X
+            </button>
+          </form>
+          <% }})%>
+        </ul>
+        <div class="box form-group">
+          <input class="box form-control" id="add" type="text" name="add" form="addIngredients" />
+        </div>
+        <button
+          class="box btn btn-warning"
+          onmouseover="setFields()"
+          type="submit"
+          form="addIngredients"
+        >
+          Adicionar Ingrediente
+        </button>
+      </section>
+      <div class="box form-group">
+        <label for="instructions">
+          Mode de Preparo
+          <input
+            class="box form-control"
+            id="instructions"
+            type="text"
+            name="instructions"
+            value="<%= instructions %>"
+            form="postRecipe"
+          />
+        </label>
+      </div>
+      <button class="box btn btn-warning" type="submit" form="postRecipe">Postar Receita</button>
+    </section>
+  </body>
+</html>

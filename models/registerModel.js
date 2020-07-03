@@ -1,12 +1,27 @@
 const connection = require('./connection');
 const userModel = require('./userModel');
 
-async function create({ email, password, firstName, lastName }) {
+async function createUser({ email, password, firstName, lastName }) {
   return connection().then((db) =>
     db
       .getTable('users')
       .insert(['email', 'password', 'first_name', 'last_name'])
       .values(email, password, firstName, lastName)
+      .execute(),
+  );
+}
+
+async function updateUser({ email, password, firstName, lastName, userId }) {
+  return connection().then((db) =>
+    db
+      .getTable('users')
+      .update()
+      .set('email', email)
+      .set('password', password)
+      .set('first_name', firstName)
+      .set('last_name', lastName)
+      .where('id = :id')
+      .bind('id', userId)
       .execute(),
   );
 }
@@ -18,7 +33,7 @@ function isEmailValid(email = '') {
 
 function isNameValid(name = '') {
   const regex = /^[a-zA-Z]*$/;
-  return name.length > 3 && regex.test(name);
+  return name.length >= 3 && regex.test(name);
 }
 
 function getUserValidade({ email, password, confirm, firstName, lastName } = {}) {
@@ -69,7 +84,7 @@ async function register({ email, password, confirm, firstName, lastName }) {
 
     if (userExists) return { ok: false, error: { ...error, email: 'Email já cadastrado' } };
 
-    await create({
+    await createUser({
       email,
       password,
       firstName: firstName.toUpperCase(),
@@ -82,6 +97,31 @@ async function register({ email, password, confirm, firstName, lastName }) {
   }
 }
 
+async function update({ email, password, confirm, firstName, lastName, userId }) {
+  try {
+    const userValidate = getUserValidade({ email, password, confirm, firstName, lastName });
+
+    const isValid = isUserValid(userValidate);
+
+    const error = getUserErrors(userValidate);
+
+    if (!isValid) return { ok: false, error };
+
+    await updateUser({
+      email,
+      password,
+      firstName: firstName.toUpperCase(),
+      lastName: lastName.toUpperCase(),
+      userId,
+    });
+
+    return { ok: true, error };
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 module.exports = {
   register,
+  update,
 };
