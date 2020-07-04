@@ -20,6 +20,12 @@ app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);
 app.post('/login', controllers.userController.login);
 
+app.get('/users/new', (req, res) => {
+  res.status(200).render('./admin/newUser', { message: null });
+})
+app.post('/users/new', controllers.userController.verifyNewForm);
+
+
 app.get('/users', async (req, res) => {
   getSession()
   .then((session) => {
@@ -30,6 +36,11 @@ app.get('/users', async (req, res) => {
     res.status(500).json({ error: err.message, stack: err.stack });
   });
 });
+
+app.get('/recipes/:id/edit?', (req, res) => {
+  console.log(req)
+})
+
 
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.findRecipeDetail);
 

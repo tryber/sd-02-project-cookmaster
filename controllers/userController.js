@@ -43,8 +43,51 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const userRegistration = async (req, res, next) => {
+  return {};
+}
+
+const regexForm = (email, password) => {
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  const passRegex = /^.{6,}$/;
+  const emailTest = emailRegex.test(email);
+  const passTest = passRegex.test(password);
+  if (emailTest, passTest) {
+    return true;
+  }
+  return { emailTest, passTest };
+}
+
+const verifyNewForm = async (req, res) => {
+  const { name, lastName, email, password } = req.body;
+  const testForm = regexForm(email, password);
+
+  const user = await userModel.findByEmail(email);
+  if (!user && name && lastName && testForm === true) {
+    const query = `INSERT INTO users (name, last_name, email, password)
+    VALUES
+    ('${name}', '${lastName}', '${email}', '${password}');`;
+    await userModel.createUser(query);
+    return res.status(200).render('./admin/newUser', { message: 'Usuário criado com sucesso' })
+  }
+
+  res.render('./admin/newUser', { message: null || 'Dados inválidos, tente novamente.' })
+  // if (!req.body) return res.redirect('/');
+
+  // return res.render('/users/new', {
+  //   message: null,
+  //   redirect: req.query.redirect,
+  // });
+}
+
+const createNew = (req, res) => {
+  const { name, lastName, email, password } = req.body;
+}
+
 module.exports = {
   login,
   loginForm,
   logout,
+  verifyNewForm,
+  createNew,
 };

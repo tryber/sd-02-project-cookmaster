@@ -9,7 +9,6 @@ const findRecipes = async (req, res) => {
 const findRecipeDetail = async (req, res) => {
   const { id } = req.params;
   const recipe = await recipeModel.getRecipeDetails(id);
-  console.log(req)
   res.render('./recipes/recipeDetailsView', { recipe, logged: req.user || 'empty' });
 }
 module.exports = {
