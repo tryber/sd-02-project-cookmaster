@@ -2,7 +2,7 @@ const { dbLogin } = require('./connection');
 // buscando as receitas no banco, retornando todas as cadastradas.
 const listRecipes = () => (
   dbLogin()
-    .then((db) => db.sql(
+    .then((session) => session.sql(
       `SELECT
       r.id,
       r.recipe_name,
