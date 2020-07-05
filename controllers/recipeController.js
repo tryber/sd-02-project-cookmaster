@@ -10,7 +10,7 @@ const findRecipeDetail = async (req, res) => {
   const { id } = req.params;
   const recipe = await recipeModel.getRecipeDetails(id);
   res.render('./recipes/recipeDetailsView', { recipe, logged: req.user || 'empty' });
-}
+};
 
 const verifyNewRecipeForm = async (req, res) => {
   const { id } = req.user;
@@ -24,7 +24,7 @@ const verifyNewRecipeForm = async (req, res) => {
     return res.render('./recipes/newRecipe', { message: 'Receita criada com sucesso'});
   }
   return res.render('./recipes/newRecipe', { message: 'Preencha todos os campos' });
-}
+};
 
 module.exports = {
   findRecipes,
