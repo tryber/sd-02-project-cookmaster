@@ -47,37 +47,29 @@ const userRegistration = async (req, res, next) => {
   return {};
 }
 
-const regexForm = (email, password) => {
+const regexForm = (email) => {
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-  const passRegex = /^.{6,}$/;
   const emailTest = emailRegex.test(email);
-  const passTest = passRegex.test(password);
-  if (emailTest, passTest) {
+  if (emailTest) {
     return true;
   }
-  return { emailTest, passTest };
+  return false;
 }
 
 const verifyNewForm = async (req, res) => {
   const { name, lastName, email, password } = req.body;
-  const testForm = regexForm(email, password);
+  const testForm = regexForm(email);
 
   const user = await userModel.findByEmail(email);
-  if (!user && name && lastName && testForm === true) {
+  if (!user && name && lastName && testForm) {
     const query = `INSERT INTO users (name, last_name, email, password)
     VALUES
     ('${name}', '${lastName}', '${email}', '${password}');`;
     await userModel.createUser(query);
-    return res.status(200).render('./admin/newUser', { message: 'Usuário criado com sucesso' })
+    return res.render('./admin/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });
   }
 
-  res.render('./admin/newUser', { message: null || 'Dados inválidos, tente novamente.' })
-  // if (!req.body) return res.redirect('/');
-
-  // return res.render('/users/new', {
-  //   message: null,
-  //   redirect: req.query.redirect,
-  // });
+  return res.render('./admin/newUser', { message: null || 'E-mail inválido, digite um e-mail válido.', login: false });
 }
 
 const createNew = (req, res) => {

@@ -43,7 +43,6 @@ const findById = async (paramId) => {
 
 const createUser = async (query) => {
   const session = await getSession();
-  console.log(query);
   return session.sql(query).execute();
 }
 
