@@ -43,15 +43,13 @@ const getRecipeDetails = async (paramId) => {
     return { id, name, ingredients, prepareMethod, authorId };
 }
 
-// const editRecipe = (query, paramId) => {
-//   const session = await getSession();
-//   const results = await
-//   session.sql(
-
-//   )
-// }
+const createRecipe = async (query) => {
+  const session = await getSession();
+  return session.sql(query).execute();
+}
 
 module.exports = {
   getRecipesFromDataBase,
   getRecipeDetails,
+  createRecipe,
 };

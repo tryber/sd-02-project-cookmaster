@@ -68,7 +68,6 @@ const verifyNewForm = async (req, res) => {
     await userModel.createUser(query);
     return res.render('./admin/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });
   }
-
   return res.render('./admin/newUser', { message: null || 'E-mail inválido, digite um e-mail válido.', login: false });
 }
 
