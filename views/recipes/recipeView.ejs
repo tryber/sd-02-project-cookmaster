@@ -13,7 +13,7 @@
       <% recipes.map((recipe) => { %>
       <li>Receita: <%= recipe.recipeName %></li>
       <li>Autor: <%= `${recipe.userName} ${recipe.userLastName}` %></li><br>
-      <a href='/recipes/<%=recipe.id%>'>Detalhes</a><br><br>
+      <a href='/recipes/<%= recipe.id %>'>Detalhes</a><br><br>
       <% }) %>
     </ul>
     <% if (!logged) { %>

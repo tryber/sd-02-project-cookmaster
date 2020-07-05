@@ -37,9 +37,9 @@ app.get('/users', async (req, res) => {
   });
 });
 
-// app.get('/recipes/:id/edit?', (req, res) => {
-//   console.log('entrou cachorro')
-// });
+app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.loginRecipeEdit);
+
+app.post('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.editRecipeController);
 
 app.get('/recipes/new', middlewares.auth(), (req, res) => {
   res.status(200).render('./recipes/newRecipe', { message: null, authorId: req.user.id });
