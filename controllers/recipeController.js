@@ -19,9 +19,9 @@ const verifyNewRecipeForm = async (req, res) => {
   if (id && name && ingredients && prepareMethod) {
     const query = `INSERT INTO recipes (name, ingredients, prepare_method, author_id)
     VALUES
-      ('${name}', '${ingredients}', '${prepareMethod}', '${id}');`
+      ('${name}', '${ingredients}', '${prepareMethod}', '${id}');`;
     await recipeModel.createRecipe(query);
-    return res.render('./recipes/newRecipe', { message: 'Receita criada com sucesso'});
+    return res.render('./recipes/newRecipe', { message: 'Receita criada com sucesso' });
   }
   return res.render('./recipes/newRecipe', { message: 'Preencha todos os campos' });
 };

@@ -4,9 +4,9 @@ module.exports = {
     port: 33060,
     user: 'root',
     password: 'password',
-    schema: 'cookmaster'
+    schema: 'cookmaster',
   },
   server: {
-    port: 3000
+    port: 3000,
   },
 };

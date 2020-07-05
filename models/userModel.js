@@ -18,7 +18,7 @@ const findByEmail = async (paramEmail) => {
     .then((emails) => emails[0]);
 
   if (!getEmail) return null;
-  const [ id, name, lastName, email, password ] = getEmail;
+  const [id, name, lastName, email, password] = getEmail;
   return { id, name, lastName, email, password };
 };
 
@@ -37,14 +37,14 @@ const findById = async (paramId) => {
     .then((id) => id[0]);
 
   if (!getId) return null;
-  const [ id, name, lastName, email, password ] = getId;
+  const [id, name, lastName, email, password] = getId;
   return { id, name, lastName, email, password };
 };
 
 const createUser = async (query) => {
   const session = await getSession();
   return session.sql(query).execute();
-}
+};
 
 module.exports = {
   findByEmail,

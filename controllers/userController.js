@@ -43,9 +43,9 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
-const userRegistration = async (req, res, next) => {
-  return {};
-}
+// const userRegistration = async (req, res, next) => {
+//   return {};
+// };
 
 const regexForm = (email) => {
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -54,7 +54,7 @@ const regexForm = (email) => {
     return true;
   }
   return false;
-}
+};
 
 const verifyNewForm = async (req, res) => {
   const { name, lastName, email, password } = req.body;
@@ -69,16 +69,11 @@ const verifyNewForm = async (req, res) => {
     return res.render('./admin/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });
   }
   return res.render('./admin/newUser', { message: null || 'E-mail inválido, digite um e-mail válido.', login: false });
-}
-
-const createNew = (req, res) => {
-  const { name, lastName, email, password } = req.body;
-}
+};
 
 module.exports = {
   login,
   loginForm,
   logout,
   verifyNewForm,
-  createNew,
 };

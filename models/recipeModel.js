@@ -6,7 +6,7 @@ const getRecipesFromDataBase = async () => {
   session.sql(
       `SELECT r.id, r.name, u.name, u.last_name
       FROM cookmaster.recipes AS r
-      INNER JOIN users AS u ON u.id = r.author_id;`
+      INNER JOIN users AS u ON u.id = r.author_id;`,
     )
     .execute()
     .then((executeResult) => executeResult.fetchAll())
@@ -21,7 +21,7 @@ const getRecipesFromDataBase = async () => {
         }),
       );
     });
-    return results;
+  return results;
 };
 
 const getRecipeDetails = async (paramId) => {
@@ -30,15 +30,15 @@ const getRecipeDetails = async (paramId) => {
   session.sql(
       `SELECT id, name, ingredients, prepare_method, author_id
       FROM recipes
-      WHERE id = ?;`
+      WHERE id = ?;`,
     )
     .bind(paramId)
     .execute()
-    .then((results) => results.fetchAll())
+    .then((recipeResults) => recipeResults.fetchAll())
     .then((recipeDetail) => recipeDetail[0]);
-    if (!results) return null;
-    const [ id, name, ingredients, prepareMethod, authorId ] = results;
-    return { id, name, ingredients, prepareMethod, authorId };
+  if (!results) return null;
+  const [id, name, ingredients, prepareMethod, authorId] = results;
+  return { id, name, ingredients, prepareMethod, authorId };
 };
 
 const createRecipe = async (query) => {
