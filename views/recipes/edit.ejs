@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Atualização de Receita</title>
+  </head>
+  <body>
+    <form action="/recipes/<%= recipe[0][0] %>/edit" method="POST">
+      <label for="recipeNameInput">Nome da Receita: </label>
+      <input value="<%= recipe[0][1]%>" type="text" name="recipeName" id="recipeNameInput" /><br />
+      <label for="ingredientsInput">Ingredientes: </label>
+      <input value="<%= recipe[0][2]%>" type="textbox" name="ingredients" id="ingredientsInput" /><br />
+      <label for="recipeInput">Modo de Preparo: </label>
+      <input value="<%= recipe[0][3]%>" type="text" name="recipe" id="recipeInput" /><br />
+      <button type="submit">Cadastrar</button>
+    </form>
+  </body>
+</html>

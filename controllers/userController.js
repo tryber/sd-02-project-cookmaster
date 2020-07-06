@@ -2,6 +2,7 @@ const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
 
 const userModel = require('../models/userModel');
+const { getRecipeDetails } = require('../models/userModel');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -14,22 +15,23 @@ const loginForm = (req, res) => {
   });
 };
 
-const login = async (req, res, next) => {
+const login = async (req, res, _next) => {
   const { email, password, redirect } = req.body;
 
-  if (!email || !password)
+  if (!email || !password) {
     return res.render('admin/login', {
       message: 'Preencha o email e a senha',
       redirect: null,
     });
+  }
 
   const user = await userModel.findByEmail(email);
-  console.log(user);
-  if (!user || user.password !== password)
+  if (!user || user.password !== password) {
     return res.render('admin/login', {
       message: 'Email ou senha incorretos',
       redirect: null,
     });
+  }
 
   const token = uuid();
   SESSIONS[token] = user.id;
@@ -45,7 +47,7 @@ const logout = (req, res) => {
 };
 
 const getAllRecipes = async (req, res) => {
-  const user = req.user;
+  const { user } = req;
   const recipes = await userModel.getAll();
   res.render('home', { recipes, user });
 };
@@ -60,11 +62,12 @@ const findRecipeById = async (req, res) => {
 
 const createUser = async (req, res) => {
   const { email, password, name, lastName } = req.body;
-  if (!email || !password || !name || !lastName)
+  if (!email || !password || !name || !lastName) {
     return res.render('user/register', {
       message: 'Todos os campos são obrigatórios',
       error: true,
     });
+  }
   await userModel.createNewUser(name, lastName, email, password);
   return res.render('user/register', {
     message: 'Usuario criado com sucesso',
@@ -81,12 +84,12 @@ const registerForm = async (req, res) => {
 
 const createRecipe = async (req, res) => {
   const { recipeName, ingredients, recipe, author } = req.body;
-  console.log(recipeName, ingredients, recipe, req.user.id);
-  if (!recipeName || !ingredients || !recipe || !author)
+  if (!recipeName || !ingredients || !recipe || !author) {
     return res.render('recipes/new', {
       message: 'Todos os campos são obrigatórios',
       error: true,
     });
+  }
   await userModel.createNewRecipe(recipeName, ingredients, recipe, req.user.id);
   return res.render('recipes/new', {
     message: 'Cadastro Feito Com sucesso',
@@ -101,6 +104,37 @@ const registerRecipeForm = async (req, res) => {
   });
 };
 
+const updateRecipeForm = async (req, res) => {
+  const { id: userId } = req.user;
+  const { id } = req.params;
+  const recipe = await getRecipeDetails(id);
+
+  if (userId !== recipe[0][4]) {
+    return res.redirect(`/recipes/${recipe[0][0]}`);
+  }
+
+  if (recipe.length !== 0) {
+    return res.render('recipes/edit', { recipe });
+  }
+  return res.redirect('/');
+};
+
+const updateRecipe = async (req, res) => {
+  const { id: userId } = req.user || [];
+  const { recipeName, ingredients, recipe } = req.body;
+  const recipeInfos = await getRecipeDetails(req.params.id);
+
+  if (userId !== recipeInfos[0][4]) {
+    return res.redirect(`/recipes/${recipeInfos[0][0]}`);
+  }
+
+  console.log(recipeName, ingredients, recipe, req.params.id);
+
+  await userModel.updateRecipe(recipeName, ingredients, recipe, req.params.id);
+
+  return res.redirect(`/recipes/${recipeInfos[0][0]}`);
+};
+
 module.exports = {
   login,
   loginForm,
@@ -111,4 +145,6 @@ module.exports = {
   registerForm,
   createRecipe,
   registerRecipeForm,
+  updateRecipeForm,
+  updateRecipe,
 };

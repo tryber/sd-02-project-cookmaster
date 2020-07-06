@@ -16,7 +16,9 @@
       <% }) %>
     </ul>
     <% if(user) { %>
-    <button>Nova Receita</button>
+    <form action="/recipes/new" method="GET">
+      <button type="submit">Nova Receita</button>
+    </form>
     <% } %>
   </body>
 </html>
