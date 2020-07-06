@@ -45,6 +45,9 @@ app.post('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.e
 app.get('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.deleteRecipeForm);
 app.post('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.deleteRecipe);
 
+app.get('/recipes/search', controllers.recipeController.searchRecipes);
+app.post('/recipes/search', middlewares.auth(false), controllers.recipeController.searchForm);
+
 app.get('/recipes/new', middlewares.auth(), (req, res) => {
   res.status(200).render('./recipes/newRecipe', { message: null, authorId: req.user.id });
 });

@@ -56,10 +56,29 @@ const deleteRecipe = async (query) => {
   return session.sql(query).execute();
 };
 
+const searchRecipe = async (query) => {
+  const session = await getSession();
+  const results = await session.sql(query).execute()
+    .then((recipeResults) => recipeResults.fetchAll())
+    .then((recipeDetail) => {
+      if (!recipeDetail) return null;
+      return recipeDetail.map(
+        ([id, recipeName, userName, userLastName]) => ({
+          id,
+          recipeName,
+          userName,
+          userLastName,
+        }),
+      );
+    });
+  return results;
+};
+
 module.exports = {
   getRecipesFromDataBase,
   getRecipeDetails,
   createRecipe,
   editRecipe,
   deleteRecipe,
+  searchRecipe,
 };

@@ -88,6 +88,21 @@ const deleteRecipe = async (req, res) => {
   return res.render('./recipes/deleteRecipe', { recipe: { id }, message: 'Email inválido' });
 };
 
+const searchRecipes = async (req, res) => res.render('./recipes/searchRecipe');
+
+const searchForm = async (req, res) => {
+  const { q } = req.body;
+  if (!!q) {
+    const query = `SELECT r.id, r.name, u.name, u.last_name
+    FROM cookmaster.recipes AS r
+    INNER JOIN users AS u ON u.id = r.author_id
+    WHERE r.name REGEXP '${q}';`;
+    const recipes = await recipeModel.searchRecipe(query);
+    return res.render('./recipes/recipeView', { recipes, message: null, logged: req.user || 'empty' });
+  }
+  return res.redirect('/recipes/search');
+};
+
 module.exports = {
   findRecipes,
   findRecipeDetail,
@@ -96,4 +111,6 @@ module.exports = {
   loginRecipeEdit,
   deleteRecipe,
   deleteRecipeForm,
+  searchRecipes,
+  searchForm,
 };

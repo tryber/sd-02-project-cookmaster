@@ -27,6 +27,9 @@
       <br>
       <a href=/logout><button>Logout</button></a>
     <% } %>
+    <form action="/recipes/search" method="GET">
+      <button>Pesquisar</button>
+    </form>
     <% if (message) {%>
       <p><%= message%></p>
     <% } %>
