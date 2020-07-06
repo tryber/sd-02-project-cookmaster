@@ -42,8 +42,8 @@ const editRecipeController = async (req, res) => {
   const { id } = req.user;
   const { id: recipeId } = req.params;
   const { name, ingredients, prepareMethod } = req.body;
-  const recipe = await recipeModel.getRecipeDetails(recipeId);
-  if (id, name, ingredients, prepareMethod) {
+  let recipe = await recipeModel.getRecipeDetails(recipeId);
+  if (id && name && ingredients && prepareMethod) {
     const query = `UPDATE recipes
     SET
     name = '${name}',
@@ -54,7 +54,7 @@ const editRecipeController = async (req, res) => {
     AND
     author_id = '${id}';`;
     await recipeModel.editRecipe(query);
-    const recipe = await recipeModel.getRecipeDetails(recipeId);
+    recipe = await recipeModel.getRecipeDetails(recipeId);
     return res.render('./recipes/recipeDetailsView', { recipe, logged: req.user || 'empty' });
   }
 
