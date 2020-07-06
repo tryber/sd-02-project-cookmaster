@@ -12,8 +12,11 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+// get é rota
+// render é caminho interno
+
 app.get('/admin', middlewares.auth(), (req, res) => {
-  return res.render('admin/home', { user: req.user });
+  return res.render('./admin/home', { user: req.user });
 });
 
 app.get('/login', controllers.userController.loginForm);

@@ -9,7 +9,7 @@ const findRecipes = async (req, res) => {
 const findRecipeDetail = async (req, res) => {
   const { id } = req.params;
   const recipe = await recipeModel.getRecipeDetails(id);
-  res.render('./recipes/recipeDetailsView', { recipe, logged: req.user || 'empty' });
+  return res.render('./recipes/recipeDetailsView', { recipe, logged: req.user || 'empty' });
 };
 
 const verifyNewRecipeForm = async (req, res) => {
