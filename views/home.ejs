@@ -7,6 +7,8 @@
   </head>
   <body>
     <h1>Boas vindas ao Cookmaster!</h1>
-    <%= JSON.stringify(recipes) %>
+    <% recipes.forEach((recipe) => { %>
+      <li><%= recipe.recipeName %> (criada por <%= recipe.firstName%> <%=recipe.lastName%>) </li>
+    <% }) %>
   </body>
 </html>

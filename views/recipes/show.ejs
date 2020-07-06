@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Detalhes da receita</title>
+</head>
+
+<body>
+    <h1>Detalhes da receita</h1>
+    <% recipe.map((r) => { %>
+    <h2><%= r.recipeName %></h2>
+    <h3>Ingredientes: <%= r.ingredients %></h3>
+    <% }) %>
+    <h3>Modo de preparo: <%= r.howToPrepare %></h3>
+    <% }) %>
+    <a href="/home">Voltar para página inicial</a>
+</body>
+
+</html>

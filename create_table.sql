@@ -23,8 +23,10 @@ CREATE TABLE Recipes (
 
 INSERT INTO Users (email, pass, first_name, last_name)
 VALUES
-    ('laurolyra@gmail.com', '123456', 'Lauro', 'Lyra');
+    ('laurolyra@gmail.com', '123456', 'Lauro', 'Lyra'),
+    ('lucas@mail.com', '654321', 'Lucas', 'Lyra');
     
 INSERT INTO Recipes (recipe_name, ingredients, how_to_prepare, author_id)
 VALUES
-    ('Pipoca de microondas', 'pipoca', 'Colocar no microondas', '1');
+    ('Pipoca de microondas', 'pipoca', 'Colocar no microondas', '1'),
+    ('miojo facil', 'miojo', 'cozinhe por 3 minutos na água', '2');
