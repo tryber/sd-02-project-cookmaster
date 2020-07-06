@@ -4,19 +4,17 @@ const recipeModel = require('../models/recipeModel');
 const listRecipes = async (req, res) => {
   const recipes = await recipeModel.listRecipes();
   const loggedIn = req.user || null;
-  res.render('home', {recipes, loggedIn})
+  res.render('home', { recipes, loggedIn })
 };
 
-// const showRecipe = async (req, res) => {
-//   const { id } = req.params;
-//   const recipe = await recipeModel.findById(id);
-
-//   if (!recipe) return res.status(404).render('404');
-
-//   res.render('recipes/show', { recipe });
-// };
+const listOneRecipe = async (req, res) => {
+  const { id } = req.params;
+  const recipe = await recipeModel.listOneRecipe(id);
+  const loggedIn = req.user || null;
+  res.render('recipes/show', {recipe, loggedIn})
+};
 
 module.exports = {
   listRecipes,
-//  showRecipe
+  listOneRecipe
 };

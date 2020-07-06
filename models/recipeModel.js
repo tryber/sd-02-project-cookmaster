@@ -1,4 +1,4 @@
-const { dbLogin } = require('./connection');
+const { dbLogin, dbGetSchema } = require('./connection');
 // buscando as receitas no banco, retornando todas as cadastradas.
 const listRecipes = () => (
   dbLogin()
@@ -25,6 +25,27 @@ const listRecipes = () => (
     })))
 );
 
+const listOneRecipe = async (param) => {
+  const recipeData = await dbGetSchema()
+    .then((db) =>
+      db
+        .getTable('Recipes')
+        .select(['id', 'recipe_name', 'ingredients', 'how_to_prepare', 'author_id'])
+        .where('id = :id')
+        .bind('id', param)
+        .execute()
+    )
+    .then((results) => results.fetchAll())
+    .then((recipe) => recipe[0]);
+
+  if (!recipeData) return null;
+
+  const [id, recipeName, ingredients, howToPrepare, authorId] = recipeData;
+
+  return { id, recipeName, ingredients, howToPrepare, authorId };
+};
+
 module.exports = {
-  listRecipes
+  listRecipes,
+  listOneRecipe
 };
