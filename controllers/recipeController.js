@@ -1,9 +1,10 @@
 const recipeModel = require('../models/recipeModel');
+const userModel = require('../models/userModel');
 
 const findRecipes = async (req, res) => {
   const recipes = await recipeModel.getRecipesFromDataBase();
   if (!recipes) return res.render('./404/notFound');
-  res.render('./recipes/recipeView', { recipes, logged: req.user });
+  res.render('./recipes/recipeView', { recipes, logged: req.user, message: null });
 };
 
 const findRecipeDetail = async (req, res) => {
@@ -21,7 +22,9 @@ const verifyNewRecipeForm = async (req, res) => {
     VALUES
       ('${name}', '${ingredients}', '${prepareMethod}', '${id}');`;
     await recipeModel.createRecipe(query);
-    return res.render('./recipes/newRecipe', { message: 'Receita criada com sucesso' });
+    const recipes = await recipeModel.getRecipesFromDataBase();
+    return res.render('./recipes/recipeView',
+      { recipes, message: 'Receita criada com sucesso', logged: req.user || 'empty' });
   }
   return res.render('./recipes/newRecipe', { message: 'Preencha todos os campos' });
 };
@@ -57,10 +60,39 @@ const editRecipeController = async (req, res) => {
   return res.render(`./recipes/${req.params}/edit`, { recipe, message: null || 'Preencha todos os campos' });
 };
 
+const deleteRecipeForm = async (req, res) => {
+  const { id } = req.params;
+  const { id: userId } = req.user;
+  const recipe = await recipeModel.getRecipeDetails(id);
+  if (recipe.authorId === userId) {
+    return res.render('./recipes/deleteRecipe', { recipe , message: null });
+  }
+  return res.redirect('/');
+};
+
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { id: userId } = req.user;
+  const { password } = req.body;
+  const userDetails = await userModel.findById(userId);
+  if (password === userDetails.password) {
+    const query = `DELETE FROM recipes
+    WHERE id = '${id}'
+    AND author_id = '${userId}';`
+    await recipeModel.deleteRecipe(query);
+    const recipes = await recipeModel.getRecipesFromDataBase();
+    return res.render('./recipes/recipeView',
+      { recipes, message: 'Receita excluída com sucesso', logged: req.user || 'empty' });
+  }
+  return res.render('./recipes/deleteRecipe', { recipe: { id: id }, message: 'Email inválido' });
+};
+
 module.exports = {
   findRecipes,
   findRecipeDetail,
   verifyNewRecipeForm,
   editRecipeController,
   loginRecipeEdit,
+  deleteRecipe,
+  deleteRecipeForm,
 };

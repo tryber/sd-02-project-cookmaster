@@ -49,11 +49,17 @@ const createRecipe = async (query) => {
 const editRecipe = async (query) => {
   const session = await getSession();
   return session.sql(query).execute();
-}
+};
+
+const deleteRecipe = async (query) => {
+  const session = await getSession();
+  return session.sql(query).execute();
+};
 
 module.exports = {
   getRecipesFromDataBase,
   getRecipeDetails,
   createRecipe,
   editRecipe,
+  deleteRecipe,
 };

@@ -26,7 +26,6 @@ app.post('/login', controllers.userController.login);
 app.get('/users/new', (req, res) => {
   res.status(200).render('./admin/newUser', { message: null, login: false });
 });
-
 app.post('/users/new', controllers.userController.verifyNewForm);
 
 app.get('/users', async (req, res) => {
@@ -41,13 +40,14 @@ app.get('/users', async (req, res) => {
 });
 
 app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.loginRecipeEdit);
-
 app.post('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.editRecipeController);
+
+app.get('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.deleteRecipeForm);
+app.post('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.deleteRecipe);
 
 app.get('/recipes/new', middlewares.auth(), (req, res) => {
   res.status(200).render('./recipes/newRecipe', { message: null, authorId: req.user.id });
 });
-
 app.post('/recipes/new', middlewares.auth(), controllers.recipeController.verifyNewRecipeForm);
 
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.findRecipeDetail);
