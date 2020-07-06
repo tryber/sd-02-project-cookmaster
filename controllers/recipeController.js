@@ -85,7 +85,7 @@ const deleteRecipe = async (req, res) => {
     return res.render('./recipes/recipeView',
       { recipes, message: 'Receita excluída com sucesso', logged: req.user || 'empty' });
   }
-  return res.render('./recipes/deleteRecipe', { recipe: { id }, message: 'Email inválido' });
+  return res.render('./recipes/deleteRecipe', { recipe: { id }, message: 'Senha inválida' });
 };
 
 const searchRecipes = async (req, res) => res.render('./recipes/searchRecipe');
@@ -98,7 +98,7 @@ const searchForm = async (req, res) => {
     INNER JOIN users AS u ON u.id = r.author_id
     WHERE r.name REGEXP '${q}';`;
     const recipes = await recipeModel.searchRecipe(query);
-    return res.render('./recipes/recipeView', { recipes, message: null, logged: req.user || 'empty' });
+    return res.render('./recipes/recipeView', { recipes, message: 'Receita Encontrada', logged: req.user || 'empty' });
   }
   return res.redirect('/recipes/search');
 };

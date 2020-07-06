@@ -30,6 +30,9 @@
     <form action="/recipes/search" method="GET">
       <button>Pesquisar</button>
     </form>
+    <% if (message === 'Receita Encontrada') {%>
+      <a href='/'><button>Página Inicial</button></a>
+    <% } %>
     <% if (message) {%>
       <p><%= message%></p>
     <% } %>
