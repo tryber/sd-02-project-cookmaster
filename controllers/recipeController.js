@@ -42,7 +42,8 @@ const editRecipeController = async (req, res) => {
   const { id } = req.user;
   const { id: recipeId } = req.params;
   const { name, ingredients, prepareMethod } = req.body;
-  if ( id, name, ingredients, prepareMethod ) {
+  const recipe = await recipeModel.getRecipeDetails(recipeId);
+  if (id, name, ingredients, prepareMethod) {
     const query = `UPDATE recipes
     SET
     name = '${name}',
@@ -54,10 +55,10 @@ const editRecipeController = async (req, res) => {
     author_id = '${id}';`;
     await recipeModel.editRecipe(query);
     const recipe = await recipeModel.getRecipeDetails(recipeId);
-    return res.render(`./recipes/recipeDetailsView`, { recipe, logged: req.user || 'empty' });
+    return res.render('./recipes/recipeDetailsView', { recipe, logged: req.user || 'empty' });
   }
 
-  return res.render(`./recipes/${req.params}/edit`, { recipe, message: null || 'Preencha todos os campos' });
+  return res.render(`./recipes/${req.params.id}/edit`, { recipe, message: null || 'Preencha todos os campos' });
 };
 
 const deleteRecipeForm = async (req, res) => {
@@ -65,7 +66,7 @@ const deleteRecipeForm = async (req, res) => {
   const { id: userId } = req.user;
   const recipe = await recipeModel.getRecipeDetails(id);
   if (recipe.authorId === userId) {
-    return res.render('./recipes/deleteRecipe', { recipe , message: null });
+    return res.render('./recipes/deleteRecipe', { recipe, message: null });
   }
   return res.redirect('/');
 };
@@ -78,13 +79,13 @@ const deleteRecipe = async (req, res) => {
   if (password === userDetails.password) {
     const query = `DELETE FROM recipes
     WHERE id = '${id}'
-    AND author_id = '${userId}';`
+    AND author_id = '${userId}';`;
     await recipeModel.deleteRecipe(query);
     const recipes = await recipeModel.getRecipesFromDataBase();
     return res.render('./recipes/recipeView',
       { recipes, message: 'Receita excluída com sucesso', logged: req.user || 'empty' });
   }
-  return res.render('./recipes/deleteRecipe', { recipe: { id: id }, message: 'Email inválido' });
+  return res.render('./recipes/deleteRecipe', { recipe: { id }, message: 'Email inválido' });
 };
 
 module.exports = {
