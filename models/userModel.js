@@ -18,13 +18,18 @@ const findByEmail = async (email) => {
         .bind('email', email)
         .execute())
     .then((results) => results.fetchAll())
-    .then((value) => ({
-      id: value[0][0],
-      email: value[0][1],
-      password: value[0][2],
-      name: value[0][3],
-      lastName: value[0][4],
-    }));
+    .then((value) => {
+      if (value.length !== 0) {
+        return ({
+          id: value[0][0],
+          email: value[0][1],
+          password: value[0][2],
+          name: value[0][3],
+          lastName: value[0][4],
+        });
+      }
+      return undefined;
+    });
   return user;
 };
 
@@ -42,13 +47,16 @@ const findById = async (id) => {
     .execute();
 
   const user = await data.fetchAll();
-  return {
-    id: user[0][0],
-    email: user[0][1],
-    password: user[0][2],
-    name: user[0][3],
-    lastName: user[0][4],
-  };
+  if (user.length !== 0) {
+    return {
+      id: user[0][0],
+      email: user[0][1],
+      password: user[0][2],
+      name: user[0][3],
+      lastName: user[0][4],
+    };
+  }
+  return undefined;
 };
 
 const getAll = async () => (
@@ -112,6 +120,15 @@ const updateRecipe = (recipeName, ingredients, recipe, id) => (
         .execute())
 );
 
+const deleteRecipeById = (id) => (
+  connection()
+    .then((db) =>
+      db
+        .sql('DELETE FROM recipes WHERE id = ?;')
+        .bind(id)
+        .execute())
+);
+
 /* const getRecipeDetails = (id) => {
   return schema()
     .then((db) =>
@@ -131,4 +148,5 @@ module.exports = {
   createNewUser,
   createNewRecipe,
   updateRecipe,
+  deleteRecipeById,
 };

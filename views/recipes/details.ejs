@@ -16,7 +16,9 @@
     <button type="submit">Editar Receita</button>
     </form>
     </br>
+    <form action="<%=`/recipes/${recipe[0][0]}/delete`%>" method="GET">
     <button>Excluir Receita</button>
+    </from>
     <% } %>
   </body>
 </html>

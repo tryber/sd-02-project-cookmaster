@@ -135,6 +135,41 @@ const updateRecipe = async (req, res) => {
   return res.redirect(`/recipes/${recipeInfos[0][0]}`);
 };
 
+const deleteRecipeForm = async (req, res) => {
+  const recipe = await userModel.findById(req.params.id);
+
+  res.render('recipes/delete', {
+    message: '',
+    error: false,
+    recipe,
+  });
+};
+
+const deleteRecipe = async (req, res) => {
+  const { email, password } = req.body;
+  const recipe = await userModel.findById(req.params.id);
+
+  if (!email || !password) {
+    return res.render('recipes/delete', {
+      message: 'Preencha o email e a senha',
+      error: true,
+      recipe,
+    });
+  }
+
+  const user = await userModel.findByEmail(email);
+
+  if (!user || user.password !== password) {
+    return res.render('recipes/delete', {
+      message: 'Email ou senha incorretos',
+      error: true,
+      recipe,
+    });
+  }
+  await userModel.deleteRecipeById(recipe.id);
+  return res.redirect('/');
+};
+
 module.exports = {
   login,
   loginForm,
@@ -147,4 +182,6 @@ module.exports = {
   registerRecipeForm,
   updateRecipeForm,
   updateRecipe,
+  deleteRecipeForm,
+  deleteRecipe,
 };

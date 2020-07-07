@@ -31,6 +31,9 @@ app.get('/recipes/:id', middlewares.auth(false), controllers.userController.find
 app.get('/user/register', middlewares.auth(false), controllers.userController.registerForm);
 app.post('/user/register', middlewares.auth(false), controllers.userController.createUser);
 
+app.get('/recipes/:id/delete', middlewares.auth(), controllers.userController.deleteRecipeForm);
+app.post('/recipes/:id/delete', middlewares.auth(), controllers.userController.deleteRecipe);
+
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
 app.get('/login', controllers.userController.loginForm);
