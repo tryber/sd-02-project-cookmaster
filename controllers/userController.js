@@ -57,5 +57,5 @@ module.exports = {
   login,
   loginForm,
   logout,
-  insertUser
+  insertUser,
 };

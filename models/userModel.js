@@ -52,12 +52,12 @@ const insertUser = async (email, pass, firstName, lastName) => {
     .then((session) => session.sql(
       `INSERT INTO cook_master.Users
       (email, pass, first_name, last_name)
-      VALUES('${email}', '${pass}', '${firstName}', '${lastName}')`
-    ).execute())
+      VALUES('${email}', '${pass}', '${firstName}', '${lastName}')`,
+    ).execute());
 };
 
 module.exports = {
   findByEmail,
   findById,
-  insertUser
+  insertUser,
 };

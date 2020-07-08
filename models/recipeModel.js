@@ -15,14 +15,15 @@ const listRecipes = () => (
       ON u.id = r.author_id`
     ).execute())
     .then((results) => results.fetchAll())
-    .then((recipes) => recipes.map(([id, recipeName, ingredients, howToPrepare, firstName, lastName]) => ({
-      id,
-      recipeName,
-      ingredients,
-      howToPrepare,
-      firstName,
-      lastName
-    })))
+    .then((recipes) => recipes
+      .map(([id, recipeName, ingredients, howToPrepare, firstName, lastName]) => ({
+        id,
+        recipeName,
+        ingredients,
+        howToPrepare,
+        firstName,
+        lastName,
+      })))
 );
 
 const listOneRecipe = async (param) => {
@@ -33,7 +34,7 @@ const listOneRecipe = async (param) => {
         .select(['id', 'recipe_name', 'ingredients', 'how_to_prepare', 'author_id'])
         .where('id = :id')
         .bind('id', param)
-        .execute()
+        .execute(),
     )
     .then((results) => results.fetchAll())
     .then((recipe) => recipe[0]);
