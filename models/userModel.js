@@ -5,16 +5,16 @@ const { dbGetSchema } = require('./connection');
  */
 const findByEmail = async (param) => {
   const emailData = await dbGetSchema()
-  .then((db) =>
-    db
-      .getTable('Users')
-      .select(['id', 'email', 'pass', 'first_name', 'last_name'])
-      .where('email = :email')
-      .bind('email', param)
-      .execute()
-  )
-  .then((results) => results.fetchAll())
-  .then((emailList) => emailList[0]);
+    .then((db) =>
+      db
+        .getTable('Users')
+        .select(['id', 'email', 'pass', 'first_name', 'last_name'])
+        .where('email = :email')
+        .bind('email', param)
+        .execute()
+    )
+    .then((results) => results.fetchAll())
+    .then((emailList) => emailList[0]);
 
   if (!emailData) return null;
 
@@ -29,16 +29,16 @@ const findByEmail = async (param) => {
  */
 const findById = async (userId) => {
   const userData = await dbGetSchema()
-  .then((db) =>
-    db
-      .getTable('Users')
-      .select(['id', 'email', 'pass', 'first_name', 'last_name'])
-      .where('id = :id')
-      .bind('id', userId)
-      .execute()
-  )
-  .then((results) => results.fetchAll())
-  .then((emailList) => emailList[0]);
+    .then((db) =>
+      db
+        .getTable('Users')
+        .select(['id', 'email', 'pass', 'first_name', 'last_name'])
+        .where('id = :id')
+        .bind('id', userId)
+        .execute()
+    )
+    .then((results) => results.fetchAll())
+    .then((emailList) => emailList[0]);
 
   if (!userData) return null;
 
@@ -47,7 +47,17 @@ const findById = async (userId) => {
   return { id, email, password, name, lastName };
 };
 
+const insertUser = async (email, pass, firstName, lastName) => {
+  await dbGetSchema()
+    .then((session) => session.sql(
+      `INSERT INTO cook_master.Users
+      (email, pass, first_name, last_name)
+      VALUES('${email}', '${pass}', '${firstName}', '${lastName}')`
+    ).execute())
+};
+
 module.exports = {
   findByEmail,
   findById,
+  insertUser
 };
