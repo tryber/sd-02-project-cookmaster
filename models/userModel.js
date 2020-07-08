@@ -48,12 +48,11 @@ const findById = async (userId) => {
 };
 
 const insertUser = async (email, pass, firstName, lastName) => {
-  await dbGetSchema()
-    .then((session) => session.sql(
-      `INSERT INTO cook_master.Users
-      (email, pass, first_name, last_name)
-      VALUES('${email}', '${pass}', '${firstName}', '${lastName}')`,
-    ).execute());
+  const db = await dbGetSchema();
+  await db.getTable('Users')
+    .insert(['email', 'pass', 'first_name', 'last_name'])
+    .values(email, pass, firstName, lastName)
+    .execute();
 };
 
 module.exports = {

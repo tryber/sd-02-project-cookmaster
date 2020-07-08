@@ -59,7 +59,6 @@ const editRecipe = async (req, res) => {
 const compareIdsDeleteRecipe = async (req, res) => {
   console.log('params: ', req.params);
   const { id } = req.params;
-  console.log('user: ', req.user)
   const { id: userId } = req.user;
   const recipe = await recipeModel.findIdRecipe(id);
   const { authorId, id: recipeId } = recipe;
@@ -95,9 +94,7 @@ const deleteRecipe = async (req, res) => {
 };
 
 const searchRecipe = async (req, res) => {
-  console.log(req.user)
   const { id: userId } = req.user;
-  console.log(req.query)
   const search = req.query.q || null;
   const recipes = await recipeModel.searchRecipe(search);
   if (userId && search) {

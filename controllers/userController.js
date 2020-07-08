@@ -44,16 +44,16 @@ const logout = (req, res) => {
 };
 
 const insertUser = async (req, res) => {
-  const { email, pass, first_name, last_name } = req.body;
+  const { email, pass, firstName, lastName } = req.body;
   const user = await userModel.findByEmail(email);
-  if (user || !first_name || !last_name || !pass) {
+  if (user || !firstName || !lastName || !pass) {
     return res.render('./user/newUser',
       {
         message: null || 'Erro. Favor preencher o cadastro e verificar seu email.',
-        login: false
+        login: false,
       });
   }
-  await userModel.insertUser(email, pass, first_name, last_name);
+  await userModel.insertUser(email, pass, firstName, lastName);
   return res.render('./user/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });
 };
 

@@ -74,9 +74,9 @@ const findIdRecipe = async (param) => {
 
   if (!recipeId) return null;
 
-  const [id, recipe_name, ingredients, howToPrepare, authorId] = recipeId;
+  const [id, recipeName, ingredients, howToPrepare, authorId] = recipeId;
 
-  return { id, recipe_name, ingredients, howToPrepare, authorId };
+  return { id, recipeName, ingredients, howToPrepare, authorId };
 };
 
 const editRecipe = async (id, recipeName, ingredients, howToPrepare) => {
