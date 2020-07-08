@@ -29,7 +29,7 @@ const findById = async (userId) =>
 
 const addUser = async ({ nome, senha, email, lastName }) =>
   getSession()
-    .then((session) => session.sql(`insert into users(nome, senha, email, lastName) values(?, ?, ?, ?)`)
+    .then((session) => session.sql('insert into users(nome, senha, email, lastName) values(?, ?, ?, ?)')
       .bind(nome)
       .bind(senha)
       .bind(email)
@@ -39,8 +39,7 @@ const addUser = async ({ nome, senha, email, lastName }) =>
 
 const update = async (nome, email, senha, lastName, id) =>
   getSession()
-  .then((session) => session.sql(`update users set nome = ?, email = ?, senha = ?,
-    lastName = ? where id = ?`)
+  .then((session) => session.sql('update users set nome = ?, email = ?, senha = ?, lastName = ? where id = ?')
     .bind(nome)
     .bind(email)
     .bind(senha)
