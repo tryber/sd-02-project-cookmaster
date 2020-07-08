@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Edit</title>
+</head>
+
+<body>
+  </div>
+  <form action=<%=`/recipes/${id}`%> method="POST">
+    <label for="nameInput">Nome: </label>
+    <input value=<%=`${name}`%> type="text" name="name" id="nameInput" required /><br />
+    <label for="ingredientInput">Ingredientes: </label>
+    <textarea type="text" name="ingredients" id="ingredientInput" required ><%=`${ingredients}`%></textarea><br />
+    <label for="prepareInput">Modo de preparo: </label>
+    <textarea name="prepare" id="prepareInput" required /><%=`${how}`%></textarea><br />
+    <button type="submit">Alterar</button>
+  </form>
+</body>
+
+</html>

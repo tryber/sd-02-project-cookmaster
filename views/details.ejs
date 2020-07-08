@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Detalhes</title>
+</head>
+
+<body>
+  <p>título: <%= recipe[1] %></p>
+  <p>ingredientes: <%= recipe[2] %></p>
+  <p>forma de preparo: <%= recipe[3] %></p>
+  <% if(recipe[4] === token) {%>
+  <button>
+    <a href=<%=`/recipes/${recipe[0]}/delete/`%>>Excluir receita</a>
+  </button>
+  <button>
+    <a href=<%=`/recipes/${recipe[0]}/edit/`%>>Editar receita</a>
+  </button>
+  <% } %>
+</body>
+
+</html>
