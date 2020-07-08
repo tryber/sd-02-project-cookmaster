@@ -46,7 +46,25 @@ const listOneRecipe = async (param) => {
   return { id, recipeName, ingredients, howToPrepare, authorId };
 };
 
+const verifyInputs = (name, ingredients, howToPrepare) => {
+  if (!name || typeof name !== 'string') return false;
+  if (!ingredients || typeof ingredients !== 'string') return false;
+  if (!howToPrepare || typeof howToPrepare !== 'string') return false;
+  return true;
+};
+
+const insertRecipe = async (name, ingredients, howToPrepare, authorId) =>{
+  await dbGetSchema().then((db) =>
+    db
+      .getTable('Recipes')
+      .insert(['recipe_ame', 'ingredients', 'how_to_prepare', 'author_id'])
+      .values(name, ingredients, howToPrepare, authorId)
+      .execute());
+};
+
 module.exports = {
   listRecipes,
   listOneRecipe,
+  verifyInputs,
+  insertRecipe,
 };

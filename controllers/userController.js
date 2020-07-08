@@ -46,8 +46,12 @@ const logout = (req, res) => {
 const insertUser = async (req, res) => {
   const { email, pass, first_name, last_name } = req.body;
   const user = await userModel.findByEmail(email);
-  if (user) {
-    return res.render('./user/newUser', { message: null || 'Já existe um e-mail cadastrado.', login: false });
+  if (user || !first_name || !last_name || !pass) {
+    return res.render('./user/newUser',
+      {
+        message: null || 'Erro. Favor preencher o cadastro e verificar seu email.',
+        login: false
+      });
   }
   await userModel.insertUser(email, pass, first_name, last_name);
   return res.render('./user/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });

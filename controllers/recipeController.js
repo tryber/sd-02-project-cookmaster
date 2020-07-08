@@ -14,7 +14,25 @@ const listOneRecipe = async (req, res) => {
   res.render('recipes/show', { recipe, loggedIn });
 };
 
+const newRecipe = async (req, res) => {
+  res.render('recipes/new', { message: null, isLogged: req.user });
+};
+
+const insertRecipe = async (req, res) => {
+  const { recipe_name, ingredients, how_to_prepare } = req.body;
+  const { id } = req.user;
+
+  if (!recipeModel.verifyInputs(recipe_name, ingredients, how_to_prepare)) {
+    return res.render('recipes/new', { message: 'Dados inválidos', isLogged: req.user });
+  }
+
+  await recipeModel.insertRecipe(recipe_name, ingredients, how_to_prepare, id);
+  res.redirect('/');
+};
+
 module.exports = {
   listRecipes,
   listOneRecipe,
+  newRecipe,
+  insertRecipe,
 };

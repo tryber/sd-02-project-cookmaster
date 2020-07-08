@@ -14,6 +14,10 @@ app.set('views', './views');
 
 app.get('/', middlewares.auth(false), controllers.recipeController.listRecipes);
 
+app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newRecipe);
+
+app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
+
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.listOneRecipe);
 
 //  app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.editRecipe);
@@ -23,7 +27,7 @@ app.get('/admin', middlewares.auth(), (req, res) => {
 });
 
 app.get('/users/new', (_req, res) => {
-  res.status(200).render('./admin/newUser', { message: null, login: false });
+  res.status(200).render('./user/newUser', { message: null, login: false });
 });
 
 app.post('/users/new', controllers.userController.insertUser);
