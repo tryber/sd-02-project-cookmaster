@@ -1,4 +1,6 @@
 const recipeModel = require('../models/recipeModel');
+const userModel = require('../models/userModel');
+
 // devolvendo os dados para a view. Aqui eu renderizo o arquivo HOME com informações
 
 const listRecipes = async (req, res) => {
@@ -33,7 +35,7 @@ const insertRecipe = async (req, res) => {
 const compareIds = async (req, res) => {
   const { id: recipeId } = req.params;
   const recipe = await recipeModel.findIdRecipe(recipeId);
-  const { authorId: authorId } = recipe;
+  const { authorId } = recipe;
   if (authorId === req.user.id) {
     return res.render('recipes/edit', { recipe, message: null, isLogged: req.user });
   }
@@ -54,6 +56,44 @@ const editRecipe = async (req, res) => {
   res.redirect('/');
 };
 
+const compareIdsDeleteRecipe = async (req, res) => {
+  console.log('params: ', req.params);
+  const { id } = req.params;
+  console.log('user: ', req.user)
+  const { id: userId } = req.user;
+  const recipe = await recipeModel.findIdRecipe(id);
+  const { authorId, id: recipeId } = recipe;
+  if (authorId === userId) {
+    return res.render('recipes/delete', { recipe, message: null, isLogged: req.user });
+  }
+  return res.redirect(`/recipes/${recipeId}`);
+};
+
+const deleteRecipe = async (req, res) => {
+  const { password } = req.body;
+  const { id: idParams } = req.params;
+  const { id: idUser } = req.user;
+  const recipe = await recipeModel.findIdRecipe(idParams);
+  const { authorId, id: recipeId } = recipe;
+  const user = await userModel.findById(authorId);
+  const { password: userPass } = user;
+  if (idUser && userPass === password) {
+    await recipeModel.deleteRecipe(recipeId);
+    return res.redirect('/');
+  }
+  if (idUser && userPass !== password) {
+    return res.render(
+      'recipes/delete',
+      {
+        recipe,
+        message: 'Senha incorreta',
+        isLogged: req.user,
+      },
+    );
+  }
+  return res.redirect(`/recipes/${idParams}`);
+};
+
 module.exports = {
   listRecipes,
   listOneRecipe,
@@ -61,4 +101,6 @@ module.exports = {
   insertRecipe,
   compareIds,
   editRecipe,
+  compareIdsDeleteRecipe,
+  deleteRecipe,
 };

@@ -20,13 +20,13 @@ app.post('/recipes', middlewares.auth(), controllers.recipeController.insertReci
 
 app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.compareIds);
 
+app.get('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.compareIdsDeleteRecipe);
+
+app.post('/recipes/:id/delete', middlewares.auth(), controllers.recipeController.deleteRecipe);
+
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.listOneRecipe);
 
 app.post('/recipes/:id', middlewares.auth(), controllers.recipeController.editRecipe);
-
-
-
-//  app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.editRecipe);
 
 app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });

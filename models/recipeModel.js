@@ -74,13 +74,13 @@ const findIdRecipe = async (param) => {
 
   if (!recipeId) return null;
 
-  const [id, name, ingredients, howToPrepare, authorId] = recipeId;
+  const [id, recipe_name, ingredients, howToPrepare, authorId] = recipeId;
 
-  return { id, name, ingredients, howToPrepare, authorId };
+  return { id, recipe_name, ingredients, howToPrepare, authorId };
 };
 
-const editRecipe = async (id, recipeName, ingredients, howToPrepare) =>
-  dbLogin().then((session) =>
+const editRecipe = async (id, recipeName, ingredients, howToPrepare) => {
+  await dbLogin().then((session) =>
     session.sql(
       `UPDATE cook_master.Recipes
       SET
@@ -94,6 +94,17 @@ const editRecipe = async (id, recipeName, ingredients, howToPrepare) =>
       .bind(howToPrepare)
       .bind(id)
       .execute());
+};
+
+const deleteRecipe = async (param) => {
+  await dbGetSchema().then((db) =>
+    db
+      .getTable('Recipes')
+      .delete()
+      .where('id = :id')
+      .bind('id', param)
+      .execute());
+};
 
 module.exports = {
   listRecipes,
@@ -102,4 +113,5 @@ module.exports = {
   insertRecipe,
   findIdRecipe,
   editRecipe,
+  deleteRecipe,
 };

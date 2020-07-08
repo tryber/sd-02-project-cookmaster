@@ -18,7 +18,7 @@
   <div style="margin-top: 10px">
     <form action="/recipes/<%= recipe.id %>" method="POST">
       <label for="nameInput">Nome: </label>
-      <input type="text" name="name" value="<%= recipe.name %>" id="nameInput" /><br />
+      <input type="text" name="name" value="<%= recipe.recipe_name %>" id="nameInput" /><br />
       <label for="ingredientsInput">Ingredientes: </label>
       <input type="text" name="ingredients" 
         value="<%= recipe.ingredients %>" id="ingredientsInput" 
