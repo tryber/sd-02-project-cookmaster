@@ -12,7 +12,7 @@ const listRecipes = () => (
       u.last_name
       FROM Recipes as r
       INNER JOIN Users as u
-      ON u.id = r.author_id`
+      ON u.id = r.author_id`,
     ).execute())
     .then((results) => results.fetchAll())
     .then((recipes) => recipes
@@ -48,5 +48,5 @@ const listOneRecipe = async (param) => {
 
 module.exports = {
   listRecipes,
-  listOneRecipe
+  listOneRecipe,
 };
