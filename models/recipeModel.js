@@ -106,6 +106,27 @@ const deleteRecipe = async (param) => {
       .execute());
 };
 
+const searchRecipe = async (param) => {
+  console.log('search!')
+  await dbLogin().then((session) =>
+    session.sql(
+      `SELECT
+      r.id,
+      r.recipe_name,
+      u.first_name,
+      u.last_name
+      FROM Recipes as r
+      INNER JOIN Users AS u ON u.id = r.author_id
+      WHERE r.recipe_name REGEXP ?;`,
+    )
+      .bind(param)
+      .execute())
+    .then((results) => results.fetchAll())
+    .then((recipes) =>
+      recipes.map(([recipeId, recipeName, authorFirstName, authorLastName]) =>
+        ({ recipeId, recipeName, authorFirstName, authorLastName }) || null));
+};
+
 module.exports = {
   listRecipes,
   listOneRecipe,
@@ -114,4 +135,5 @@ module.exports = {
   findIdRecipe,
   editRecipe,
   deleteRecipe,
+  searchRecipe,
 };

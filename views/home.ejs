@@ -13,11 +13,15 @@
     <% }) %>
     <br>
     <% if (loggedIn) { %>
-      <button type="button" href=/recipes/search>Pesquisar receita</button>
+      <a href=/recipes/search>Pesquisar receita</a>
       <form action="/recipes/new" method="GET">
       <button type="submit">Nova receita</button>
       </form>
       <% } %>
-      <button type="button" href=/users/new method="GET">inserir novo usuário</button>
+      <% if (!loggedIn) { %>
+        <form action="/users/new" method="GET">
+          <button type="submit" method="GET">inserir novo usuário</button>
+        </form>
+      <% } %>
   </body>
 </html>
