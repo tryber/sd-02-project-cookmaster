@@ -107,7 +107,6 @@ const deleteRecipe = async (param) => {
 };
 
 const searchRecipe = async (param) => {
-  console.log('search!')
   await dbLogin().then((session) =>
     session.sql(
       `SELECT
