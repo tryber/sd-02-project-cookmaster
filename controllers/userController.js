@@ -14,21 +14,23 @@ const loginForm = (req, res) => {
   });
 };
 
-const login = async (req, res, next) => {
+const login = async (req, res, _next) => {
   const { email, password, redirect } = req.body;
 
-  if (!email || !password)
+  if (!email || !password) {
     return res.render('admin/login', {
       message: 'Preencha o email e a senha',
       redirect: null,
     });
+  }
 
   const user = await userModel.findByEmail(email);
-  if (!user || user.password !== password)
+  if (!user || user.password !== password) {
     return res.render('admin/login', {
       message: 'Email ou senha incorretos',
       redirect: null,
     });
+  }
 
   const token = uuid();
   SESSIONS[token] = user.id;
@@ -43,8 +45,28 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const showAdmin = (req, res) => res.render('admin/home', { user: req.user });
+
+const newUser = (_req, res) => {
+  res.render('users/signup', { message: null });
+};
+
+const insertUser = async (req, res) => {
+  const { email, password, firstName, lastName } = req.body;
+
+  if (!userModel.isValid(email, password, firstName, lastName)) {
+    return res.render('users/signup', { message: 'Dados inválidos' });
+  }
+
+  await userModel.insertUser(email, password, firstName, lastName);
+  res.redirect('login');
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  showAdmin,
+  newUser,
+  insertUser,
 };

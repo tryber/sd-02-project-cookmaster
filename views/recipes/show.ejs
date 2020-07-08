@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Mostrar Receitas</title>
+</head>
+
+<body>
+
+  <h1>Cookmaster - Mostrar Receitas</h1>
+
+  <h2>
+    <%= recipe.name %>
+  </h2>
+
+  <p>
+    <strong>Ingredientes:</strong>
+    <%=recipe.ingredients%>
+  </p>
+
+  <p>
+    <strong>Modo de preparo:</strong>
+    <%=recipe.prepareMethod%>
+  </p>
+  <p>
+    <% if (recipe.authorId === isLogged.id) { %>
+      <!-- <a href=/recipes/new>Nova receita!</a> -->
+      <form action=<%= `/recipes/${recipe.id}/edit` %> method="GET">
+        <button type="submit">Editar receita</button>
+      </form>
+
+      <form action=<%= `/recipes/${recipe.id}/delete` %> method="GET">
+        <button type="submit">Excluir receita</button>
+      </form>
+    <% } %>
+  </p>
+
+  <button onclick="javascript:history.back()">Voltar</button>
+</body>
+
+</html>
