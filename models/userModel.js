@@ -28,11 +28,12 @@ const findById = async (userId) =>
 
 
 const addUser = async ({ nome, senha, email, lastName }) =>
-  connection()
-    .then((db) =>
-      db.getTable('users')
-      .insert(['nome', 'senha', 'email', 'lastName'])
-      .value(nome, senha, email, lastName)
+  getSession()
+    .then((session) => session.sql(`insert into users(nome, senha, email, lastName) values(?, ?, ?, ?)`)
+      .bind(nome)
+      .bind(senha)
+      .bind(email)
+      .bind(lastName)
       .execute(),
     );
 
