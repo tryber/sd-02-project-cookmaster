@@ -30,9 +30,35 @@ const insertRecipe = async (req, res) => {
   res.redirect('/');
 };
 
+const compareIds = async (req, res) => {
+  const { id: recipeId } = req.params;
+  const recipe = await recipeModel.findIdRecipe(recipeId);
+  const { authorId: authorId } = recipe;
+  if (authorId === req.user.id) {
+    return res.render('recipes/edit', { recipe, message: null, isLogged: req.user });
+  }
+  return res.redirect(`/recipes/${recipeId}`);
+};
+
+const editRecipe = async (req, res) => {
+  const { name, ingredients, howToPrepare } = req.body;
+  const { id: recipeId } = req.params;
+  const { id: userId } = req.user;
+  const recipe = await recipeModel.findIdRecipe(recipeId);
+  const { authorId } = recipe;
+
+  if (userId && userId === authorId) {
+    await recipeModel.editRecipe(recipeId, name, ingredients, howToPrepare);
+    return res.redirect(`/recipes/${recipeId}`);
+  }
+  res.redirect('/');
+};
+
 module.exports = {
   listRecipes,
   listOneRecipe,
   newRecipe,
   insertRecipe,
+  compareIds,
+  editRecipe,
 };

@@ -53,18 +53,53 @@ const verifyInputs = (name, ingredients, howToPrepare) => {
   return true;
 };
 
-const insertRecipe = async (name, ingredients, howToPrepare, authorId) =>{
+const insertRecipe = async (name, ingredients, howToPrepare, authorId) => {
   await dbGetSchema().then((db) =>
     db
       .getTable('Recipes')
-      .insert(['recipe_ame', 'ingredients', 'how_to_prepare', 'author_id'])
+      .insert(['recipe_name', 'ingredients', 'how_to_prepare', 'author_id'])
       .values(name, ingredients, howToPrepare, authorId)
       .execute());
 };
+
+const findIdRecipe = async (param) => {
+  const recipeId = await dbGetSchema().then((db) => db
+    .getTable('Recipes')
+    .select(['id', 'recipe_name', 'ingredients', 'how_to_prepare', 'author_id'])
+    .where('id = :id')
+    .bind('id', param)
+    .execute()
+    .then((results) => results.fetchAll())
+    .then((ids) => ids[0]));
+
+  if (!recipeId) return null;
+
+  const [id, name, ingredients, howToPrepare, authorId] = recipeId;
+
+  return { id, name, ingredients, howToPrepare, authorId };
+};
+
+const editRecipe = async (id, recipeName, ingredients, howToPrepare) =>
+  dbLogin().then((session) =>
+    session.sql(
+      `UPDATE cook_master.Recipes
+      SET
+        recipe_name = ?,
+        ingredients = ?,
+        how_to_prepare = ?
+      WHERE id = ?;`,
+    )
+      .bind(recipeName)
+      .bind(ingredients)
+      .bind(howToPrepare)
+      .bind(id)
+      .execute());
 
 module.exports = {
   listRecipes,
   listOneRecipe,
   verifyInputs,
   insertRecipe,
+  findIdRecipe,
+  editRecipe,
 };

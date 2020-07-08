@@ -18,7 +18,13 @@ app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newReci
 
 app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
 
+app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.compareIds);
+
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.listOneRecipe);
+
+app.post('/recipes/:id', middlewares.auth(), controllers.recipeController.editRecipe);
+
+
 
 //  app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.editRecipe);
 
