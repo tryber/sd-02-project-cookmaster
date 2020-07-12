@@ -7,6 +7,7 @@ const controllers = require('./controllers');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.set('view engine', 'ejs');
@@ -56,5 +57,7 @@ app.post('/recipes/new', middlewares.auth(), controllers.recipeController.verify
 app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.findRecipeDetail);
 
 app.get('/', middlewares.auth(false), controllers.recipeController.findRecipes);
+
+app.get('*', (req, res) => res.status(200).json({ Error: '404 - End Point Not Found' }));
 
 app.listen(3000, () => console.log('Listening on 3000'));

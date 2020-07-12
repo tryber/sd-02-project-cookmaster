@@ -41,9 +41,16 @@ const getRecipeDetails = async (paramId) => {
   return { id, name, ingredients, prepareMethod, authorId };
 };
 
-const createRecipe = async (query) => {
+const createRecipe = async (name, ingredients, prepareMethod, id) => {
   const session = await getSession();
-  return session.sql(query).execute();
+  return session.sql(`INSERT INTO recipes (name, ingredients, prepare_method, author_id)
+    VALUES
+      (?, ?, ?, ?);`)
+    .bind(name)
+    .bind(ingredients)
+    .bind(prepareMethod)
+    .bind(id)
+    .execute();
 };
 
 const editRecipe = async (query) => {
