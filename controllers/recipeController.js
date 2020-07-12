@@ -78,11 +78,7 @@ const searchRecipes = async (req, res) => res.render('./recipes/searchRecipe');
 const searchForm = async (req, res) => {
   const { q } = req.body;
   if (q.length > 0) {
-    const query = `SELECT r.id, r.name, u.name, u.last_name
-    FROM cookmaster.recipes AS r
-    INNER JOIN users AS u ON u.id = r.author_id
-    WHERE r.name REGEXP '${q}';`;
-    const recipes = await recipeModel.searchRecipe(query);
+    const recipes = await recipeModel.searchRecipe(q);
     return res.render('./recipes/recipeView', { recipes, message: 'Pesquisa Realizada', logged: req.user || 'empty' });
   }
   return res.redirect('/recipes/search');

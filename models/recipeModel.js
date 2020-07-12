@@ -84,7 +84,12 @@ const deleteRecipe = async (id, userId) => {
 
 const searchRecipe = async (query) => {
   const session = await getSession();
-  const results = await session.sql(query).execute()
+  const results = await session.sql(`SELECT r.id, r.name, u.name, u.last_name
+  FROM cookmaster.recipes AS r
+  INNER JOIN users AS u ON u.id = r.author_id
+  WHERE r.name REGEXP ?;`)
+  .bind(query)
+  .execute()
     .then((recipeResults) => recipeResults.fetchAll())
     .then((recipeDetail) => {
       if (!recipeDetail) return null;
