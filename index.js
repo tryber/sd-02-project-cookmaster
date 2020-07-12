@@ -16,9 +16,9 @@ app.get('/', middlewares.auth(false), controllers.recipeController.listRecipes);
 
 app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newRecipe);
 
-app.get('/recipes/search', middlewares.auth(), controllers.recipeController.searchRecipe);
-
 app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
+
+app.get('/recipes/search', middlewares.auth(), controllers.recipeController.searchRecipe);
 
 app.get('/recipes/:id/edit', middlewares.auth(), controllers.recipeController.compareIds);
 
@@ -38,10 +38,12 @@ app.get('/users/new', (_req, res) => {
   res.status(200).render('./user/newUser', { message: null, login: false });
 });
 
-app.post('/users/new', controllers.userController.insertUser);
+app.post('/users/new',  middlewares.auth(), controllers.userController.insertUser);
 
 app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);
 app.post('/login', controllers.userController.login);
+
+app.get('*', (_req, res) => res.status(200).json({ Error: '404 - Not Found' }));
 
 app.listen(3000, () => console.log('Listening on 3000'));

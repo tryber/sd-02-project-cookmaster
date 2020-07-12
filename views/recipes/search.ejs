@@ -24,9 +24,9 @@
   </div>
   <div>
     <ul>
-        <% recipes && recipes.length > 0 && recipes.forEach((recipe) => { %>
-            <li><%= recipe.recipeName %> (criada por <%= recipe.firstName%> <%=recipe.lastName%>) </li>
-            <a href=/recipes/<%= `${recipe.id}` %>>Detalhes</a>
+        <% recipes && recipes.forEach((recipe) => { %>
+          <li><%= recipe.recipeName %> (criada por <%= recipe.firstName%> <%=recipe.lastName%>) </li>
+          <a href=/recipes/<%= `${recipe.id}` %>>Detalhes</a>
           <% }) %>
     </ul>
   </div>

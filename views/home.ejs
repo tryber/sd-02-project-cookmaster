@@ -18,10 +18,8 @@
       <button type="submit">Nova receita</button>
       </form>
       <% } %>
-      <% if (!loggedIn) { %>
-        <form action="/users/new" method="GET">
-          <button type="submit" method="GET">inserir novo usuário</button>
-        </form>
-      <% } %>
+    <form action="/users/new" method="GET">
+      <button type="submit" method="GET">inserir novo usuário</button>
+    </form>
   </body>
 </html>
