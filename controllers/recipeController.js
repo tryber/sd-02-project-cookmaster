@@ -65,10 +65,7 @@ const deleteRecipe = async (req, res) => {
   const { password } = req.body;
   const userDetails = await userModel.findById(userId);
   if (password === userDetails.password) {
-    const query = `DELETE FROM recipes
-    WHERE id = '${id}'
-    AND author_id = '${userId}';`;
-    await recipeModel.deleteRecipe(query);
+    await recipeModel.deleteRecipe(id, userId);
     const recipes = await recipeModel.getRecipesFromDataBase();
     return res.render('./recipes/recipeView',
       { recipes, message: 'Receita excluída com sucesso', logged: req.user || 'empty' });

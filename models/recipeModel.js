@@ -72,9 +72,14 @@ const editRecipe = async (name, ingredients, prepareMethod, recipeId, id) => {
   .execute();
 };
 
-const deleteRecipe = async (query) => {
+const deleteRecipe = async (id, userId) => {
   const session = await getSession();
-  return session.sql(query).execute();
+  return session.sql(`DELETE FROM recipes
+  WHERE id = ?
+  AND author_id = ?;`)
+  .bind(id)
+  .bind(userId)
+  .execute();
 };
 
 const searchRecipe = async (query) => {
