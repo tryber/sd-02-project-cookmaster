@@ -62,10 +62,7 @@ const verifyNewForm = async (req, res) => {
 
   const user = await userModel.findByEmail(email);
   if (!user && name && lastName && testForm) {
-    const query = `INSERT INTO users (name, last_name, email, password)
-    VALUES
-    ('${name}', '${lastName}', '${email}', '${password}');`;
-    await userModel.createUser(query);
+    await userModel.createUser(name, lastName, email, password);
     return res.render('./admin/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });
   }
   return res.render('./admin/newUser', { message: null || 'E-mail inválido, digite um e-mail válido.', login: false });

@@ -41,9 +41,16 @@ const findById = async (paramId) => {
   return { id, name, lastName, email, password };
 };
 
-const createUser = async (query) => {
+const createUser = async (name, lastName, email, password) => {
   const session = await getSession();
-  return session.sql(query).execute();
+  return session.sql(`INSERT INTO users (name, last_name, email, password)
+  VALUES
+  (?, ?, ?, ?);`)
+  .bind(name)
+  .bind(lastName)
+  .bind(email)
+  .bind(password)
+  .execute();
 };
 
 module.exports = {
