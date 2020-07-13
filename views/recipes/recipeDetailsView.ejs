@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receitas</title>
+  </head>
+  <body>
+    <ul>
+      <li>Titulo: <%= recipe.name %></li>
+      <li>Ingredientes: <%= recipe.ingredients %></li><br>
+      <li>Modo de Preparo: <%= recipe.prepareMethod %></li>
+    </ul>
+    <% if (logged.id === recipe.authorId) { %>
+      <form action="/recipes/<%= recipe.id %>/edit" method="GET">
+        <button type="submit">Editar receita</button>
+      </form><br>
+      <form action="/recipes/<%= recipe.id %>/delete" method="GET">
+        <button type="submit">Excluir receita</button>
+      </form>
+    <% } %>
+    <a href='/'><button>Página Inicial</button></a>
+  </body>
+</html>

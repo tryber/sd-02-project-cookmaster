@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name ="viewport" content="width=device=width, initial-scale=1.0" />
+  <title>Editar Receita</title>
+</head>
+<body>
+  <% if (message) { %>
+    <p><%= message %></p>
+  <% } %>
+  <form action="/recipes/<%= recipe.id%>/edit" method="POST">
+    <label for="nameInput">Título: </label>
+    <input type="text" name="name" id="nameInput" value="<%= recipe.name %>" required /><br />
+    <label for="ingredients">Ingredientes: </label>
+    <textarea type="text" name="ingredients" id="ingredients" required ><%= recipe.ingredients %></textarea><br />
+    <label for="prepareMethod">Método de Preparo: </label>
+    <textarea type="text" name="prepareMethod" id="prepareMethod" required ><%= recipe.prepareMethod %></textarea><br />
+    <button>Finalizar Edição</button>
+  </form>
+  <a href='/'><button>Página Inicial</button></a>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Receitas</title>
+  </head>
+  <body>
+    <% if (!recipes) {%>
+      <h1>Não foram encontradas nenhuma receita, verifique o banco de dados</h1>
+    <% } %>
+    <ul>
+      <% recipes.map((recipe) => { %>
+      <li>Receita: <%= recipe.recipeName %></li>
+      <li>Autor: <%= `${recipe.userName} ${recipe.userLastName}` %></li><br>
+      <a href='/recipes/<%= recipe.id %>'>Detalhes</a><br><br>
+      <% }) %>
+    </ul>
+    <% if (!logged) { %>
+      <a href=/login><button>Login</button></a>
+      <a href=/users/new><button>Novo Usuário</button></a>
+    <% } %> 
+    <% if (logged) { %>
+      <form action="/recipes/new" method="GET">
+      <button type="submit">Nova receita!</button>
+      </form>
+      <br>
+      <a href=/logout><button>Logout</button></a>
+    <% } %>
+    <form action="/recipes/search" method="GET">
+      <button>Pesquisar</button>
+    </form>
+    <% if (message === 'Pesquisa Realizada') {%>
+      <a href='/'><button>Página Inicial</button></a>
+    <% } %>
+    <% if (message) {%>
+      <p><%= message%></p>
+    <% } %>
+  </body>
+</html>

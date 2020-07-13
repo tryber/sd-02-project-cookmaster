@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Receita</title>
+</head>
+<body>
+  <% if (message) { %>
+    <p><%= message %></p>
+  <% } %>
+  <form action="/recipes/new" method="POST">
+    <label for="nameInput">Nome: </label>
+    <input type="text" name="name" id="nameInput" required /><br />
+    <label for="ingredients">Ingredientes: </label>
+    <textarea name="ingredients" id="ingredients" required ></textarea><br />
+    <label for="prepareMethod">Modo de Preparo: </label>
+    <textarea name="prepareMethod" id="prepareMethod" required ></textarea><br />
+    <button type="submit">Cadastrar</button>
+  </form>
+  <a href='/'><button>Página Inicial</button></a>
+</body>
+</html>

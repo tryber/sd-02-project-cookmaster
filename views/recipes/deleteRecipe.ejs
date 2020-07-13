@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+  <title>Confirmação de exclusão</title>
+</head>
+<body>
+  <% if (message) {%>
+    <p><%= message%></p>
+  <% } %>
+  <form action="/recipes/<%= recipe.id%>/delete" method="POST">
+    <label for="passwordInput">Confirme sua senha:</label>
+    <input type="password" name="password" id="passwordInput" />
+    <button>Deletar receita</button>
+  </form>
+  <a href='/'><button>Página Inicial</button></a>
+</body>
+</html>
