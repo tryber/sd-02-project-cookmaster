@@ -26,6 +26,18 @@
       align-items: center;
       padding: 0 2vw 0 2vw;
     }
+
+    .Recipes_div {
+      display: flex;
+      flex-flow: row wrap;
+      padding: 2vh 2vw;
+    }
+
+    .Recipe_selection {
+      margin: 1vh 1vw;
+      padding: 1vh 1vw;
+      background-color: grey;
+    }
   </style>
 
 </head>
@@ -33,26 +45,34 @@
 <body>
   <div class="Home_header">
     <p class="Home_header_tags">Cookmaster</p>
-    <button class=" Home_header_tags" type="button">Login</button>
+    <button
+      class=" Home_header_tags"
+      type="button"
+      onclick="window.location.pathname='/login'"
+    >
+      Login
+    </button>
   </div>
   <div class="Home_recipes">
     <h1>Receitas</h1>
     <div>
+      <% if(user) { %>
       <button type="button" class="my_recipes">Minhas Receitas</button>
-      <button type="button" class="search_recipes">Buscar Receita</button>
       <button type="button" class="new_recipe">Nova Receita</button>
+      <% } %>
+      <button type="button" class="search_recipes">Buscar Receita</button>
     </div>
   </div>
 
-  <div class="dataReceive"></div>
-  <script>
-
-    const login = document.querySelectorAll(".Home_header_tags")[1];
-    login.addEventListener("click", () => {
-      window.location="/login"
-    });
-
-  </script>
+  <div class="Recipes_div">
+    <% allRecipes.forEach((recipe) => {%>
+    <div class="Recipe_selection">
+      <p><%=`${recipe.recipe}`%></p>
+      <p><%=`${recipe.userName}`%></p>
+      <a href="<%=`/recipes/${recipe.id}`%>">Ver mais</a>
+    </div>
+    <% }) %>
+  </div>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
+const userModel = require('../models/userModel');
 const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
-
-const userModel = require('../models/userModel');
+const { createAdmin } = require('../models/userModel');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -37,6 +37,22 @@ const login = async (req, res, next) => {
   res.redirect(redirect || '/admin');
 };
 
+const createUser = async (req, res) => {
+  const { email, password, confirmPass, name, lastName } = req.body;
+  const isPassword = password === confirmPass;
+
+  if (!email || !isPassword || !name || !lastName) {
+    return res.render('admin/register', {
+      message: 'Preencha todos os campos.',
+      redirect: null,
+    });
+  };
+
+  await createAdmin(email, password, name, lastName);
+
+  return res.redirect(redirect ||'/login')
+};
+
 const logout = (req, res) => {
   res.clearCookie('token');
   if (!req.cookies || !req.cookies.token) return res.redirect('/login');
@@ -47,4 +63,5 @@ module.exports = {
   login,
   loginForm,
   logout,
+  createUser,
 };

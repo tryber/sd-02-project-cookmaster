@@ -8,7 +8,6 @@ const connection = () => (
     port: 33060,
     schema: 'cookmaster',
   })
-    .then((session) => session.getSchema('cookmaster'))
     .catch((err) => {
       console.error(err.message);
       process.exit(1);
