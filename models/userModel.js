@@ -47,6 +47,7 @@ const findById = async (id) => {
     .execute();
 
   const user = await data.fetchAll();
+
   if (user.length !== 0) {
     return {
       id: user[0][0],

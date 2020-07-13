@@ -128,45 +128,41 @@ const updateRecipe = async (req, res) => {
     return res.redirect(`/recipes/${recipeInfos[0][0]}`);
   }
 
-  console.log(recipeName, ingredients, recipe, req.params.id);
-
   await userModel.updateRecipe(recipeName, ingredients, recipe, req.params.id);
 
   return res.redirect(`/recipes/${recipeInfos[0][0]}`);
 };
 
 const deleteRecipeForm = async (req, res) => {
-  const recipe = await userModel.findById(req.params.id);
-
   res.render('recipes/delete', {
     message: '',
     error: false,
-    recipe,
+    recipe: { id: req.params.id },
   });
 };
 
 const deleteRecipe = async (req, res) => {
-  const { email, password } = req.body;
-  const recipe = await userModel.findById(req.params.id);
+  const { password } = req.body;
+  const recipe = await userModel.getRecipeDetails(req.params.id);
 
-  if (!email || !password) {
+  if (!password) {
     return res.render('recipes/delete', {
-      message: 'Preencha o email e a senha',
+      message: 'Preencha a senha',
       error: true,
-      recipe,
+      recipe: { id: recipe[0][0] },
     });
   }
 
-  const user = await userModel.findByEmail(email);
+  const user = await userModel.findById(req.user.id);
 
   if (!user || user.password !== password) {
     return res.render('recipes/delete', {
-      message: 'Email ou senha incorretos',
+      message: 'Senha incorreta',
       error: true,
-      recipe,
+      recipe: { id: recipe[0][0] },
     });
   }
-  await userModel.deleteRecipeById(recipe.id);
+  await userModel.deleteRecipeById(recipe[0][0]);
   return res.redirect('/');
 };
 
@@ -176,7 +172,6 @@ const searchRecipeForm = async (req, res) => {
     INNER JOIN users as us ON us.id = rcp.author_id
     WHERE rcp.recipe_name LIKE '%${req.query.q}%';`;
     const results = await userModel.searchRecipeByName(query);
-    console.log(results);
     if (results.length === 0) {
       return res.render('recipes/search', { recipes: false, message: 'Não foram encontradas receitas' });
     }
