@@ -26,6 +26,8 @@ app.post('/recipes/new', middlewares.auth(), controllers.userController.createRe
 app.get('/recipes/:id/edit', middlewares.auth(), controllers.userController.updateRecipeForm);
 app.post('/recipes/:id/edit', middlewares.auth(), controllers.userController.updateRecipe);
 
+app.get('/recipes/search', middlewares.auth(false), controllers.userController.searchRecipeForm);
+
 app.get('/recipes/:id', middlewares.auth(false), controllers.userController.findRecipeById);
 
 app.get('/user/register', middlewares.auth(false), controllers.userController.registerForm);

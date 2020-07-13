@@ -170,6 +170,21 @@ const deleteRecipe = async (req, res) => {
   return res.redirect('/');
 };
 
+const searchRecipeForm = async (req, res) => {
+  if (req.query.q) {
+    const query = `SELECT rcp.id, rcp.recipe_name, us.first_name FROM recipes as rcp
+    INNER JOIN users as us ON us.id = rcp.author_id
+    WHERE rcp.recipe_name LIKE '%${req.query.q}%';`;
+    const results = await userModel.searchRecipeByName(query);
+    console.log(results);
+    if (results.length === 0) {
+      return res.render('recipes/search', { recipes: false, message: 'Não foram encontradas receitas' });
+    }
+    return res.render('recipes/search', { recipes: results, message: '' });
+  }
+  return res.render('recipes/search', { recipes: false, message: '' });
+};
+
 module.exports = {
   login,
   loginForm,
@@ -184,4 +199,5 @@ module.exports = {
   updateRecipe,
   deleteRecipeForm,
   deleteRecipe,
+  searchRecipeForm,
 };

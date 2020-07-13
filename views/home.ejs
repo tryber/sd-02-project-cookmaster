@@ -15,6 +15,10 @@
         </li>
       <% }) %>
     </ul>
+    <% if (!user) { %>
+      <button type="button" onclick="window.location.pathname='/login'">Login</button>
+      <button type="button" onclick="window.location.pathname='/recipes/search'">Buscar Receita</button>    
+    <% } %>
     <% if(user) { %>
     <form action="/recipes/new" method="GET">
       <button type="submit">Nova Receita</button>

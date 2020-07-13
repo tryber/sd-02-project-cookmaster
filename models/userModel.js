@@ -129,6 +129,19 @@ const deleteRecipeById = (id) => (
         .execute())
 );
 
+const searchRecipeByName = async (searchQuery) =>
+  connection()
+    .then((db) =>
+      db
+        .sql(searchQuery)
+        .execute())
+    .then((results) => results.fetchAll())
+    .then((recipes) => recipes.map(([id, recipeName, author]) => ({
+      id,
+      recipeName,
+      author,
+    })));
+
 /* const getRecipeDetails = (id) => {
   return schema()
     .then((db) =>
@@ -149,4 +162,5 @@ module.exports = {
   createNewRecipe,
   updateRecipe,
   deleteRecipeById,
+  searchRecipeByName,
 };
