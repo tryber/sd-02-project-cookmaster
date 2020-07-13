@@ -2,6 +2,7 @@ const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
 
 const userModel = require('../models/userModel');
+const { getRecipeDetails } = require('../models/userModel');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -14,21 +15,23 @@ const loginForm = (req, res) => {
   });
 };
 
-const login = async (req, res, next) => {
+const login = async (req, res, _next) => {
   const { email, password, redirect } = req.body;
 
-  if (!email || !password)
+  if (!email || !password) {
     return res.render('admin/login', {
       message: 'Preencha o email e a senha',
       redirect: null,
     });
+  }
 
   const user = await userModel.findByEmail(email);
-  if (!user || user.password !== password)
+  if (!user || user.password !== password) {
     return res.render('admin/login', {
       message: 'Email ou senha incorretos',
       redirect: null,
     });
+  }
 
   const token = uuid();
   SESSIONS[token] = user.id;
@@ -43,8 +46,154 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const getAllRecipes = async (req, res) => {
+  const { user } = req;
+  const recipes = await userModel.getAll();
+  res.render('home', { recipes, user });
+};
+
+const findRecipeById = async (req, res) => {
+  const recipe = await userModel.getRecipeDetails(req.params.id);
+  let recipeUser = false;
+  if (req.user) recipeUser = (req.user.id === recipe[0][4]);
+  res.render('recipes/details', { recipe, recipeUser });
+  // const details = await userModel.getRecipeDetails()
+};
+
+const createUser = async (req, res) => {
+  const { email, password, name, lastName } = req.body;
+  if (!email || !password || !name || !lastName) {
+    return res.render('user/register', {
+      message: 'Todos os campos são obrigatórios',
+      error: true,
+    });
+  }
+  await userModel.createNewUser(name, lastName, email, password);
+  return res.render('user/register', {
+    message: 'Usuario criado com sucesso',
+    error: true,
+  });
+};
+
+const registerForm = async (req, res) => {
+  res.render('user/register', {
+    message: '',
+    error: false,
+  });
+};
+
+const createRecipe = async (req, res) => {
+  const { recipeName, ingredients, recipe, author } = req.body;
+  if (!recipeName || !ingredients || !recipe || !author) {
+    return res.render('recipes/new', {
+      message: 'Todos os campos são obrigatórios',
+      error: true,
+    });
+  }
+  await userModel.createNewRecipe(recipeName, ingredients, recipe, req.user.id);
+  return res.render('recipes/new', {
+    message: 'Cadastro Feito Com sucesso',
+    error: true,
+  });
+};
+
+const registerRecipeForm = async (req, res) => {
+  res.render('recipes/new', {
+    message: '',
+    error: false,
+    author: req.user.name,
+  });
+};
+
+const updateRecipeForm = async (req, res) => {
+  const { id: userId } = req.user;
+  const { id } = req.params;
+  const recipe = await getRecipeDetails(id);
+
+  if (userId !== recipe[0][4]) {
+    return res.redirect(`/recipes/${recipe[0][0]}`);
+  }
+
+  if (recipe.length !== 0) {
+    return res.render('recipes/edit', { recipe });
+  }
+  return res.redirect('/');
+};
+
+const updateRecipe = async (req, res) => {
+  const { id: userId } = req.user || [];
+  const { recipeName, ingredients, recipe } = req.body;
+  const recipeInfos = await getRecipeDetails(req.params.id);
+
+  if (userId !== recipeInfos[0][4]) {
+    return res.redirect(`/recipes/${recipeInfos[0][0]}`);
+  }
+
+  await userModel.updateRecipe(recipeName, ingredients, recipe, req.params.id);
+
+  return res.redirect(`/recipes/${recipeInfos[0][0]}`);
+};
+
+const deleteRecipeForm = async (req, res) => {
+  res.render('recipes/delete', {
+    message: '',
+    error: false,
+    recipe: { id: req.params.id },
+  });
+};
+
+const deleteRecipe = async (req, res) => {
+  const { password } = req.body;
+  const recipe = await userModel.getRecipeDetails(req.params.id);
+
+  if (!password) {
+    return res.render('recipes/delete', {
+      message: 'Preencha a senha',
+      error: true,
+      recipe: { id: recipe[0][0] },
+    });
+  }
+
+  const user = await userModel.findById(req.user.id);
+
+  if (!user || user.password !== password) {
+    return res.render('recipes/delete', {
+      message: 'Senha incorreta',
+      error: true,
+      recipe: { id: recipe[0][0] },
+    });
+  }
+  await userModel.deleteRecipeById(recipe[0][0]);
+  return res.redirect('/');
+};
+
+const searchRecipeForm = async (req, res) => {
+  if (req.query.q) {
+    const query = `SELECT rcp.id, rcp.recipe_name, us.first_name FROM recipes as rcp
+    INNER JOIN users as us ON us.id = rcp.author_id
+    WHERE rcp.recipe_name LIKE '%${req.query.q}%';`;
+    const results = await userModel.searchRecipeByName(query);
+    if (results.length === 0) {
+      return res.render('recipes/search', { recipes: false, message: 'Não foram encontradas receitas' });
+    }
+    return res.render('recipes/search', { recipes: results, message: '' });
+  }
+  return res.render('recipes/search', { recipes: false, message: '' });
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  getAllRecipes,
+  findRecipeById,
+  createUser,
+  registerForm,
+  createRecipe,
+  registerRecipeForm,
+  updateRecipeForm,
+  updateRecipe,
+  deleteRecipeForm,
+  deleteRecipe,
+  searchRecipeForm,
 };

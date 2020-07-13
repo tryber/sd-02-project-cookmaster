@@ -11,21 +11,11 @@
       <%= message %>
     </div>
     <% } %>
-    <form action="/login" method="POST">
-      <label for="emailInput">Email: </label>
-      <input type="text" name="email" id="emailInput" /><br />
+    <form action="/recipes/<%= recipe.id %>/delete" method="POST">
       <label for="passwordInput">Senha: </label>
       <input type="password" name="password" id="passwordInput" /><br />
-      <% if (redirect) { %>
-      <input
-        type="hidden"
-        name="redirect"
-        value="<%= decodeURIComponent(redirect) %>"
-      />
-      <% } %>
       <button type="button" onclick="window.location.pathname='/'">Home</button>
-      <button type="button" onclick="window.location.pathname='/user/register'">Cadastre-se</button>
-      <button type="submit">Entrar</button>
+      <button type="submit">Deletar</button>
     </form>
   </body>
 </html>

@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Home</title>
-  </head>
-  <body>
-    <h1>Boas vindas ao Cookmaster!</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Home</title>
+</head>
+
+<body>
+  <h1>Boas vindas ao Cookmaster!</h1>
+  <ul>
+    <% recipes.map((recipe) => { %>
+    <li>
+      <%= `${recipe[1]} - ${recipe[2]} -` %>
+      <a href=<%=`/recipes/${recipe[0]}`%>>Ver Detalhes</a>
+    </li>
+    <% }) %>
+  </ul>
+  <% if(!user) { %>
+    <button type="button" onclick="window.location.pathname='/login'">Login</button>
+    <button type="button" onclick="window.location.pathname='/recipes/search'">Buscar Receita</button>
+    <% } %>
+  <% if(user) { %>
+  <form action="/recipes/new" method="GET">
+    <button type="button" onclick="window.location.pathname='/recipes/search'">Buscar Receita</button>
+    <button type="button" onclick="window.location.pathname='/admin'">Logout</button>
+    <button type="submit">Nova Receita</button>
+  </form>
+  <% } %>
+</body>
+
 </html>

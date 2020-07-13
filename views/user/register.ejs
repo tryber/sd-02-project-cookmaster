@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Login</title>
+    <title>Cookmaster - Cadastro de Usuario</title>
   </head>
   <body>
     <% if (message) {%>
@@ -11,21 +11,17 @@
       <%= message %>
     </div>
     <% } %>
-    <form action="/login" method="POST">
+    <form action="/user/register" method="POST">
       <label for="emailInput">Email: </label>
       <input type="text" name="email" id="emailInput" /><br />
       <label for="passwordInput">Senha: </label>
       <input type="password" name="password" id="passwordInput" /><br />
-      <% if (redirect) { %>
-      <input
-        type="hidden"
-        name="redirect"
-        value="<%= decodeURIComponent(redirect) %>"
-      />
-      <% } %>
-      <button type="button" onclick="window.location.pathname='/'">Home</button>
-      <button type="button" onclick="window.location.pathname='/user/register'">Cadastre-se</button>
-      <button type="submit">Entrar</button>
+      <label for="nameInput">Nome: </label>
+      <input type="text" name="name" id="nameInput" /><br />
+      <label for="lastNameInput">Sobrenome: </label>
+      <input type="text" name="lastName" id="lastNameInput" /><br />
+      <button type="button" onclick="window.location.pathname='/login'">Login</button>
+      <button type="submit">Cadastrar</button>
     </form>
   </body>
 </html>

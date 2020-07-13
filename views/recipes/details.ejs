@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Recipe Details</title>
+  </head>
+  <body>
+    <h1>Receita de <%= recipe[0][1]%></h1>
+    <h3>Ingredientes: <%= recipe[0][2]%></h3>    
+    <p>
+      Como Fazer: <%= recipe[0][3] %>
+    </p>
+    <% if(recipeUser) { %>
+    <form action="<%=`/recipes/${recipe[0][0]}/edit`%>" method="GET">
+    <button type="submit">Editar Receita</button>
+    </form>
+    </br>
+    <form action="<%=`/recipes/${recipe[0][0]}/delete`%>" method="GET">
+    <button>Excluir Receita</button>
+    </from>
+    <% } %>
+    <button type="button" onclick="window.location.pathname='/'">Home</button>
+  </body>
+</html>
