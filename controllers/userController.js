@@ -101,6 +101,7 @@ const registerRecipeForm = async (req, res) => {
   res.render('recipes/new', {
     message: '',
     error: false,
+    author: req.user.name,
   });
 };
 
