@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('header') %>
+
+  <body>
+    <h1>Search</h1>
+    <form action="/recipes/search" method="GET">
+      <input type="text" name="q" />
+      <button type="submit">Pesquisar</button>
+    </form>
+    <% if(receitas) { %>
+      <% for(let i = 0; i < receitas.length; i++) { %>
+        <tr>
+          <td><%= receitas[i].userName %></td>
+          <td><%= receitas[i].receitaName %></td>
+        </tr>
+        <br />
+      <% } %>
+    <% } %>
+    <button onclick="window.location.pathname='/logout'">Logout</button>
+  </body>
+</html>

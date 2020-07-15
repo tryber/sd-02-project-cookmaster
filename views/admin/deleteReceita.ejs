@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('header') %>
+
+  <body>
+    <h1>Deletar receita</h1>
+
+    <% if (message) {%>
+      <p><%= message %></p>
+    <% } %>
+
+    <form action=<%= pathRedirect %> method="POST">
+      <p>digite sua senha:</p><input name="inputPassword" type="text" />
+      <button type="submit">Deletar receita</button>
+    </form>
+
+    <button onclick="window.location.pathname='/logout'">Logout</button>
+  </body>
+</html>

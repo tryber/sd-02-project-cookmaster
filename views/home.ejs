@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Home</title>
-  </head>
+  <%- include('admin/header') %>
   <body>
     <h1>Boas vindas ao Cookmaster!</h1>
+    <hr />
+    <% for(let i = 0; i < receitas.length; i++) { %>
+      <tr>
+        <td><%= receitas[i].userName %></td>
+        <td><%= receitas[i].receitaName %></td>
+        <a href=<%= links[i] %>>link</a>
+      </tr>
+      <br />
+    <% } %>
+  <hr />
+  <% if (user) { %>
+    <button type="button" onclick="window.location.pathname='/recipes/new'">Nova receita</button>
+  <%} %>
   </body>
 </html>

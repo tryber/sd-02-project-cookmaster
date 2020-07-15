@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('admin/header') %>
+  <body>
+    <% if(message) { %>
+    <p><%= message %></p>
+    <% } %>
+
+    <% if(receita) { %>
+    <h1>Receita detalhes</h1>
+    <label>Autor:</label>
+    <p><%= receita.userName %></p>
+    <br />
+    <label>Receita:</label>
+    <p><%= receita.receitaName %></p>
+    <br />
+    <label>Ingredientes:</label>
+    <p><%= receita.ingredientes %></p>
+    <br />
+    <label>Modo de preparar:</label>
+    <p><%= receita.modoDePreparar %></p>
+    <% } %>
+
+    <% if(permission) { %>
+      <button onclick=<%= links.edit %>>Editar receita</button>
+      <button onclick=<%= links.del %>>Deletar receita</button>
+    <% } %>
+  </body>
+</html>
