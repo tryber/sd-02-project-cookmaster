@@ -47,4 +47,4 @@ app.get('/recipes/search', middlewares.auth(), controllers.receitasController.se
 
 app.get('/recipes/:id', middlewares.auth(false), controllers.receitasController.getReceitaById);
 
-app.listen(3000, () => console.log('Listening on 3000'));
+app.listen(5000, () => console.log('Listening on 5000'));

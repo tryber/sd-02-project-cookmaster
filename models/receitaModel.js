@@ -9,12 +9,12 @@ const getAll = async () =>
 
 const getAllById = async (id) =>
   getSession()
-  .then((session) => session.sql('select r.nome from receitas r inner join users u on r.user_id = u.id where u.id = ?')
+  .then((session) => session.sql('select r.nome, r.id from receitas r inner join users u on r.user_id = u.id where u.id = ?')
   .bind(id)
   .execute(),
   )
   .then((results) => results.fetchAll())
-  .then((receitas) => receitas.map(([nome]) => ({ nome })));
+  .then((receitas) => receitas.map(([nome, receitaId]) => ({ nome, receitaId })));
 
 const getById = async (id) =>
   getSession()
@@ -62,7 +62,7 @@ const deleteById = async (id) =>
 const search = async (query) =>
   getSession()
     .then((session) => session.sql(`select r.nome, u.nome from receitas r
-      inner join users u on r.user_id = u.id where r.nome like ?`)
+      inner join users u on r.user_id = u.id where r.nome regexp ?`)
     .bind(query)
     .execute(),
     )

@@ -4,11 +4,10 @@
 
   <body>
     <h1>Editar receita</h1>
-
     <form action=<%= pathRedirect %> method="POST">
-      <p>nome</p><input name="nome" type="text" />
-      <p>ingredientes</p><input name="ingredientes" type="text" />
-      <p>modo de preparar</p><input name="modoDePreparar" type="text" />
+      <p>nome</p><input name="nome" type="text" value="<%= receita.userName %>" />
+      <p>ingredientes</p><input name="ingredientes" type="text" value="<%= receita.ingredientes %>" />
+      <p>modo de preparar</p><input name="modoDePreparar" type="text" value="<%= receita.modoDePreparar %>" />
       <button type="submit">Editar receita</button>
     </form>
 

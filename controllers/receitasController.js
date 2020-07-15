@@ -55,11 +55,11 @@ const pageEditReceita = rescue(async (req, res) => {
   const receita = await receitaModel.getById(id);
   const userId = req.user.id;
 
-  if (!receita) res.send('Receita não foi encontrado');
+  if (!receita) { res.send('Receita não foi encontrado'); }
 
   if (receita.userId !== userId) { res.redirect('/'); }
 
-  return res.render('admin/editReceita', { pathRedirect: `/recipes/${id}` });
+  return res.render('admin/editReceita', { pathRedirect: `/recipes/${id}`, receita });
 });
 
 const updateReceita = rescue(async (req, res) => {
@@ -109,7 +109,8 @@ const search = rescue(async (req, res) => {
 const minhasReceitas = rescue(async (req, res) => {
   const userId = req.user.id;
   const receitas = await receitaModel.getAllById(userId);
-  return res.render('admin/minhasReceitas', { receitas });
+  const links = receitas.map((receita) => `/recipes/${receita.receitaId}`);
+  return res.render('admin/minhasReceitas', { receitas, links });
 });
 
 module.exports = {
