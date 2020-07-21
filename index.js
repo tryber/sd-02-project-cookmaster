@@ -16,6 +16,8 @@ app.get('/', middlewares.auth(false), controllers.recipeController.listRecipes);
 
 app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newRecipe);
 
+app.get('/me/recipes', middlewares.auth(), controllers.recipeController.ownRecipes);
+
 app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
 
 app.get('/recipes/search', middlewares.auth(), controllers.recipeController.searchRecipe);
@@ -30,15 +32,13 @@ app.get('/recipes/:id', middlewares.auth(false), controllers.recipeController.li
 
 app.post('/recipes/:id', middlewares.auth(), controllers.recipeController.editRecipe);
 
-app.get('/admin', middlewares.auth(), (req, res) => {
-  return res.render('admin/home', { user: req.user });
-});
+app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
 app.get('/users/new', (_req, res) => {
   res.status(200).render('./user/newUser', { message: null, login: false });
 });
 
-app.post('/users/new',  middlewares.auth(), controllers.userController.insertUser);
+app.post('/users/new', middlewares.auth(), controllers.userController.insertUser);
 
 app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);

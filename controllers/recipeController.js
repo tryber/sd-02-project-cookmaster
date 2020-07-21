@@ -6,6 +6,13 @@ const userModel = require('../models/userModel');
 const listRecipes = async (req, res) => {
   const recipes = await recipeModel.listRecipes();
   const loggedIn = req.user || null;
+  res.render('me/recipes', { recipes, loggedIn });
+};
+
+const ownRecipes = async (req, res) => {
+  const { id } = req.user;
+  const recipes = await recipeModel.ownRecipes(id);
+  const loggedIn = req.user || null;
   res.render('home', { recipes, loggedIn });
 };
 
@@ -115,4 +122,5 @@ module.exports = {
   compareIdsDeleteRecipe,
   deleteRecipe,
   searchRecipe,
+  ownRecipes,
 };
