@@ -6,6 +6,9 @@
     <title>Minhas receitas</title>
   </head>
   <body>
+    <header>
+      <%- include("../header.ejs") %>
+    </header>
     <% recipes.forEach((recipe) => { %>
       <li><%= recipe.recipeName %></li>
       <a href=/recipes/<%= `${recipe.id}` %>>Detalhes</a>

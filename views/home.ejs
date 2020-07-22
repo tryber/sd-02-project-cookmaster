@@ -6,6 +6,9 @@
     <title>Cookmaster - Home</title>
   </head>
   <body>
+    <header>
+      <%- include("./header.ejs") %>
+    </header>
     <h1>Boas vindas ao Cookmaster!</h1>
     <% recipes.forEach((recipe) => { %>
       <li><%= recipe.recipeName %> (criada por <%= recipe.firstName%> <%=recipe.lastName%>) </li>

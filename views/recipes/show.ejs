@@ -6,6 +6,9 @@
     <title>Cookmaster - Home</title>
   </head>
   <body>
+    <header>
+      <%- include("../header.ejs") %>
+    </header>
     <h1>Detalhes da receita</h1>
     <h2><%= recipe.recipeName %></h2>
     <h3>Ingredientes: <%= recipe.ingredients %></h3>
