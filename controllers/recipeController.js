@@ -6,7 +6,7 @@ const userModel = require('../models/userModel');
 const listRecipes = async (req, res) => {
   const recipes = await recipeModel.listRecipes();
   const loggedIn = req.user || null;
-  res.render('me/recipes', { recipes, loggedIn });
+  res.render('home', { recipes, loggedIn });
 };
 
 const ownRecipes = async (req, res) => {

@@ -18,6 +18,10 @@ app.get('/recipes/new', middlewares.auth(), controllers.recipeController.newReci
 
 app.get('/me/recipes', middlewares.auth(), controllers.recipeController.ownRecipes);
 
+app.get('/me/edit', middlewares.auth(), controllers.userController.showEditUser);
+
+app.post('/me', middlewares.auth(), controllers.userController.editUser);
+
 app.post('/recipes', middlewares.auth(), controllers.recipeController.insertRecipe);
 
 app.get('/recipes/search', middlewares.auth(), controllers.recipeController.searchRecipe);

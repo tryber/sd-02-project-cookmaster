@@ -1,18 +1,17 @@
-const { dbGetSchema } = require('./connection');
+const { dbGetSchema, dbLogin } = require('./connection');
 /**
  * Busca um usuário através do seu email e, se encontrado, retorna-o.
  * @param {string} email Email do usuário a ser encontrado
  */
-const findByEmail = async (param) => {
+const findByEmail = async (emailInput) => {
   const emailData = await dbGetSchema()
     .then((db) =>
       db
         .getTable('Users')
         .select(['id', 'email', 'pass', 'first_name', 'last_name'])
         .where('email = :email')
-        .bind('email', param)
-        .execute(),
-    )
+        .bind('email', emailInput)
+        .execute())
     .then((results) => results.fetchAll())
     .then((emailList) => emailList[0]);
 
@@ -42,9 +41,9 @@ const findById = async (userId) => {
 
   if (!userData) return null;
 
-  const [id, email, password, name, lastName] = userData;
+  const [id, email, password, firstName, lastName] = userData;
 
-  return { id, email, password, name, lastName };
+  return { id, email, password, firstName, lastName };
 };
 
 const insertUser = async (email, pass, firstName, lastName) => {
@@ -55,8 +54,28 @@ const insertUser = async (email, pass, firstName, lastName) => {
     .execute();
 };
 
+const editUser = async (id, email, pass, firstName, lastName) => {
+  await dbLogin().then((session) =>
+    session.sql(
+      `UPDATE cook_master.Users
+      SET
+        email = ?,
+        pass = ?,
+        first_name = ?,
+        last_name = ?
+      WHERE id = ?;`,
+    )
+      .bind(email)
+      .bind(pass)
+      .bind(firstName)
+      .bind(lastName)
+      .bind(id)
+      .execute());
+};
+
 module.exports = {
   findByEmail,
   findById,
   insertUser,
+  editUser,
 };

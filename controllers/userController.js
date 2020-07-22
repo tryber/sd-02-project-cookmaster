@@ -57,9 +57,40 @@ const insertUser = async (req, res) => {
   return res.render('./user/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });
 };
 
+const showEditUser = async (req, res) => {
+  res.render('me/edit', { message: null, isLogged: req.user });
+};
+
+const editUser = async (req, res) => {
+  const { email, pass, firstName, lastName } = req.body;
+  const { id: userId } = req.user;
+  if (!firstName || !lastName || !pass) {
+    return res.render('me/edit',
+      {
+        message: 'Erro. Favor preencher todos os campos.',
+      });
+  }
+  const alreadyExistEmail = await userModel.findByEmail(email);
+  if (alreadyExistEmail && alreadyExistEmail.id !== userId) {
+    return res.render('me/edit',
+      {
+        message: 'Erro. Email já cadastrado.',
+      });
+  }
+  await userModel.editUser(userId, email, pass, firstName, lastName);
+
+  const { password, ...userData } = await userModel.findById(userId);
+
+  req.user = userData;
+
+  res.render('admin/home', { user: req.user });
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
   insertUser,
+  showEditUser,
+  editUser,
 };
