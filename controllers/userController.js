@@ -43,8 +43,56 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const newUser = (_req, res) => {
+  res.render('./user/newUser', { message: null });
+};
+
+const insertUser = async (req, res) => {
+  const { email, pass, firstName, lastName } = req.body;
+
+  if (!userModel.checkMail(email, pass, firstName, lastName)) {
+    return res.render('./user/newUser', { message: 'Dados inválidos' });
+  }
+
+  await userModel.insertUser(email, pass, firstName, lastName);
+  res.status(200).render('./admin/login', { message: null, redirect: null });
+};
+
+const showEditUser = async (req, res) => {
+  res.render('me/edit', { message: null, isLogged: req.user });
+};
+
+const editUser = async (req, res) => {
+  const { email, pass, firstName, lastName } = req.body;
+  const { id: userId } = req.user;
+  if (!firstName || !lastName || !pass) {
+    return res.render('me/edit',
+      {
+        message: 'Erro. Favor preencher todos os campos.',
+      });
+  }
+  const alreadyExistEmail = await userModel.findByEmail(email);
+  if (alreadyExistEmail && alreadyExistEmail.id !== userId) {
+    return res.render('me/edit',
+      {
+        message: 'Erro. Email já cadastrado.',
+      });
+  }
+  await userModel.editUser(userId, email, pass, firstName, lastName);
+
+  const { password, ...userData } = await userModel.findById(userId);
+
+  req.user = userData;
+
+  res.render('admin/home', { user: req.user });
+};
+
 module.exports = {
   login,
   loginForm,
   logout,
+  newUser,
+  insertUser,
+  showEditUser,
+  editUser,
 };
