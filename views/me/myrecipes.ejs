@@ -11,7 +11,7 @@
     </header>
     <% recipes && recipes.forEach((recipe) => { %>
       <li><%= recipe.recipeName %></li>
-      <a href=/recipes/<%= `${recipe.id}` %>>Detalhes</a>
+      <a href=/recipes/<%= `${recipe.recipeId}` %>>Detalhes</a>
     <% }) %>
       <form action="/recipes/new" method="GET">
       <button type="submit">Nova receita</button>
