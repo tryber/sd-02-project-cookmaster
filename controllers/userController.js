@@ -43,18 +43,19 @@ const logout = (req, res) => {
   res.render('admin/logout');
 };
 
+const newUser = (_req, res) => {
+  res.render('./user/newUser', { message: null });
+};
+
 const insertUser = async (req, res) => {
   const { email, pass, firstName, lastName } = req.body;
-  const user = await userModel.findByEmail(email);
-  if (user || !firstName || !lastName || !pass) {
-    return res.render('./user/newUser',
-      {
-        message: null || 'Erro. Favor preencher o cadastro e verificar seu email.',
-        login: false,
-      });
+
+  if (!userModel.checkMail(email, pass, firstName, lastName)) {
+    return res.render('./user/newUser', { message: 'Dados inválidos' });
   }
+
   await userModel.insertUser(email, pass, firstName, lastName);
-  return res.render('./user/newUser', { message: 'Usuário criado com sucesso. Realize seu Login', login: true });
+  res.status(200).render('./admin/login', { message: null, redirect: null });
 };
 
 const showEditUser = async (req, res) => {
@@ -90,6 +91,7 @@ module.exports = {
   login,
   loginForm,
   logout,
+  newUser,
   insertUser,
   showEditUser,
   editUser,

@@ -38,11 +38,9 @@ app.post('/recipes/:id', middlewares.auth(), controllers.recipeController.editRe
 
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
 
-app.get('/users/new', (_req, res) => {
-  res.status(200).render('./user/newUser', { message: null, login: false });
-});
+app.get('/users/new', middlewares.auth(false), controllers.userController.newUser);
 
-app.post('/users/new', middlewares.auth(), controllers.userController.insertUser);
+app.post('/users/new', middlewares.auth(false), controllers.userController.insertUser);
 
 app.get('/login', controllers.userController.loginForm);
 app.get('/logout', controllers.userController.logout);

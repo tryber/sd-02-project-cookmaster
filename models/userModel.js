@@ -46,6 +46,13 @@ const findById = async (userId) => {
   return { id, email, password, firstName, lastName };
 };
 
+const checkMail = (email, pass, firstName, lastName) => {
+  if (!email || !pass || !firstName || !lastName) return false;
+  if (typeof email !== 'string' || typeof pass !== 'string'
+    || typeof firstName !== 'string' || typeof lastName !== 'string') return false;
+  return true;
+};
+
 const insertUser = async (email, pass, firstName, lastName) => {
   const db = await dbGetSchema();
   await db.getTable('Users')
@@ -76,6 +83,7 @@ const editUser = async (id, email, pass, firstName, lastName) => {
 module.exports = {
   findByEmail,
   findById,
+  checkMail,
   insertUser,
   editUser,
 };
