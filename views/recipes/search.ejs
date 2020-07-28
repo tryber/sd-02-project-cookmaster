@@ -29,7 +29,7 @@
         <% recipes && recipes.forEach((recipe) => { %>
           <li><%= recipe.recipeName %> (criada por <%= recipe.firstName%> <%=recipe.lastName%>) </li>
           <a href=/recipes/<%= `${recipe.id}` %>>Detalhes</a>
-          <% }) %>
+        <% }) %>
     </ul>
   </div>
   <button onclick="window.location.pathname='/'">Ir para Home</button>

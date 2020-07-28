@@ -13,7 +13,7 @@ const ownRecipes = async (req, res) => {
   const { id } = req.user;
   const recipes = await recipeModel.ownRecipes(id);
   const loggedIn = req.user || null;
-  res.render('home', { recipes, loggedIn });
+  res.render('me/myrecipes', { recipes, loggedIn });
 };
 
 const listOneRecipe = async (req, res) => {
@@ -64,7 +64,6 @@ const editRecipe = async (req, res) => {
 };
 
 const compareIdsDeleteRecipe = async (req, res) => {
-  console.log('params: ', req.params);
   const { id } = req.params;
   const { id: userId } = req.user;
   const recipe = await recipeModel.findIdRecipe(id);

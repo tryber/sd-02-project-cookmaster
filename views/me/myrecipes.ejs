@@ -9,7 +9,7 @@
     <header>
       <%- include("../header.ejs") %>
     </header>
-    <% recipes.forEach((recipe) => { %>
+    <% recipes && recipes.forEach((recipe) => { %>
       <li><%= recipe.recipeName %></li>
       <a href=/recipes/<%= `${recipe.id}` %>>Detalhes</a>
     <% }) %>
@@ -18,3 +18,4 @@
       </form>
   </body>
 </html>
+  

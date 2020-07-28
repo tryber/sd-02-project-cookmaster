@@ -107,7 +107,7 @@ const deleteRecipe = async (param) => {
 };
 
 const searchRecipe = async (param) => {
-  await dbLogin().then((session) =>
+  return dbLogin().then((session) =>
     session.sql(
       `SELECT
       r.id,
@@ -122,12 +122,13 @@ const searchRecipe = async (param) => {
       .execute())
     .then((results) => results.fetchAll())
     .then((recipes) =>
-      recipes.map(([recipeId, recipeName, authorFirstName, authorLastName]) =>
-        ({ recipeId, recipeName, authorFirstName, authorLastName }) || null));
+      recipes.map(([id, recipeName, firstName, lastName]) =>
+        ({ id, recipeName, firstName, lastName }) || null));
 };
 
+
 const ownRecipes = async (id) => {
-  await dbLogin().then((session) =>
+  return dbLogin().then((session) =>
     session.sql(
       `SELECT
       r.id,
@@ -142,8 +143,8 @@ const ownRecipes = async (id) => {
       .execute())
     .then((results) => results.fetchAll())
     .then((recipes) =>
-      recipes.map(([recipeId, recipeName, authorFirstName, authorLastName]) =>
-        ({ recipeId, recipeName, authorFirstName, authorLastName }) || null));
+      recipes.map(([id, recipeName, ingredients, howToPrepare, firstName, lastName]) =>
+        ({ id, recipeName, ingredients, howToPrepare, firstName, lastName }) || null));
 };
 
 module.exports = {
