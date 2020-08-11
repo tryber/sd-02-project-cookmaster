@@ -13,12 +13,16 @@ app.set('views', './views');
 
 app.get('/', middlewares.auth(false), controllers.userAuth.recipesAuth);
 
-app.get('/admin', middlewares.auth(), (req, res) => {
+app.get('/admin', middlewares.auth(true), (req, res) => {
   return res.render('admin/home', { user: req.user });
 });
 
 app.use('/recipes', controllers.recipesController.router);
 app.get('/login', controllers.userController.loginForm);
+
+app.get('/register', controllers.userController.renderForm);
+app.post('/register', controllers.userController.createUser);
+
 app.get('/logout', controllers.userController.logout);
 app.post('/login', controllers.userController.login);
 

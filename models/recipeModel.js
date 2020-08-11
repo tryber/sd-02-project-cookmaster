@@ -28,11 +28,11 @@ const getNames = async () =>
  */
 
 const queryRecipe = `SELECT
-fs.recipe_name, fs.ingredients, fs.process_recipe, CONCAT(us.first_name, ' ', us.last_name)
+fs.recipe_name, fs.ingredients, fs.process_recipe, CONCAT(us.first_name, ' ', us.last_name), us.id
 FROM (SELECT recipe_name, ingredients, process_recipe, insert_user
 FROM recipes
 WHERE recipe_id = ?) AS fs
-inner join users AS us ON fs.insert_user = us.id;`
+INNER JOIN users AS us ON fs.insert_user = us.id;`
 
 const getRecipe = async (id) =>
   connection().then((session) =>
@@ -40,10 +40,48 @@ const getRecipe = async (id) =>
       .bind(id)
       .execute())
     .then((results) => results.fetchAll()[0])
-    .then(([recipe_name, ingredients, process_recipe, insert_user]) =>
-      ({ recipe_name, ingredients, process_recipe, insert_user }));
+    .then(([title, ingredients, detailsRecipe, userName, idUser]) =>
+      ({ title, ingredients, detailsRecipe, userName, idUser }));
+
+const insertRecipe = async ({ title, ing, proc, id }) =>
+  connection()
+    .then((db) =>
+      db
+        .getSchema("cookmaster")
+        .getTable("recipes")
+        .insert(['recipe_name', 'ingredients', 'process_recipe', 'insert_user'])
+        .values([title, ing, proc, id])
+        .execute()
+    );
+
+const createRecipe = async ({ title, ingredients, detailsRecipe }, user) => {
+  if (!title || !ingredients || !detailsRecipe) return { message: 'Preencha todos os campos.' };
+  const toInsert = { title, ing: ingredients, proc: detailsRecipe, id: user };
+  const id = await insertRecipe(toInsert)
+    .then((result) => result.getAutoIncrementValue())
+  return { message: 'Receita cadastrada.', id };
+};
+
+const updateQuery = `UPDATE recipes
+SET recipe_name = ?, ingredients = ?, process_recipe = ?
+WHERE recipe_id = ?;`
+
+const updateRecipe = async ({title, ingredients, detailsRecipe, id}) => {
+  connection()
+    .then((session) => {
+      session
+        .sql(updateQuery)
+        .bind(title)
+        .bind(ingredients)
+        .bind(detailsRecipe)
+        .bind(id)
+        .execute()
+    });
+}
 
 module.exports = {
   getNames,
   getRecipe,
+  createRecipe,
+  updateRecipe,
 }

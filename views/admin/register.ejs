@@ -10,9 +10,9 @@
 <body>
   <div>
     <h6>Cookmaster - Cadastro</h6>
-    <% if (message) { %>
+    <% if (error || message) { %>
     <div class="message">
-      <%= message %>
+      <p><%= error || message %></p>
     </div>
     <% } %>
     <form action="/register" method="POST">
@@ -32,9 +32,6 @@
       <input type="text" id="lastName" name="lastName">
 
       <a href="/login">Fazer Login</a>
-      <% if (redirect) { %>
-      <input type="hidden" name="redirect" value="<%= decodeURIComponent(redirect) %>" />
-      <% } %>
       <button type="submit">Cadastrar-se</button>
     </form>
   </div>

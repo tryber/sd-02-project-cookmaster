@@ -37,14 +37,20 @@
       </button>
     </div>
     <div>
+      <% if(user.id === recipe.idUser){ %>
+      <button>Editar Receita</button>
+      <button>Excluir Receita</button>
+      <% } %>
       <% if(recipe){ %>
-      <h2><%= recipe.recipe_name%></h2>
-      <p><%= recipe.insert_user%></p>
+      <h2><%= recipe.title%></h2>
+      <p><%= recipe.userName%></p>
       <h3>Ingredientes</h3>
       <p><%= recipe.ingredients%></p>
       <h3>Modo de Preparo</h3>
-      <p><%= recipe.process_recipe %></p>
+      <p><%= recipe.detailsRecipe %></p>
       <% } %>
+      <%= typeof user.id %>
+      <%= typeof recipe.idUser %>
     </div>
   </div>
 </body>
