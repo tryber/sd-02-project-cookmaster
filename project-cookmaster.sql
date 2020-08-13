@@ -23,7 +23,7 @@ CREATE TABLE ingredients (
     name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE receipes_ingredients (
+CREATE TABLE recipes_ingredients (
     recipe_id INT NOT NULL,
     ingredient_id INT NOT NULL,
     PRIMARY KEY(recipe_id, ingredient_id),
@@ -41,6 +41,19 @@ CREATE TABLE users_recipes (
 
 INSERT INTO users (name, last_name, email, password) VALUES
     ('Taylor', 'Doe', 'taylor.doe@company.com', 'password');
-    
+
+
+INSERT INTO recipes (name, recipe_description ) VALUES
+    ('Tutu de feijao', 'Faça o feijão direitinho e bata tudo no liquidificador.');
+   
+INSERT INTO ingredients (name) VALUES
+	('Feijão');
+
+INSERT INTO recipes_ingredients (recipe_id, ingredient_id) VALUES
+	(1, 1);
+
+INSERT INTO users_recipes (user_id, recipe_id) VALUES
+	(1,1);
+
    
 SELECT * FROM users;
