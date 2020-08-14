@@ -7,7 +7,7 @@ const landingPage = async (_req, res) => {
 }
 
 const recipeDetails = async (req, res) => {
-  return res.render('recipeDetails', { user: req.user });
+  return res.render('recipeDetails', { user: req.user, recipeID: req.params.id });
 }
 
 module.exports = {

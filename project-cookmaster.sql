@@ -19,7 +19,7 @@ CREATE TABLE recipes (
 );
 
 CREATE TABLE ingredients (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    ingredient_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
 
@@ -28,7 +28,7 @@ CREATE TABLE recipes_ingredients (
     ingredient_id INT NOT NULL,
     PRIMARY KEY(recipe_id, ingredient_id),
     FOREIGN KEY(recipe_id) REFERENCES recipes(id),
-    FOREIGN KEY(ingredient_id) REFERENCES ingredients(id)
+    FOREIGN KEY(ingredient_id) REFERENCES ingredients(ingredient_id)
 );
 
 CREATE TABLE users_recipes (

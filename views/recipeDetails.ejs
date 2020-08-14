@@ -6,7 +6,16 @@
     <title>Cookmaster - Detalhes de Receita</title>
   </head>
   <body>
-    <h1>Cookmaster - Detalhes de Receita<</h1>
-    <h1><%= user %></h1>
+    <h1>Cookmaster - Detalhes de Receita</h1>
+    <div class="recipe-content">
+      
+    </div>
+    <div>
+      <% if(user && (user.id === recipeID)) { %>
+        <button type="button">Editar receita</button>
+        <button type="button">Excluir Receita</button>
+      <% } %>
+    </div>
+
   </body>
 </html>
