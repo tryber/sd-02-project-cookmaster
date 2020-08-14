@@ -1,6 +1,7 @@
 const recipeModel = require('../models/recipeModel');
 const express = require('express');
 const middlewares = require('../middlewares');
+const userModel = require('../models/userModel');
 
 const router = express.Router();
 
@@ -43,10 +44,31 @@ router.post('/:id', middlewares.auth(true), async ({ body, params: { id }, user 
   try {
     await recipeModel.updateRecipe(recipe);
     res.render('recipes/details', { user, recipe });
-  } catch(err) { 
+  } catch (err) {
     err.code
   }
 });
+
+router.get('/:id/delete', middlewares.auth(true), async (req, res) => {
+  const { idUser } = await recipeModel.getRecipe(req.params.id);
+  const { id } = req.user;
+
+  if (id !== idUser) return res.redirect('/');
+
+  return res.render('delete/delete', { wrongPass: false, id: req.params.id });
+});
+
+router.post('/:id/delete', middlewares.auth(true), async ({ body, user, params }, res) => {
+  const { password } = body;
+  const { id } = user;
+  const userData = await userModel.findById(id);
+  
+  if (password !== userData.password) return res.render('delete/delete', { wrongPass: true, id: params.id })
+  
+  await recipeModel.deleteRecipe(id);
+  
+  return res.redirect('/');
+})
 
 module.exports = {
   router,

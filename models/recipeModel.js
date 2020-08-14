@@ -66,15 +66,26 @@ const updateQuery = `UPDATE recipes
 SET recipe_name = ?, ingredients = ?, process_recipe = ?
 WHERE recipe_id = ?;`
 
-const updateRecipe = async ({title, ingredients, detailsRecipe, id}) => {
+const updateRecipe = async ({ title, ingredients, detailsRecipe, id }) =>
   connection()
-    .then((session) => {
+    .then((session) =>
       session
         .sql(updateQuery)
         .bind(title)
         .bind(ingredients)
         .bind(detailsRecipe)
         .bind(id)
+        .execute()
+    );
+
+const deleteRecipeQuery = `DELETE from recipes WHERE recipe_id=?`;
+
+const deleteRecipe = async (recipeId) => {
+  connection()
+    .then((session) => {
+      session
+        .sql(deleteRecipeQuery)
+        .bind(recipeId)
         .execute()
     });
 }
@@ -84,4 +95,5 @@ module.exports = {
   getRecipe,
   createRecipe,
   updateRecipe,
+  deleteRecipe,
 }
