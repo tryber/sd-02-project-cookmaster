@@ -12,9 +12,9 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/', controllers.landingPage);
+app.get('/', controllers.recipesController.recipesLandingPage);
 
-app.get('/recipes/:id', middlewares.auth(false), (req, res) => controllers.recipeDetails(req, res));
+app.get('/recipes/:id', middlewares.auth(false), (req, res) => controllers.recipesController.recipeDetails(req, res));
 
 app.get('/admin', middlewares.auth(), (req, res) => {
   return res.render('admin/home', { user: req.user });

@@ -1,17 +1,22 @@
 const connection = require('./connection');
 
-const readRecipes = async () => 
-  await connection().then((db) =>
+const readRecipes = async (recipeID) => {
+  const recipes = await connection().then((db) =>
     db
       .getTable('recipes')
-      .select(['id', 'name'])
+      .select(['id', 'name', 'recipe_description'])
       .execute()
     )
       .then((results) => results.fetchAll())
       .then((data) => fetchRecipeWithAuthor(data));
+      
+  if(recipeID) return recipes.filter(({ id }) => id === recipeID)[0];
+
+  return recipes;
+}
 
 const fetchRecipeWithAuthor = async (recipesData) => {
-  const recipesWithAuthor = recipesData.map(([ id, name ]) => 
+  const recipesWithAuthor = recipesData.map(([ id, name, description ]) => 
     connection().then((db) =>
     db
       .getTable('users_recipes')
@@ -30,7 +35,7 @@ const fetchRecipeWithAuthor = async (recipesData) => {
           .execute()))
         .then((results) => results.fetchAll())
         .then(([ authorInfo ]) => fetchRecipesIngredients(
-            { id, name, authorInfo: {'authorID': authorInfo[0], fullName: `${authorInfo[1]} ${authorInfo[2]}` }}
+            { id, name, description, authorInfo: {'authorID': authorInfo[0], fullName: `${authorInfo[1]} ${authorInfo[2]}` }}
         )
   ));
   const recipesArray = await Promise.all(recipesWithAuthor).then((results) => results);
@@ -38,7 +43,7 @@ const fetchRecipeWithAuthor = async (recipesData) => {
 }
 
 const fetchRecipesIngredients = async (recipeData) => {
-  const { id, name, authorInfo: { authorID, fullName } } = recipeData;
+  const { id, name, description, authorInfo: { authorID, fullName } } = recipeData;
   const ingredientsData = await connection().then((db) =>
     db
       .getTable('recipes_ingredients')
@@ -60,7 +65,7 @@ const fetchRecipesIngredients = async (recipeData) => {
       )))
       
   const ingredientNames = await Promise.all(ingredientsData).then(([...results]) => results);
-  return { id, name, authorInfo: { authorID, fullName }, ingredients: ingredientNames }
+  return { id, name, description, authorInfo: { authorID, fullName }, ingredients: ingredientNames }
 }
 
 

@@ -8,10 +8,20 @@
   <body>
     <h1>Cookmaster - Detalhes de Receita</h1>
     <div class="recipe-content">
-      
+      <h3><%= recipe.name %> </h3>
+      <ul>
+          <% recipe.ingredients.map((ingredient) => { %>
+            <li>
+              <%= ingredient %>
+            </li>
+          <% }) %>
+      </ul>
+      <div>
+        <%= recipe.description %>
+      </div>
     </div>
     <div>
-      <% if(user && (user.id === recipeID)) { %>
+      <% if(user && (user.id === recipe.id)) { %>
         <button type="button">Editar receita</button>
         <button type="button">Excluir Receita</button>
       <% } %>
