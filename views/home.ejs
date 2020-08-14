@@ -10,7 +10,14 @@
     <div>
       <% recipesData.map(({ id, name, authorInfo: { fullName }}) => { %>
       <%= `Receita: ${name} - Autor: ${fullName}` %> 
+      <div>
+        <a href="/">Detalhes</a>
+      </div>
       <% }); %>
+    </div>
+    <br>
+    <div>
+      <button type="button">Nova Receita</button>
     </div>
   </body>
 </html>
