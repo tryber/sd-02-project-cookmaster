@@ -8,7 +8,9 @@
   <body>
     <h1>Boas vindas ao Cookmaster!</h1>
     <div>
-      <%= recipesData %>
+      <% recipesData.map(({ id, name, authorInfo: { fullName }}) => { %>
+      <%= `Receita: ${name} - Autor: ${fullName}` %> 
+      <% }); %>
     </div>
   </body>
 </html>
