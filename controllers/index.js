@@ -6,7 +6,12 @@ const landingPage = async (_req, res) => {
   return res.render('home', { recipesData });
 }
 
+const recipeDetails = async (req, res) => {
+  return res.render('recipeDetails', { user: req.user });
+}
+
 module.exports = {
   userController,
-  landingPage
+  landingPage,
+  recipeDetails
 };
