@@ -8,9 +8,7 @@ const connection = () => {
     port: 33060,
     schema: 'project_cookmaster',
   })
-  .then((session) => {
-    return session.getSchema('project_cookmaster');
-  })
+  .then((session) => session.getSchema('project_cookmaster'))
   .catch((err) => {
     console.error(err);
     process.exit(1);

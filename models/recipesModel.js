@@ -9,14 +9,14 @@ const readRecipes = async (recipeID) => {
     )
       .then((results) => results.fetchAll())
       .then((data) => fetchRecipeWithAuthor(data));
-      
+
   if(recipeID) return recipes.filter(({ id }) => id === recipeID)[0];
 
   return recipes;
 }
 
 const fetchRecipeWithAuthor = async (recipesData) => {
-  const recipesWithAuthor = recipesData.map(([ id, name, description ]) => 
+  const recipesWithAuthor = recipesData.map(([ id, name, description ]) =>
     connection().then((db) =>
     db
       .getTable('users_recipes')
@@ -25,7 +25,7 @@ const fetchRecipeWithAuthor = async (recipesData) => {
       .bind('id', id)
       .execute())
       .then((results) => results.fetchAll())
-      .then(([[ userID ]]) => 
+      .then(([[ userID ]]) =>
         connection().then((db) =>
         db
           .getTable('users')
@@ -52,7 +52,7 @@ const fetchRecipesIngredients = async (recipeData) => {
       .bind('recipeData_id', recipeData.id)
       .execute()
     .then((results) => results.fetchAll())
-    .then((data) => data.map(([ingredientID]) => 
+    .then((data) => data.map(([ingredientID]) =>
         connection().then((db) =>
           db
             .getTable('ingredients')
@@ -63,7 +63,7 @@ const fetchRecipesIngredients = async (recipeData) => {
           .then((results) => results.fetchAll())
           .then(([[ingredientNames]]) => ingredientNames))
       )))
-      
+
   const ingredientNames = await Promise.all(ingredientsData).then(([...results]) => results);
   return { id, name, description, authorInfo: { authorID, fullName }, ingredients: ingredientNames }
 }
