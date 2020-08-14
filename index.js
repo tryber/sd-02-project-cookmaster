@@ -12,7 +12,7 @@ app.use(cookieParser());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-app.get('/', controllers.recipesController.recipesLandingPage);
+app.get('/', middlewares.auth(), controllers.recipesController.recipesLandingPage);
 
 app.get('/recipes/:id', middlewares.auth(false), (req, res) => controllers.recipesController.recipeDetails(req, res));
 
