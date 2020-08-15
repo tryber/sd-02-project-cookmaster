@@ -5,6 +5,13 @@ const userModel = require('../models/userModel');
 
 const router = express.Router();
 
+router.get('/search', middlewares.auth(false), async (req, res) => {
+  const toSearch = req.query.q;
+  const recipesLike = await recipeModel.getRecipeLike(toSearch) || [];
+
+  res.render('recipes/search', { recipesLike });
+});
+
 router.get('/new', middlewares.auth(true), async (_req, res) => {
   res.render('recipes/newRecipe', { error: '', message: '' });
 });
@@ -62,13 +69,13 @@ router.post('/:id/delete', middlewares.auth(true), async ({ body, user, params }
   const { password } = body;
   const { id } = user;
   const userData = await userModel.findById(id);
-  
+
   if (password !== userData.password) return res.render('delete/delete', { wrongPass: true, id: params.id })
-  
+
   await recipeModel.deleteRecipe(id);
-  
+
   return res.redirect('/');
-})
+});
 
 module.exports = {
   router,

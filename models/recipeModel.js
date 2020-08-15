@@ -78,17 +78,36 @@ const updateRecipe = async ({ title, ingredients, detailsRecipe, id }) =>
         .execute()
     );
 
-const deleteRecipeQuery = `DELETE from recipes WHERE recipe_id=?`;
+const deleteRecipeQuery = 'DELETE from recipes WHERE recipe_id=?';
 
-const deleteRecipe = async (recipeId) => {
+const deleteRecipe = async (recipeId) =>
   connection()
-    .then((session) => {
+    .then((session) =>
       session
         .sql(deleteRecipeQuery)
         .bind(recipeId)
         .execute()
-    });
-}
+    );
+
+const recipeLike = `SELECT 
+re.recipe_id, re.recipe_name, CONCAT(us.first_name, ' ', us.last_name) FROM recipes as re
+INNER JOIN users as us on us.id = re.insert_user
+WHERE re.recipe_name LIKE ?;`
+
+const getRecipeLike = async (string) => {
+  const likeWord = `%${string}%`
+  return connection()
+    .then((session) =>
+      session
+        .sql(recipeLike)
+        .bind(likeWord)
+        .execute()
+        .then((results) => results.fetchAll())
+        .then((recipes) => recipes
+          .map(([id, title, user]) => ({ id, title, user })))
+    );
+};
+
 
 module.exports = {
   getNames,
@@ -96,4 +115,5 @@ module.exports = {
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  getRecipeLike,
 }
