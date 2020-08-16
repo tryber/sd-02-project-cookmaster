@@ -80,4 +80,3 @@ router.post('/:id/delete', middlewares.auth(true), async ({ body, user, params }
 module.exports = {
   router,
 };
-

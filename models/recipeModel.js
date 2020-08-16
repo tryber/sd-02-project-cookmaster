@@ -7,7 +7,7 @@ const connection = require('./connections');
 const queryUser = `SELECT
 re.recipe_id, re.recipe_name, CONCAT(us.first_name, ' ', us.last_name)
 FROM recipes AS re
-INNER JOIN users AS us ON us.id = re.insert_user;`
+INNER JOIN users AS us ON us.id = re.insert_user;`;
 
 const getNames = async () =>
   connection().then((session) =>
@@ -18,9 +18,7 @@ const getNames = async () =>
         recipes.map(
           ([id, recipe, userName]) =>
             ({ id, recipe, userName }),
-        )
-      )
-  );
+        )));
 
 /**
  * Retorna a receita completa de acordo com o ID
@@ -32,7 +30,7 @@ fs.recipe_name, fs.ingredients, fs.process_recipe, CONCAT(us.first_name, ' ', us
 FROM (SELECT recipe_name, ingredients, process_recipe, insert_user
 FROM recipes
 WHERE recipe_id = ?) AS fs
-INNER JOIN users AS us ON fs.insert_user = us.id;`
+INNER JOIN users AS us ON fs.insert_user = us.id;`;
 
 const getRecipe = async (id) =>
   connection().then((session) =>
@@ -47,8 +45,8 @@ const insertRecipe = async ({ title, ing, proc, id }) =>
   connection()
     .then((db) =>
       db
-        .getSchema("cookmaster")
-        .getTable("recipes")
+        .getSchema('cookmaster')
+        .getTable('recipes')
         .insert(['recipe_name', 'ingredients', 'process_recipe', 'insert_user'])
         .values([title, ing, proc, id])
         .execute()
@@ -64,7 +62,7 @@ const createRecipe = async ({ title, ingredients, detailsRecipe }, user) => {
 
 const updateQuery = `UPDATE recipes
 SET recipe_name = ?, ingredients = ?, process_recipe = ?
-WHERE recipe_id = ?;`
+WHERE recipe_id = ?;`;
 
 const updateRecipe = async ({ title, ingredients, detailsRecipe, id }) =>
   connection()
@@ -75,8 +73,7 @@ const updateRecipe = async ({ title, ingredients, detailsRecipe, id }) =>
         .bind(ingredients)
         .bind(detailsRecipe)
         .bind(id)
-        .execute()
-    );
+        .execute());
 
 const deleteRecipeQuery = 'DELETE from recipes WHERE recipe_id=?';
 
@@ -86,13 +83,12 @@ const deleteRecipe = async (recipeId) =>
       session
         .sql(deleteRecipeQuery)
         .bind(recipeId)
-        .execute()
-    );
+        .execute());
 
-const recipeLike = `SELECT 
+const recipeLike = `SELECT
 re.recipe_id, re.recipe_name, CONCAT(us.first_name, ' ', us.last_name) FROM recipes as re
 INNER JOIN users as us on us.id = re.insert_user
-WHERE re.recipe_name LIKE ?;`
+WHERE re.recipe_name LIKE ?;`;
 
 const getRecipeLike = async (string) => {
   const likeWord = `%${string}%`
@@ -126,8 +122,7 @@ const getUserRecipes = (id) =>
         .then((results) => results.fetchAll())
         .then((recipes) => recipes
           .map(([id, title, user]) => ({ id, title, user }))
-        )
-    );
+        ));
 
 
 module.exports = {
