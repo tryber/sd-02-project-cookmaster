@@ -1,8 +1,8 @@
 const connection = require('./connections');
 
 const findByEmail = async (emailInput) => {
-  const userData = await connection().then((db) =>
-    db
+  const userData = await connection()
+    .then((db) => db
       .getSchema('cookmaster')
       .getTable('users')
       .select(['id', 'first_name', 'last_name', 'user_pass', 'email'])
