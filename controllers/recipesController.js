@@ -17,7 +17,7 @@ router.get('/new', middlewares.auth(true), async (_req, res) => {
 });
 
 router.post('/', middlewares.auth(true), async (req, res) => {
-  const { error, message, id } = await recipeModel.createRecipe(req.body, req.user.id);
+  const { id } = await recipeModel.createRecipe(req.body, req.user.id);
   res.redirect(`recipes/${id}`);
 });
 
@@ -70,7 +70,10 @@ router.post('/:id/delete', middlewares.auth(true), async ({ body, user, params }
   const { id } = user;
   const userData = await userModel.findById(id);
 
-  if (password !== userData.password) return res.render('delete/delete', { wrongPass: true, id: params.id })
+  if (password !== userData.password) return res.render('delete/delete', {
+    wrongPass: true,
+    id: params.id
+  });
 
   await recipeModel.deleteRecipe(id);
 

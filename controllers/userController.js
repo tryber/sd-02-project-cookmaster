@@ -1,6 +1,6 @@
 const userModel = require('../models/userModel');
-const { v4: uuid } = require('uuid');
 const { SESSIONS } = require('../middlewares/auth');
+const { v4: uuid } = require('uuid');
 
 const loginForm = (req, res) => {
   const { token = '' } = req.cookies || {};
@@ -44,11 +44,11 @@ const logout = (req, res) => {
 
 const createUser = async (req, res) => {
   const { error, message } = await userModel.createUser(req.body);
-  return res.render('admin/register', { error, message });
+  res.render('admin/register', { error, message });
 };
 
 const renderForm = async (_req, res) => {
-  return res.render('admin/register', { error: '', message: '' });
+  res.render('admin/register', { error: '', message: '' });
 };
 
 module.exports = {

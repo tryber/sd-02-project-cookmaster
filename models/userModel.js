@@ -3,13 +3,12 @@ const connection = require('./connections');
 const findByEmail = async (emailInput) => {
   const userData = await connection().then((db) =>
     db
-      .getSchema("cookmaster")
-      .getTable("users")
-      .select(["id", "first_name", "last_name", "user_pass", "email"])
-      .where("email = :email")
-      .bind("email", emailInput)
-      .execute()
-  )
+      .getSchema('cookmaster')
+      .getTable('users')
+      .select(['id', 'first_name', 'last_name', 'user_pass', 'email'])
+      .where('email = :email')
+      .bind('email', emailInput)
+      .execute())
     .then((results) => results.fetchAll())
     .then((user) => user[0]);
 
@@ -22,11 +21,11 @@ const findByEmail = async (emailInput) => {
 const findById = async (idInput) => {
   const userData = await connection().then((db) =>
     db
-      .getSchema("cookmaster")
-      .getTable("users")
-      .select(["id", "first_name", "last_name", "user_pass", "email"])
-      .where("id = :id")
-      .bind("id", idInput)
+      .getSchema('cookmaster')
+      .getTable('users')
+      .select(['id', 'first_name', 'last_name', 'user_pass', 'email'])
+      .where('id = :id')
+      .bind('id', idInput)
       .execute()
   )
     .then((results) => results.fetchAll())
@@ -41,11 +40,11 @@ const findById = async (idInput) => {
 const insertUser = async (data) =>
   connection().then((db) => {
     db
-      .getSchema("cookmaster")
+      .getSchema('cookmaster')
       .getTable('users')
       .insert(['first_name', 'last_name', 'user_pass', 'email'])
       .values([data.name, data.lastName, data.typePass, data.email])
-      .execute()
+      .execute();
   });
 
 const validateUser = ({ email, name, lastName, typePass, confirmPass }) => {
@@ -72,7 +71,7 @@ const createUser = async (data) => {
 
 const updateUserQuery = `UPDATE users
 SET email = ?, first_name = ?, last_name = ?
-WHERE id = ?`
+WHERE id = ?`;
 
 const updateUser = ({ email, name, lastName, id }) =>
   connection()
@@ -82,8 +81,7 @@ const updateUser = ({ email, name, lastName, id }) =>
         .bind(name)
         .bind(lastName)
         .bind(id)
-        .execute()
-    );
+        .execute());
 
 
 module.exports = {

@@ -7,4 +7,4 @@ const recipesAuth = async ({ user }, res) => {
 
 module.exports = {
   recipesAuth,
-}
+};
