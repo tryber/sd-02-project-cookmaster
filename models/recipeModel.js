@@ -124,7 +124,6 @@ const getUserRecipes = (id) =>
           .map(([userId, title, user]) => ({ id: userId, title, user })),
         ));
 
-
 module.exports = {
   getNames,
   getRecipe,
