@@ -28,4 +28,6 @@ app.post('/login', controllers.userController.login);
 
 app.use('/me', controllers.userInfoController.router);
 
+app.get('*', (_req, res) => res.send('Página não encontrada. Favor conferir o Link.'));
+
 app.listen(3000, () => console.log('Listening on 3000'));

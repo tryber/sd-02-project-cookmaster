@@ -1,0 +1,11 @@
+<div class="Home_header">
+  <p class="Home_header_tags">Cookmaster</p>
+  <% if(user.id) { %>
+  <p><%= user.user </p>
+  <button class=" Home_header_tags" type="button" onclick="window.location.pathname='/logout'">
+  <% } else { %>
+  <button class=" Home_header_tags" type="button" onclick="window.location.pathname='/login'">
+    Login
+  </button>
+  <% } %>
+</div>

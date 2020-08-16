@@ -70,8 +70,25 @@ const createUser = async (data) => {
   return { message: 'Usuário cadastrado com sucesso.' };
 };
 
+const updateUserQuery = `UPDATE users
+SET email = ?, first_name = ?, last_name = ?
+WHERE id = ?`
+
+const updateUser = ({ email, name, lastName, id }) =>
+  connection()
+    .then((session) =>
+      session.sql(updateUserQuery)
+        .bind(email)
+        .bind(name)
+        .bind(lastName)
+        .bind(id)
+        .execute()
+    );
+
+
 module.exports = {
   findByEmail,
   findById,
   createUser,
+  updateUser,
 };
