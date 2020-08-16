@@ -52,7 +52,7 @@ router.post('/:id', middlewares.auth(true), async ({ body, params: { id }, user 
     await recipeModel.updateRecipe(recipe);
     res.render('recipes/details', { user, recipe });
   } catch (err) {
-    err.code
+    res.send(err.code);
   }
 });
 
@@ -70,13 +70,14 @@ router.post('/:id/delete', middlewares.auth(true), async ({ body, user, params }
   const { id } = user;
   const userData = await userModel.findById(id);
 
-  if (password !== userData.password) return res.render('delete/delete', {
-    wrongPass: true,
-    id: params.id
-  });
+  if (password !== userData.password) {
+    return res.render('delete/delete', {
+      wrongPass: true,
+      id: params.id,
+    });
+  };
 
   await recipeModel.deleteRecipe(id);
-
   return res.redirect('/');
 });
 

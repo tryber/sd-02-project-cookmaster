@@ -26,8 +26,7 @@ const findById = async (idInput) => {
       .select(['id', 'first_name', 'last_name', 'user_pass', 'email'])
       .where('id = :id')
       .bind('id', idInput)
-      .execute()
-  )
+      .execute())
     .then((results) => results.fetchAll())
     .then((user) => user[0]);
 

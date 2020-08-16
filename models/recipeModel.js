@@ -121,7 +121,7 @@ const getUserRecipes = (id) =>
         .execute()
         .then((results) => results.fetchAll())
         .then((recipes) => recipes
-          .map(([userId, title, user]) => ({ id: userId, title, user }))
+          .map(([userId, title, user]) => ({ id: userId, title, user })),
         ));
 
 
