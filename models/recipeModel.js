@@ -108,6 +108,27 @@ const getRecipeLike = async (string) => {
     );
 };
 
+const getUserRecipesQuery = `SELECT
+re.recipe_id,
+re.recipe_name,
+CONCAT(us.first_name, ' ', us.last_name)
+FROM recipes as re
+INNER JOIN users as us on us.id = re.insert_user
+WHERE re.insert_user = ?;`
+
+const getUserRecipes = (id) =>
+  connection()
+    .then((session) =>
+      session
+        .sql(getUserRecipesQuery)
+        .bind(id)
+        .execute()
+        .then((results) => results.fetchAll())
+        .then((recipes) => recipes
+          .map(([id, title, user]) => ({ id, title, user }))
+        )
+    );
+
 
 module.exports = {
   getNames,
@@ -116,4 +137,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   getRecipeLike,
+  getUserRecipes,
 }
