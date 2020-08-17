@@ -15,7 +15,6 @@ app.use(cookieParser());
 
 app.use('/recipes', recipesCrud);
 
-
 app.get('/', middlewares.auth(), controllers.recipesController.recipesLandingPage);
 
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
