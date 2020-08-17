@@ -8,9 +8,12 @@ const recipesLandingPage = async (_req, res) => {
 
 const recipeDetails = async (req, res) => {
   const recipeID = req.originalUrl.match(/[0-9]+/g);
+  const recipeData = await recipesModel.readRecipes(Number(recipeID));
+  if (!recipeData) return res.render('404');
   const {
     id, name, description, authorAlias, authorInfo, ingredients,
-  } = await recipesModel.readRecipes(Number(recipeID));
+  } = recipeData;
+
   return res.render('recipeDetails', { user: req.user, authorAlias, authorInfo, recipe: { id, name, description, ingredients } });
 };
 
