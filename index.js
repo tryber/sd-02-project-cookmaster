@@ -7,12 +7,14 @@ const recipesCrud = require('./routers/recipesCRUD');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use('/recipes', recipesCrud);
-
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+app.use('/recipes', recipesCrud);
+
 
 app.get('/', middlewares.auth(), controllers.recipesController.recipesLandingPage);
 
@@ -24,7 +26,5 @@ app.post('/login', controllers.userController.login);
 
 app.get('/register', controllers.registrationController.displayRegistration);
 app.post('/register', controllers.registrationController.registerUser);
-
-
 
 app.listen(3000, () => console.log('Listening on 3000'));

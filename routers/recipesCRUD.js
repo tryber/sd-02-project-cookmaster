@@ -4,7 +4,7 @@ const controllers = require('../controllers');
 
 const router = express.Router();
 
-router.get(/\/[0-9]+/g, middlewares.auth(false), (req, res) => controllers.recipesController.recipeDetails(req, res));
+router.get(/\/[0-9]+/, middlewares.auth(false), (req, res) => controllers.recipesController.recipeDetails(req, res));
 
 router.use(middlewares.auth());
 
