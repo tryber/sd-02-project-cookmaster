@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Detalhes de Receita</title>
+  </head>
+  <body>
+    <h1>Cookmaster - Criar Receita</h1>
+    <div class="new-recipe-form-container">
+      <form method="POST" action="/recipes" id="new-recipe-form">
+        <label for="recipe-name">
+          Nome da receita:
+          <input type="text" id="recipe-name" name="name" />
+        </label>
+        <label for="recipe-author">
+          Autor:
+          <input type="text" id="recipe-author" name="authorName" />
+        </label>
+        <label for="recipe-ingredients">
+          Insira os ingredientes separado por vírgula:
+          <textarea form="new-recipe-form" id="recipe-ingredients" name="ingredients"></textarea>
+        </label>
+        <label for="recipe-description">
+          Modo de preparo:
+          <textarea form="new-recipe-form" id="recipe-description" name="description"></textarea>
+        </label>
+        <button type="submit">Enviar</button>
+      </form>
+      <div class="status">
+        <%= message %>
+      </div>
+  </body>
+</html>

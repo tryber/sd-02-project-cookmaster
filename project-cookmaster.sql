@@ -15,7 +15,8 @@ CREATE TABLE users (
 CREATE TABLE recipes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
-    recipe_description VARCHAR(500) NOT NULL
+    recipe_description VARCHAR(500) NOT NULL,
+    author_alias VARCHAR(50) NOT NULL DEFAULT ''
 );
 
 CREATE TABLE ingredients (
@@ -46,7 +47,7 @@ INSERT INTO users (name, last_name, email, password) VALUES
 INSERT INTO recipes (name, recipe_description ) VALUES
     ('Tutu de feijao', 'Faça o feijão direitinho e bata tudo no liquidificador.'),
    	('Inhoque', 'Prepare o Inhoque');
-   
+
 INSERT INTO ingredients (ingredient_name) VALUES
 	('Feijão'),
 	('Inhoque'),
@@ -60,6 +61,3 @@ INSERT INTO recipes_ingredients (recipe_id, ingredient_id) VALUES
 INSERT INTO users_recipes (user_id, recipe_id) VALUES
 	(1, 1),
 	(1, 2);
-
-   
-SELECT * FROM recipes_ingredients ri ;
