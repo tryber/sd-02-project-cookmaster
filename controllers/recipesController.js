@@ -23,12 +23,17 @@ router.post('/', middlewares.auth(true), async (req, res) => {
 
 router.get('/:id', middlewares.auth(false), async (req, res) => {
   const recipe = await recipeModel.getRecipe(req.params.id);
+  if (!recipe) return res.redirect('/');
   const user = req.user || {};
   res.render('recipes/details', { recipe, user, recipeId: req.params.id });
 });
 
 router.get('/:id/edit', middlewares.auth(true), async (req, res) => {
-  const { title, ingredients, detailsRecipe, idUser } = await recipeModel.getRecipe(req.params.id);
+  const recipeRequest = await recipeModel.getRecipe(req.params.id);
+
+  if (!recipeRequest) return res.redirect('/');
+
+  const { title, ingredients, detailsRecipe, idUser } = recipeRequest;
 
   if (req.user.id !== idUser) return res.redirect('/');
 
@@ -36,7 +41,7 @@ router.get('/:id/edit', middlewares.auth(true), async (req, res) => {
     title,
     ingredients,
     detailsRecipe,
-    id: idUser,
+    id: req.params.id,
   });
 });
 
@@ -47,7 +52,7 @@ router.post('/:id', middlewares.auth(true), async ({ body, params: { id }, user 
     detailsRecipe: body.detailsRecipe,
     idUser: id,
   };
-
+  console.log(recipe);
   try {
     await recipeModel.updateRecipe(recipe);
     res.render('recipes/details', { user, recipe });
@@ -57,7 +62,12 @@ router.post('/:id', middlewares.auth(true), async ({ body, params: { id }, user 
 });
 
 router.get('/:id/delete', middlewares.auth(true), async (req, res) => {
-  const { idUser } = await recipeModel.getRecipe(req.params.id);
+  const recipeRequest = await recipeModel.getRecipe(req.params.id);
+
+  if (!recipeRequest) return res.redirect('/');
+
+  const { idUser } = recipeRequest;
+
   const { id } = req.user;
 
   if (id !== idUser) return res.redirect('/');

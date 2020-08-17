@@ -1,4 +1,4 @@
-const connection = require('./connections');
+const { connection, connectionSession } = require('./connections');
 
 /**
  * Captura os títulos de todas as receitas no banco
@@ -10,15 +10,16 @@ FROM recipes AS re
 INNER JOIN users AS us ON us.id = re.insert_user;`;
 
 const getNames = async () =>
-  connection().then((session) =>
-    session.sql(queryUser)
-      .execute()
-      .then((results) => results.fetchAll())
-      .then((recipes) =>
-        recipes.map(
-          ([id, recipe, userName]) =>
-            ({ id, recipe, userName }),
-        )));
+  connectionSession(queryUser)
+    .then((query) =>
+      query
+        .execute()
+        .then((results) => results.fetchAll())
+        .then((recipes) =>
+          recipes.map(
+            ([id, recipe, userName]) =>
+              ({ id, recipe, userName }),
+          )));
 
 /**
  * Retorna a receita completa de acordo com o ID
@@ -38,8 +39,8 @@ const getRecipe = async (id) =>
       .bind(id)
       .execute())
     .then((results) => results.fetchAll()[0])
-    .then(([title, ingredients, detailsRecipe, userName, idUser]) =>
-      ({ title, ingredients, detailsRecipe, userName, idUser }));
+    .then(([title, ingredients, detailsRecipe, userName, idUser] = []) =>
+      title ? ({ title, ingredients, detailsRecipe, userName, idUser }) : null);
 
 const insertRecipe = async ({ title, ing, proc, id }) =>
   connection()
@@ -64,28 +65,25 @@ const updateQuery = `UPDATE recipes
 SET recipe_name = ?, ingredients = ?, process_recipe = ?
 WHERE recipe_id = ?;`;
 
-const updateRecipe = async ({ title, ingredients, detailsRecipe, id }) =>
-  connection()
-    .then((session) =>
-      session
-        .sql(updateQuery)
+const updateRecipe = async ({ title, ingredients, detailsRecipe, idUser }) =>
+  connectionSession(updateQuery)
+    .then((query) =>
+      query
         .bind(title)
         .bind(ingredients)
         .bind(detailsRecipe)
-        .bind(id)
+        .bind(idUser)
         .execute());
 
 const deleteRecipeQuery = 'DELETE from recipes WHERE recipe_id = ?';
 
-const deleteRecipe = async (recipeId) => {
-  console.log(recipeId);
-  return connection()
+const deleteRecipe = async (recipeId) =>
+  connection()
     .then((session) =>
       session
         .sql(deleteRecipeQuery)
         .bind(recipeId)
         .execute());
-}
 
 const recipeLike = `SELECT
 re.recipe_id, re.recipe_name, CONCAT(us.first_name, ' ', us.last_name) FROM recipes as re

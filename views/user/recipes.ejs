@@ -8,17 +8,18 @@
 </head>
 
 <body>
-  <p>
+  <div>
+    <%- include('../header/header'); %>
     <% if(userRecipes) { %>
     <% userRecipes.map((recipe) => { %>
-  <div class="Recipe_selection">
-    <p><%=`${recipe.title}`%></p>
-    <p><%=`${recipe.user}`%></p>
-    <a href="<%=`/recipes/${recipe.id}`%>">Ver mais</a>
+    <div class="Recipe_selection">
+      <p><%=`${recipe.title}`%></p>
+      <p><%=`${recipe.user}`%></p>
+      <a href="<%=`/recipes/${recipe.id}`%>">Ver mais</a>
+    </div>
+    <% }) %>
+    <% } %>
   </div>
-  <% }) %>
-  <% } %>
-  </p>
 </body>
 
 </html>
