@@ -14,6 +14,7 @@
       <label for="password">Digite sua senha para confirmar a exclusão</label>
       <input type="password" id="password" name="password">
       <button type="submit">Excluir Senha</button>
+      <button type="button" onclick="history.go(-1);">Voltar</button>
     </form>
     <% if(wrongPass) { %>
     <h3>Senha incorreta. Por favor, tente novamente.</h3>
