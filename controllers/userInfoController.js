@@ -12,7 +12,7 @@ router.get('/recipes', middlewares.auth(true), async (req, res) => {
   res.render('user/recipes', { userRecipes });
 });
 
-router.get('/edit', middlewares.auth(true), async ({user}, res) => {
+router.get('/edit', middlewares.auth(true), async ({ user }, res) => {
   res.render('user/edit', { user });
 });
 
