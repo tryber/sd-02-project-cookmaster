@@ -77,7 +77,7 @@ router.post('/:id/delete', middlewares.auth(true), async ({ body, user, params }
     });
   }
 
-  recipeModel.deleteRecipe(id);
+  await recipeModel.deleteRecipe(params.id);
 
   return res.redirect('/');
 });

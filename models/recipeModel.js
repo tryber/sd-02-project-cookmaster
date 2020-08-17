@@ -77,13 +77,15 @@ const updateRecipe = async ({ title, ingredients, detailsRecipe, id }) =>
 
 const deleteRecipeQuery = 'DELETE from recipes WHERE recipe_id = ?';
 
-const deleteRecipe = async (recipeId) =>
-  connection()
+const deleteRecipe = async (recipeId) => {
+  console.log(recipeId);
+  return connection()
     .then((session) =>
       session
         .sql(deleteRecipeQuery)
         .bind(recipeId)
         .execute());
+}
 
 const recipeLike = `SELECT
 re.recipe_id, re.recipe_name, CONCAT(us.first_name, ' ', us.last_name) FROM recipes as re
