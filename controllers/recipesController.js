@@ -9,9 +9,9 @@ const recipesLandingPage = async (_req, res) => {
 const recipeDetails = async (req, res) => {
   const recipeID = req.originalUrl.match(/[0-9]+/g);
   const {
-    id, name, description, authorInfo, ingredients,
+    id, name, description, authorAlias, authorInfo, ingredients,
   } = await recipesModel.readRecipes(Number(recipeID));
-  return res.render('recipeDetails', { user: req.user, authorInfo, recipe: { id, name, description, ingredients } });
+  return res.render('recipeDetails', { user: req.user, authorAlias, authorInfo, recipe: { id, name, description, ingredients } });
 };
 
 const newRecipesPage = async (_req, res) => res.render('admin/newRecipe', { message: 'test', redirect: false });

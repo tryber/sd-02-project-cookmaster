@@ -1,7 +1,7 @@
 const connection = require('./connection');
 
 const fetchRecipesIngredients = async (recipeData) => {
-  const { id, name, description, authorInfo: { authorID, fullName } } = recipeData;
+  const { id, name, description, authorAlias, authorInfo: { authorID, fullName } } = recipeData;
   const ingredientsData = await connection().then((db) =>
     db
       .getTable('recipes_ingredients')
@@ -20,13 +20,19 @@ const fetchRecipesIngredients = async (recipeData) => {
           .then((results) => results.fetchAll())
           .then(([[ingredientNames]]) => ingredientNames))));
   const ingredientNames = await Promise.all(ingredientsData).then(([...results]) => results);
+
   return {
-    id, name, description, authorInfo: { authorID, fullName }, ingredients: ingredientNames,
+    id,
+    name,
+    description,
+    authorAlias,
+    authorInfo: { authorID, fullName },
+    ingredients: ingredientNames,
   };
 };
 
 const fetchRecipeWithAuthor = async (recipesData) => {
-  const recipesWithAuthor = recipesData.map(([id, name, description]) =>
+  const recipesWithAuthor = recipesData.map(([id, name, description, authorAlias]) =>
     connection().then((db) =>
       db
         .getTable('users_recipes')
@@ -45,7 +51,7 @@ const fetchRecipeWithAuthor = async (recipesData) => {
             .execute()))
       .then((results) => results.fetchAll())
       .then(([authorInfo]) => fetchRecipesIngredients(
-        { id, name, description, authorInfo: { authorID: authorInfo[0], fullName: `${authorInfo[1]} ${authorInfo[2]}` } },
+        { id, name, description, authorAlias, authorInfo: { authorID: authorInfo[0], fullName: `${authorInfo[1]} ${authorInfo[2]}` } },
       )));
   const recipesArray = await Promise.all(recipesWithAuthor).then((results) => results);
   return recipesArray;
@@ -55,7 +61,7 @@ const readRecipes = async (recipeID) => {
   const recipes = await connection().then((db) =>
     db
       .getTable('recipes')
-      .select(['id', 'name', 'recipe_description'])
+      .select(['id', 'name', 'recipe_description', 'author_alias'])
       .execute())
     .then((results) => results.fetchAll())
     .then((data) => fetchRecipeWithAuthor(data));
