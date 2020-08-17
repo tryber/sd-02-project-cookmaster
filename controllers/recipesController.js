@@ -1,5 +1,5 @@
 const recipesModel = require('../models/recipesModel');
-const recipeCreation = require('../models/admin/recipeCreation');
+const newRecipeModel = require('../models/admin/newRecipeModel');
 
 const recipesLandingPage = async (_req, res) => {
   const recipesData = await recipesModel.readRecipes();
@@ -19,7 +19,7 @@ const newRecipesPage = async (_req, res) => res.render('admin/newRecipe', { mess
 const createNewRecipe = async (req, res) => {
   const { id: userId } = req.user;
   const { body: recipeData } = req;
-  const newRecipe = await recipeCreation.addNewRecipe(recipeData, userId);
+  const newRecipe = await newRecipeModel.addNewRecipe(recipeData, userId);
   console.log(newRecipe);
   res.render('admin/newRecipe', { message: 'Criado', redirect: false });
 };
