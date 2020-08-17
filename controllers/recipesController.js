@@ -9,7 +9,7 @@ router.get('/search', middlewares.auth(false), async (req, res) => {
   const toSearch = req.query.q;
   const recipesLike = await recipeModel.getRecipeLike(toSearch) || [];
 
-  res.render('recipes/search', { recipesLike });
+  res.render('recipes/search', { recipesLike, user: req.user });
 });
 
 router.get('/new', middlewares.auth(true), async (_req, res) => {

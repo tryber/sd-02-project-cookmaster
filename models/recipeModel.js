@@ -92,10 +92,9 @@ WHERE re.recipe_name LIKE ?;`;
 
 const getRecipeLike = async (string) => {
   const likeWord = `%${string}%`;
-  return connection()
-    .then((session) =>
-      session
-        .sql(recipeLike)
+  return connectionSession(recipeLike)
+    .then((query) =>
+      query
         .bind(likeWord)
         .execute()
         .then((results) => results.fetchAll())

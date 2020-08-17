@@ -9,6 +9,7 @@
 
 <body>
   <div>
+    <%- include('../header/header'); %>
     <h6>Cookmaster - Pesquisa de receitas</h6>
     <form action=<%= `/recipes/search` %> method="GET">
       <label for="q">Título da Receita</label>
@@ -16,10 +17,11 @@
       <br>
       <button type="submit">Pesquisar</button>
     </form>
+    <button onclick="window.location.pathname='/'">Voltar</button>
     <% if(recipesLike) { %>
     <% recipesLike.map((recipe) => { %>
     <div class="Recipe_selection">
-      <p><%=`${recipe.title}`%></p>
+      <h3><%=`${recipe.title}`%></h3>
       <p><%=`${recipe.user}`%></p>
       <a href="<%=`/recipes/${recipe.id}`%>">Ver mais</a>
     </div>

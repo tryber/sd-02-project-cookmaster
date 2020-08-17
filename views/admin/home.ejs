@@ -7,6 +7,7 @@
   </head>
 
   <body>
+    <%- include('../header/header'); %>
     <h1>Painel Administrativo Cookmaster</h1>
     <p>Usuário atual: <%= `${user.name} ${user.lastName}` %></p>
     <pre><%= JSON.stringify(user, null, 4) %></pre>
