@@ -15,7 +15,8 @@ const addNewRecipe = async (recipeData, userId) => {
           .insert(['user_id', 'recipe_id'])
           .values([userId, recipeId])
           .execute();
-        const ingredientsArray = ingredients.split(',').trim();
+        const ingredientsArray = ingredients.split(',');
+        ingredientsArray.map((ingredient) => ingredient.trim());
         return ingredientsArray.map((ingredient) => db
           .getTable('ingredients')
           .insert('ingredient_name')
@@ -29,8 +30,10 @@ const addNewRecipe = async (recipeData, userId) => {
             .execute()));
       }));
 
-  await Promise.all(newRecipe).then((results) => results);
-  return newRecipe;
+  const status = await Promise.all(newRecipe).then((results) => results);
+  const errorCount = status.reduce((acc, stats) => acc + stats.getWarnings().length, 0);
+  if (errorCount === 0) return { message: 'Receita criada com sucesso', redirect: true };
+  return { message: 'Algo deu errado...', redirect: false };
 };
 
 module.exports = {

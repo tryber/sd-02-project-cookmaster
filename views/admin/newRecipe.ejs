@@ -11,19 +11,19 @@
       <form method="POST" action="/recipes" id="new-recipe-form">
         <label for="recipe-name">
           Nome da receita:
-          <input type="text" id="recipe-name" name="name" />
+          <input required=true type="text" id="recipe-name" name="name" />
         </label>
         <label for="recipe-author">
           Autor:
-          <input type="text" id="recipe-author" name="authorName" />
+          <input required=true type="text" id="recipe-author" name="authorName" />
         </label>
         <label for="recipe-ingredients">
           Insira os ingredientes separado por vírgula:
-          <textarea form="new-recipe-form" id="recipe-ingredients" name="ingredients"></textarea>
+          <textarea required=true form="new-recipe-form" id="recipe-ingredients" name="ingredients"></textarea>
         </label>
         <label for="recipe-description">
           Modo de preparo:
-          <textarea form="new-recipe-form" id="recipe-description" name="description"></textarea>
+          <textarea required=true form="new-recipe-form" id="recipe-description" name="description"></textarea>
         </label>
         <button type="submit">Enviar</button>
       </form>

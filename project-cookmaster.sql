@@ -15,7 +15,7 @@ CREATE TABLE users (
 CREATE TABLE recipes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
-    recipe_description VARCHAR(500) NOT NULL,
+    recipe_description TEXT NOT NULL,
     author_alias VARCHAR(50) NOT NULL DEFAULT ''
 );
 

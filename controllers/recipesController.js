@@ -10,6 +10,7 @@ const recipeDetails = async (req, res) => {
   const recipeID = req.originalUrl.match(/[0-9]+/g);
   const recipeData = await recipesModel.readRecipes(Number(recipeID));
   if (!recipeData) return res.render('404');
+
   const {
     id, name, description, authorAlias, authorInfo, ingredients,
   } = recipeData;
@@ -17,14 +18,25 @@ const recipeDetails = async (req, res) => {
   return res.render('recipeDetails', { user: req.user, authorAlias, authorInfo, recipe: { id, name, description, ingredients } });
 };
 
-const newRecipesPage = async (_req, res) => res.render('admin/newRecipe', { message: 'test', redirect: false });
+const newRecipesPage = async (_req, res) => res.render('admin/newRecipe', { message: '', redirect: false });
 
 const createNewRecipe = async (req, res) => {
   const { id: userId } = req.user;
   const { body: recipeData } = req;
-  const newRecipe = await newRecipeModel.addNewRecipe(recipeData, userId);
-  console.log(newRecipe);
-  res.render('admin/newRecipe', { message: 'Criado', redirect: false });
+  const { message, redirect } = await newRecipeModel.addNewRecipe(recipeData, userId);
+  if (redirect) res.render('admin/newRecipe', { message });
+};
+
+const modifyRecipe = async (req, res) => {
+  const recipeID = req.originalUrl.match(/[0-9]+/g);
+  const recipeData = await recipesModel.readRecipes(Number(recipeID));
+  if (!recipeData) return res.render('404');
+
+  const {
+    id, name, description, authorAlias, authorInfo, ingredients,
+  } = recipeData;
+
+  return res.render('admin/editRecipe', { message: '', user: req.user, authorAlias, fullName: authorInfo.fullName, recipe: { id, name, description, ingredients } });
 };
 
 module.exports = {
@@ -32,4 +44,5 @@ module.exports = {
   recipeDetails,
   newRecipesPage,
   createNewRecipe,
+  modifyRecipe,
 };
