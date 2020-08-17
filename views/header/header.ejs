@@ -27,7 +27,7 @@
 <body>
   <div class="Home_header">
     <p class="Home_header_tags">Cookmaster</p>
-    <% if(user) { %>
+    <% if(user && user.name) { %>
     <div class="Header_Comps">
       <p><%= `${user.name} | ` %></p>
       <button class=" Home_header_tags" type="button" onclick="window.location.pathname='/logout'">

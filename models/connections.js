@@ -14,4 +14,11 @@ const connection = () => (
     })
 );
 
-module.exports = connection;
+const connectionSession = (query) =>
+  connection()
+    .then((session) => session.sql(query));
+
+module.exports = {
+  connection,
+  connectionSession,
+};

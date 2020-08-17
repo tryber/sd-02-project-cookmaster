@@ -24,7 +24,7 @@ router.post('/', middlewares.auth(true), async (req, res) => {
 router.get('/:id', middlewares.auth(false), async (req, res) => {
   const recipe = await recipeModel.getRecipe(req.params.id);
   const user = req.user || {};
-  res.render('recipes/details', { recipe, user });
+  res.render('recipes/details', { recipe, user, recipeId: req.params.id });
 });
 
 router.get('/:id/edit', middlewares.auth(true), async (req, res) => {

@@ -6,40 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detalhes da Receita</title>
   <style>
-    .Home_header {
-      background-color: grey;
-      position: relative;
-      padding: 1vh 2vw;
-      margin: -10px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .Home_header_tags {
-      font-size: 2vh;
-    }
-
-    .Home_recipes {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 2vw 0 2vw;
+    .Data_details {
+      margin-top: 7vh;
     }
   </style>
 </head>
 
 <body>
   <div>
-    <div class="Home_header">
-      <p class="Home_header_tags">Cookmaster</p>
-      <button class=" Home_header_tags" type="button" onclick="window.location.pathname='/login'">
-        Login
-      </button>
-    </div>
-    <div>
+    <%- include('../header/header'); %>
+    <div class="Data_details">
       <% if(user.id === recipe.idUser){ %>
-      <button>Editar Receita</button>
-      <button>Excluir Receita</button>
+      <button type="button" onclick="window.location.href='<%= `/recipes/${recipeId}/edit` %>'">
+        Editar Receita
+      </button>
+      <button type="button" onclick="window.location.href='<%= `/recipes/${recipeId}/delete` %>'">
+        Excluir Receita
+      </button>
       <% } %>
       <% if(recipe){ %>
       <h2><%= recipe.title%></h2>

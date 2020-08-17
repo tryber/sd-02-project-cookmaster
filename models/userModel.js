@@ -1,4 +1,4 @@
-const connection = require('./connections');
+const { connection, connectionSession } = require('./connections');
 
 const findBy = async (data, local) => {
   const userData = await connection()
@@ -55,14 +55,13 @@ SET email = ?, first_name = ?, last_name = ?
 WHERE id = ?`;
 
 const updateUser = async ({ email, name, lastName, id }) =>
-  connection()
-    .then((session) =>
-      session.sql(updateUserQuery)
-        .bind(email)
-        .bind(name)
-        .bind(lastName)
-        .bind(id)
-        .execute());
+  connectionSession(updateUserQuery)
+    .then((query) => query
+      .bind(email)
+      .bind(name)
+      .bind(lastName)
+      .bind(id)
+      .execute());
 
 
 module.exports = {
