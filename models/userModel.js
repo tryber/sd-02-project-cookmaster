@@ -1,31 +1,13 @@
 const connection = require('./connections');
 
-const findByEmail = async (emailInput) => {
+const findBy = async (data, local) => {
   const userData = await connection()
     .then((db) => db
       .getSchema('cookmaster')
       .getTable('users')
       .select(['id', 'first_name', 'last_name', 'user_pass', 'email'])
-      .where('email = :email')
-      .bind('email', emailInput)
-      .execute())
-    .then((results) => results.fetchAll())
-    .then((user) => user[0]);
-
-  if (!userData) return null;
-
-  const [id, name, lastName, password, email] = userData;
-  return { id, email, password, name, lastName };
-};
-
-const findById = async (idInput) => {
-  const userData = await connection().then((db) =>
-    db
-      .getSchema('cookmaster')
-      .getTable('users')
-      .select(['id', 'first_name', 'last_name', 'user_pass', 'email'])
-      .where('id = :id')
-      .bind('id', idInput)
+      .where(`${local} = :${local}`)
+      .bind(`${local}`, data)
       .execute())
     .then((results) => results.fetchAll())
     .then((user) => user[0]);
@@ -59,7 +41,7 @@ const createUser = async (data) => {
 
   if (!isUserValid) return { error: 'Dados Inválidos' };
 
-  const isUserExists = await findByEmail(data.email);
+  const isUserExists = await findBy(data.email, 'email');
 
   if (isUserExists) return { error: 'Usuário já cadastrado' };
 
@@ -72,7 +54,7 @@ const updateUserQuery = `UPDATE users
 SET email = ?, first_name = ?, last_name = ?
 WHERE id = ?`;
 
-const updateUser = ({ email, name, lastName, id }) =>
+const updateUser = async ({ email, name, lastName, id }) =>
   connection()
     .then((session) =>
       session.sql(updateUserQuery)
@@ -84,8 +66,7 @@ const updateUser = ({ email, name, lastName, id }) =>
 
 
 module.exports = {
-  findByEmail,
-  findById,
   createUser,
   updateUser,
+  findBy,
 };

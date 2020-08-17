@@ -75,7 +75,7 @@ const updateRecipe = async ({ title, ingredients, detailsRecipe, id }) =>
         .bind(id)
         .execute());
 
-const deleteRecipeQuery = 'DELETE from recipes WHERE recipe_id=?';
+const deleteRecipeQuery = 'DELETE from recipes WHERE recipe_id = ?';
 
 const deleteRecipe = async (recipeId) =>
   connection()
