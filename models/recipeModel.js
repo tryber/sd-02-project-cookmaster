@@ -43,7 +43,7 @@ const getRecipe = async (id) =>
       if (!response) return null;
       const [title, ingredients, detailsRecipe, userName, idUser] = response;
       return ({ title, ingredients, detailsRecipe, userName, idUser });
-    }
+    },
     );
 
 const insertRecipe = async ({ title, ing, proc, id }) =>
