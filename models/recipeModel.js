@@ -39,8 +39,12 @@ const getRecipe = async (id) =>
       .bind(id)
       .execute())
     .then((results) => results.fetchAll()[0])
-    .then(([title, ingredients, detailsRecipe, userName, idUser] = []) =>
-      title ? ({ title, ingredients, detailsRecipe, userName, idUser }) : null);
+    .then((response) => {
+      if (!response) return null;
+      const [title, ingredients, detailsRecipe, userName, idUser] = response;
+      return ({ title, ingredients, detailsRecipe, userName, idUser });
+    }
+    );
 
 const insertRecipe = async ({ title, ing, proc, id }) =>
   connection()

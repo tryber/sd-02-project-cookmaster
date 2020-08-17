@@ -1,4 +1,4 @@
-const { connection, connectionSession } = require('./connections');
+const { connection } = require('./connections');
 
 const findBy = async (data, local) => {
   const userData = await connection()
