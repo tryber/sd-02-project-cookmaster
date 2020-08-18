@@ -8,7 +8,9 @@ router.get(/\/[0-9]+$/, middlewares.auth(false), (req, res) => controllers.recip
 
 router.use(middlewares.auth());
 
-router.get('/:id/edit', (req, res) => controllers.recipesController.modifyRecipe(req, res));
+router.get('/:id/edit', (req, res) => controllers.recipesController.modifyRecipePage(req, res));
+
+router.post('/:id', (req, res) => controllers.recipesController.modifyRecipe(req, res));
 
 router.get('/new', (_req, res) => controllers.recipesController.newRecipesPage(_req, res));
 

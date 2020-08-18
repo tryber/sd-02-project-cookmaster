@@ -9,7 +9,7 @@
     <h1>Cookmaster - Detalhes de Receita</h1>
     <div class="recipe-content">
       <h3><%= recipe.name %> </h3>
-      <h4><%= `Autor: ${authorAlias}` %></h6>
+      <h4><%= `Autor: ${authorAlias || authorInfo.fullName}` %></h6>
       <h4>Ingredientes: </h4>
       <ul>
           <% recipe.ingredients.map((ingredient) => { %>

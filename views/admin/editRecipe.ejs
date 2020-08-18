@@ -8,22 +8,22 @@
   <body>
     <h1>Cookmaster - Modificar Receita</h1>
     <div class="modify-recipe-content">
-      <form method="POST" action=`/recipes/${id}/edit` id="modify-recipe-content">
+      <form method="POST" <%- `action="/recipes/${recipe.id}"` %> id="modify-recipe-content">
         <label for="recipe-name">
           Nome da receita:
           <input type="text" id="recipe-name" name="name" <%- `value="${recipe.name}"` %> />
         </label>
         <label for="recipe-author">
           Autor:
-          <input type="text" id="recipe-author" name="authorName" <%- `value="${fullName}"` %> />
+          <input type="text" id="recipe-author" name="authorName" <%- `value="${authorAlias || authorInfo.fullName}"` %> />
         </label>
         <label for="recipe-ingredients">
           Insira os ingredientes separado por vírgula:
-          <textarea form="new-recipe-form" id="recipe-ingredients" name="ingredients"><% recipe.ingredients.map((ingredient) => { %><%= `${ingredient}, ` %><% }) %></textarea>
+          <textarea form="modify-recipe-content" id="recipe-ingredients" name="ingredients"><% recipe.ingredients.map((ingredient) => { %><%= `${ingredient}, ` %><% }) %></textarea>
         </label>
         <label for="recipe-description">
           Modo de preparo:
-          <textarea form="new-recipe-form" id="recipe-description" name="description"><%= recipe.description %></textarea>
+          <textarea form="modify-recipe-content" id="recipe-description" name="description"><%= recipe.description %></textarea>
         </label>
         <button type="submit">Enviar</button>
       </form>

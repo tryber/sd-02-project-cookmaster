@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const middlewares = require('./middlewares');
 const controllers = require('./controllers');
-const recipesCrud = require('./routers/recipesCRUD');
+const recipesRouter = require('./routers/recipesRouter');
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.set('views', './views');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use('/recipes', recipesCrud);
+app.use('/recipes', recipesRouter);
 
 app.get('/', middlewares.auth(), controllers.recipesController.recipesLandingPage);
 

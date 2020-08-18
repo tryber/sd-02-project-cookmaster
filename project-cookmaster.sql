@@ -16,7 +16,7 @@ CREATE TABLE recipes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     recipe_description TEXT NOT NULL,
-    author_alias VARCHAR(50) NOT NULL DEFAULT ''
+    author_alias VARCHAR(50) DEFAULT null
 );
 
 CREATE TABLE ingredients (
@@ -41,7 +41,8 @@ CREATE TABLE users_recipes (
 );
 
 INSERT INTO users (name, last_name, email, password) VALUES
-    ('Taylor', 'Doe', 'taylor.doe@company.com', 'password');
+    ('Taylor', 'Doe', 'taylor.doe@company.com', 'password'),
+    ('User', 'Test', 'test@test.com', 'test1234');
 
 
 INSERT INTO recipes (name, recipe_description ) VALUES

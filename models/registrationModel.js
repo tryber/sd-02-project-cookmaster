@@ -15,8 +15,7 @@ const registerNewUser = async (userData = null) => {
       .values([email, name, lastName, password])
       .execute()
       .then((data) => data));
-  console.log(registerUser);
-  console.log('cadastrei');
+
   return { message: 'Usuário cadastrado com sucesso.', redirect: true };
 };
 
