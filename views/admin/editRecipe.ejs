@@ -19,17 +19,11 @@
         </label>
         <label for="recipe-ingredients">
           Insira os ingredientes separado por vírgula:
-          <textarea form="new-recipe-form" id="recipe-ingredients" name="ingredients">
-            <% recipe.ingredients.map((ingredient) => { %>
-                <span><%= `${ingredient}, ` %></span>
-            <% }) %>
-          </textarea>
+          <textarea form="new-recipe-form" id="recipe-ingredients" name="ingredients"><% recipe.ingredients.map((ingredient) => { %><%= `${ingredient}, ` %><% }) %></textarea>
         </label>
         <label for="recipe-description">
           Modo de preparo:
-          <textarea form="new-recipe-form" id="recipe-description" name="description">
-            <%= recipe.description %>
-          </textarea>
+          <textarea form="new-recipe-form" id="recipe-description" name="description"><%= recipe.description %></textarea>
         </label>
         <button type="submit">Enviar</button>
       </form>
