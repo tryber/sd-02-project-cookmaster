@@ -235,6 +235,9 @@ dist
 # vuepress build output
 .vuepress/dist
 
+#password
+/password
+
 # Serverless directories
 .serverless/
 

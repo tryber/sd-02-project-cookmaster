@@ -1,11 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cookmaster - Home</title>
-  </head>
-  <body>
-    <h1>Boas vindas ao Cookmaster!</h1>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cookmaster - Home</title>
+
+  <style>
+    .Home_recipes {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2vw 0 2vw;
+    }
+
+    .Recipes_div {
+      display: flex;
+      flex-flow: row wrap;
+      padding: 2vh 2vw;
+    }
+
+    .Recipe_selection {
+      margin: 1vh 1vw;
+      padding: 1vh 1vw;
+      background-color: grey;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div>
+    <%- include('header/header'); %>
+    <div class="Home_recipes">
+      <h1>Receitas</h1>
+      <div>
+        <% if(user) { %>
+        <button type="button" onclick="window.location.pathname = '/me/recipes'">
+          Minhas Receitas
+        </button>
+        <button type="button" onclick="window.location.pathname = '/recipes/new'">
+          Nova Receita
+        </button>
+        <button type="button" onclick="window.location.pathname = '/me/edit'">
+          Minha Conta
+        </button>
+        <% } %>
+        <button type="button" onclick="window.location.pathname = '/recipes/search'">
+          Buscar Receita
+        </button>
+      </div>
+    </div>
+    <div class="Recipes_div">
+      <% allRecipes.forEach((recipe) => {%>
+      <div class="Recipe_selection">
+        <p><%=`${recipe.recipe}`%></p>
+        <p><%=`${recipe.userName}`%></p>
+        <a href="<%=`/recipes/${recipe.id}`%>">Ver mais</a>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</body>
+
 </html>

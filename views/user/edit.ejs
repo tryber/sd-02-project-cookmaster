@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookmaster - Editar Usuário</title>
+</head>
+
+<body>
+  <%- include('../header/header'); %>
+  <div>
+    <h3>Editar Usuário</h3>
+    <form action="/me" method="POST">
+      <label for="name">Nome</label>
+      <input type="text" id="name" name="name" value=<%= user.name %>>
+      <label for="lastName">SobreNome</label>
+      <input type="text" id="lastName" name="lastName" value=<%= user.lastName %>>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value=<%= user.email %>>
+      <button type="submit">Enviar Alterações</button>
+    </form>
+    <button onclick="window.location.pathname='/'">Voltar</button>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    .Home_header {
+      background-color: grey;
+      position: relative;
+      padding: 1vh 2vw;
+      margin: -10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .Home_header_tags {
+      font-size: 1em;
+    }
+
+    .Header_Comps {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="Home_header">
+    <p class="Home_header_tags">Cookmaster</p>
+    <% if(user && user.name) { %>
+    <div class="Header_Comps">
+      <p><%= `${user.name} | ` %></p>
+      <button class=" Home_header_tags" type="button" onclick="window.location.pathname='/logout'">
+        Logout
+      </button>
+    </div>
+    <% } else { %>
+    <button class=" Home_header_tags" type="button" onclick="window.location.pathname='/login'">
+      Login
+    </button>
+    <% } %>
+  </div>
+</body>
+
+</html>
