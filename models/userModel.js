@@ -29,7 +29,7 @@ const insertUser = async (data) =>
   });
 
 const validateUser = ({ email, name, lastName, typePass, confirmPass }) => {
-  const emailReg = /^(([^<>()\\.,;:\s@']+(\.[^<>()\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+  const emailReg = /[A-Z0-9]{1,}@[A-Z0-9]{2,}\.[A-Z0-9]{2,}/i.test(email);
   const namesReg = /^[a-zA-Z]*$/.test(name) && /^[a-zA-Z]*$/.test(lastName);
   const isPassValid = typePass === confirmPass;
   if (!emailReg || !namesReg || !isPassValid) return false;
