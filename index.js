@@ -15,8 +15,6 @@ app.use(cookieParser());
 
 app.use('/recipes', recipesRouter);
 
-app.get('/me/recipes', middlewares.auth(), controllers.recipesController.fetchMyRecipesPage);
-
 app.get('/', middlewares.auth(), controllers.recipesController.recipesLandingPage);
 
 app.get('/admin', middlewares.auth(), (req, res) => res.render('admin/home', { user: req.user }));
@@ -28,5 +26,8 @@ app.post('/login', controllers.userController.login);
 app.get('/register', controllers.registrationController.displayRegistration);
 app.post('/register', controllers.registrationController.registerUser);
 
+app.get('/me/recipes', middlewares.auth(), controllers.recipesController.fetchMyRecipesPage);
+app.get('/me/edit', middlewares.auth(), controllers.registrationController.editUserPage);
+app.post('/me', middlewares.auth(), controllers.registrationController.editUser);
 
 app.listen(3000, () => console.log('Listening on 3000'));
