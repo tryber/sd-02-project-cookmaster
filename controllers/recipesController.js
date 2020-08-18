@@ -51,7 +51,7 @@ const modifyRecipe = async (req, res) => {
 
   const { body } = req;
   const recipeData = { recipeId, ...body };
-  const updateRecipe = await recipesCRUDModel.updateRecipe(recipeData);
+  await recipesCRUDModel.updateRecipe(recipeData);
   return setTimeout(() => res.redirect(`/recipes/${recipeId}`), 2000);
 };
 

@@ -17,6 +17,16 @@ de fato, realize a busca no banco de dados */
  * @param {string} email Email do usuário a ser encontrado
  */
 
+const anyUserFound = (userData) => {
+  if (userData.length > 0) {
+    const [[id, email, password, name, lastName]] = userData;
+    const userObject = { id, email, password, name, lastName };
+    return userObject;
+  }
+
+  return null;
+};
+
 const findByEmail = async (userEmail) => {
   const registeredUser = await connection().then((db) =>
     db
@@ -28,13 +38,7 @@ const findByEmail = async (userEmail) => {
       .then((results) => results.fetchAll())
       .then((userData) => userData));
 
-  if (registeredUser.length > 0) {
-    const [[id, email, password, name, lastName]] = registeredUser;
-    const userObject = { id, email, password, name, lastName };
-    return userObject;
-  }
-
-  return null;
+  return anyUserFound(registeredUser);
 };
 
 /**
@@ -52,13 +56,7 @@ const findById = async (userID) => {
       .then((results) => results.fetchAll())
       .then((userData) => userData));
 
-  if (registeredUser) {
-    const [[id, email, password, name, lastName]] = registeredUser;
-    const userObject = { id, email, password, name, lastName };
-    return userObject;
-  }
-
-  return null;
+  return anyUserFound(registeredUser);
 };
 
 module.exports = {

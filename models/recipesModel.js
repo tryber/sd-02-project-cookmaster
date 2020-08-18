@@ -4,18 +4,12 @@ const fetchRecipesIngredients = async (recipeData) => {
   const { id, name, description, authorAlias, authorInfo: { authorID, fullName } } = recipeData;
   const ingredientsData = await connection().then((db) =>
     db
-      .getTable('recipes_ingredients')
-      .select('ingredient_id')
-      .where('recipe_id = :recipeData_id')
-      .bind('recipeData_id', recipeData.id)
+      .getTable('recipes_ingredients').select('ingredient_id').where('recipe_id = :recipeData_id').bind('recipeData_id', recipeData.id)
       .execute()
       .then((results) => results.fetchAll())
       .then((data) => data.map(([ingredientID]) =>
         db
-          .getTable('ingredients')
-          .select('ingredient_name')
-          .where('ingredient_id = :ingredientID')
-          .bind('ingredientID', ingredientID)
+          .getTable('ingredients').select('ingredient_name').where('ingredient_id = :ingredientID').bind('ingredientID', ingredientID)
           .execute()
           .then((results) => results.fetchAll())
           .then(([[ingredientNames]]) => ingredientNames))));
@@ -35,19 +29,13 @@ const fetchRecipeWithAuthor = async (recipesData) => {
   const recipesWithAuthor = recipesData.map(([id, name, description, authorAlias]) =>
     connection().then((db) =>
       db
-        .getTable('users_recipes')
-        .select('user_id')
-        .where('recipe_id = :id')
-        .bind('id', id)
+        .getTable('users_recipes').select('user_id').where('recipe_id = :id').bind('id', id)
         .execute())
       .then((results) => results.fetchAll())
       .then(([[userID]]) =>
         connection().then((db) =>
           db
-            .getTable('users')
-            .select(['id', 'name', 'last_name'])
-            .where('id = :userID')
-            .bind('userID', userID)
+            .getTable('users').select(['id', 'name', 'last_name']).where('id = :userID').bind('userID', userID)
             .execute()))
       .then((results) => results.fetchAll())
       .then(([authorInfo]) => fetchRecipesIngredients(
@@ -60,8 +48,7 @@ const fetchRecipeWithAuthor = async (recipesData) => {
 const readRecipes = async (recipeID) => {
   const recipes = await connection().then((db) =>
     db
-      .getTable('recipes')
-      .select(['id', 'name', 'recipe_description', 'author_alias'])
+      .getTable('recipes').select(['id', 'name', 'recipe_description', 'author_alias'])
       .execute())
     .then((results) => results.fetchAll())
     .then((data) => fetchRecipeWithAuthor(data));

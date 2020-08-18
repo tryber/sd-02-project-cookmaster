@@ -8,7 +8,7 @@ const registerNewUser = async (userData = null) => {
   const doesUserExists = await userModel.findByEmail(email);
   if (doesUserExists) return { message: 'E-mail já cadastrado', redirect: false };
 
-  const registerUser = await connection().then((db) =>
+  await connection().then((db) =>
     db
       .getTable('users')
       .insert(['email', 'name', 'last_name', 'password'])
