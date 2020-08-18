@@ -11,26 +11,17 @@ const addNewRecipe = async (recipeData, userId) => {
   const ingredientsArray = formatIngredients(ingredients);
   const newRecipe = await connection().then((db) =>
     db
-      .getTable('recipes')
-      .insert(['name', 'recipe_description', 'author_alias'])
+      .getTable('recipes').insert(['name', 'recipe_description', 'author_alias'])
       .values([name, description, authorName])
       .execute()
       .then((results) => results.getAutoIncrementValue())
       .then((recipeId) => db
-        .getTable('users_recipes')
-        .insert(['user_id', 'recipe_id'])
-        .values([userId, recipeId])
-        .execute()
+        .getTable('users_recipes').insert(['user_id', 'recipe_id']).values([userId, recipeId]).execute()
         .then(() => ingredientsArray.map((ingredient) => db
-          .getTable('ingredients')
-          .insert('ingredient_name')
-          .values(ingredient)
-          .execute()
+          .getTable('ingredients').insert('ingredient_name').values(ingredient).execute()
           .then((results) => results.getAutoIncrementValue())
           .then((ingredientId) => db
-            .getTable('recipes_ingredients')
-            .insert(['recipe_id', 'ingredient_id'])
-            .values([recipeId, ingredientId])
+            .getTable('recipes_ingredients').insert(['recipe_id', 'ingredient_id']).values([recipeId, ingredientId])
             .execute())))));
 
   const status = await Promise.all(newRecipe).then((results) => results);
