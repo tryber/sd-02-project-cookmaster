@@ -23,6 +23,25 @@ const searchByName = async (query) => {
   return recipesArray;
 };
 
+const searchByUserId = async (userId) => {
+  const searchResults = await connection().then((db) =>
+    db
+      .getTable('users_recipes')
+      .select('recipe_id')
+      .where('user_id = :userId')
+      .bind('userId', userId)
+      .execute()
+      .then((results) => results.fetchAll())
+      .then((recipeIds) => recipeIds.map(async ([id]) => recipesModel.readRecipes(id))));
+
+  if (searchResults.length === 0) return null;
+
+  const recipesArray = await Promise.all(searchResults).then((results) => results);
+
+  return recipesArray;
+};
+
 module.exports = {
   searchByName,
+  searchByUserId,
 };

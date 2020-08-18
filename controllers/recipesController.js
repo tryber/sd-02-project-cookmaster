@@ -81,6 +81,12 @@ const recipeSearchPage = async (req, res) => {
   return res.render('admin/searchRecipes', { recipesData });
 };
 
+const fetchMyRecipesPage = async (req, res) => {
+  const { user: { id } } = req;
+  const recipesData = await recipeSearchModels.searchByUserId(id);
+  return res.render('admin/myRecipes', { recipesData });
+};
+
 module.exports = {
   recipesLandingPage,
   recipeDetails,
@@ -91,4 +97,5 @@ module.exports = {
   deleteRecipePage,
   deleteRecipe,
   recipeSearchPage,
+  fetchMyRecipesPage,
 };
