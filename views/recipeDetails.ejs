@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Detalhes de Receita</title>
+  </head>
+  <body>
+    <h1>Cookmaster - Detalhes de Receita</h1>
+    <div class="recipe-content">
+      <h3><%= recipe.name %> </h3>
+      <h4><%= `Autor: ${authorAlias || authorInfo.fullName}` %></h6>
+      <h4>Ingredientes: </h4>
+      <ul>
+          <% recipe.ingredients.map((ingredient) => { %>
+            <li>
+              <%= ingredient %>
+            </li>
+          <% }) %>
+      </ul>
+      <div>
+        <%= recipe.description %>
+      </div>
+    </div>
+    <br>
+    <div>
+      <% if(user && (user.id === authorInfo.authorID)) { %>
+        <a <%- `href="/recipes/${recipe.id}/edit"` %>><button type="button">Editar receita</button></a>
+        <a <%- `href="/recipes/${recipe.id}/delete"` %>><button type="button">Excluir Receita</button></a>
+      <% } %>
+    </div>
+
+  </body>
+</html>

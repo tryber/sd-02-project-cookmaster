@@ -6,22 +6,19 @@
     <title>Cookmaster - Home</title>
   </head>
   <body>
-    <h1>Boas vindas ao Cookmaster!</h1>
+    <form method="GET" action="/recipes/search" id="recipes-search-form">
+      <label for="recipe-search-input">
+        Busque sua pesquisa por palavra:
+        <input type="text" id="recipe-search-input" name="q" />
+      </label>
+    </form>
     <div>
-      <% recipesData.map(({ id, name, authorInfo: { fullName } }) => { %>
+      <% recipesData && recipesData.map(({ id, name, authorInfo: { fullName } }) => { %>
       <%= `Receita: ${name} - Autor: ${fullName}` %>
       <div>
         <a href="/recipes/<%=id%>">Detalhes</a>
       </div>
       <% }); %>
     </div>
-    <br>
-    <% if (userLogged) { %>
-      <div>
-        <a href="/recipes/new">
-          <button type="button">Nova Receita</button>
-        </a>
-      </div>
-    <% } %>
   </body>
 </html>

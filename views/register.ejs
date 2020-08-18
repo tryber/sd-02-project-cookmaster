@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Home</title>
+  </head>
+  <body>
+    <h1>Registrar Novo Usuário</h1>
+    <div>
+      <form method="POST" action="/register" name="registration-form">
+        <label for="input-name">
+          Nome
+          <input required=true type="text" id="input-name" name="name" />
+        </label>
+        <label for="input-lastname">
+          Sobrenome
+          <input required=true type="text" id="input-lastname" name="lastName" />
+        </label>
+        <label for="input-email">
+          E-mail
+          <input required=true type="email" id="input-email" name="email" />
+        </label>
+        <label for="input-password">
+          Senha
+          <input required=true type="password" id="input-password" name="password"/>
+        </label>
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+    <div>
+      <% if(message)  { %>
+        <%=`${message}` %>
+      <% } %>
+    </div>
+  </body>
+</html>

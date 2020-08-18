@@ -6,22 +6,14 @@
     <title>Cookmaster - Home</title>
   </head>
   <body>
-    <h1>Boas vindas ao Cookmaster!</h1>
+    <h1>Minhas Receitas</h1>
     <div>
-      <% recipesData.map(({ id, name, authorInfo: { fullName } }) => { %>
+      <% recipesData && recipesData.map(({ id, name, authorInfo: { fullName } }) => { %>
       <%= `Receita: ${name} - Autor: ${fullName}` %>
       <div>
         <a href="/recipes/<%=id%>">Detalhes</a>
       </div>
       <% }); %>
     </div>
-    <br>
-    <% if (userLogged) { %>
-      <div>
-        <a href="/recipes/new">
-          <button type="button">Nova Receita</button>
-        </a>
-      </div>
-    <% } %>
   </body>
 </html>

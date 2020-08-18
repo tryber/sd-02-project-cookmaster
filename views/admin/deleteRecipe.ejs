@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Modificar Receita</title>
+  </head>
+  <body>
+    <h1>Cookmaster - Excluir Receita</h1>
+    <div class="delete-recipe-content">
+      <form method="POST" <%- `action="/recipes/${recipeId}/delete"` %> id="delete-recipe-content">
+        <label for="delete-password">
+          Insira sua senha para deletar:
+          <input id="delete-password" type="delete-password" name="deletePassword" />
+        </label>
+      </form>
+      <div class="deletion-status">
+        <%= message %>
+      </div>
+    </div>
+  </body>
+</html>
