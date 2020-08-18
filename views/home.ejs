@@ -16,10 +16,12 @@
       <% }); %>
     </div>
     <br>
-    <div>
-      <a href="/recipes/new">
-        <button type="button">Nova Receita</button>
-      </a>
-    </div>
+    <% if (userLogged) { %>
+      <div>
+        <a href="/recipes/new">
+          <button type="button">Nova Receita</button>
+        </a>
+      </div>
+    <% } %>
   </body>
 </html>

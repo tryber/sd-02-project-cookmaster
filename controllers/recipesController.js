@@ -2,9 +2,9 @@ const recipesModel = require('../models/recipesModel');
 const recipesCRUDModel = require('../models/admin/recipesCRUDModel');
 const recipeSearchModels = require('../models/admin/recipeSearchModel');
 
-const recipesLandingPage = async (_req, res) => {
+const recipesLandingPage = async (req, res) => {
   const recipesData = await recipesModel.readRecipes();
-  return res.render('home', { recipesData });
+  return res.render('home', { recipesData, userLogged: !!req.user });
 };
 
 const recipeDetails = async (req, res) => {
