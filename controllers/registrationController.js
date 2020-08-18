@@ -1,6 +1,4 @@
-
 const registrationModel = require('../models/registrationModel');
-
 
 const displayRegistration = async (_req, res) => res.render('register', { message: '', redirect: false });
 

@@ -3,8 +3,8 @@ const userModel = require('./userModel');
 
 const registerNewUser = async (userData = null) => {
   if (!userData) return { message: 'Valores inválidos', redirect: false };
-  const { email, name, lastName, password } = userData;
 
+  const { email, name, lastName, password } = userData;
   const doesUserExists = await userModel.findByEmail(email);
   if (doesUserExists) return { message: 'E-mail já cadastrado', redirect: false };
 

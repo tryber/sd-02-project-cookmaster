@@ -28,7 +28,7 @@ const findByEmail = async (userEmail) => {
       .then((results) => results.fetchAll())
       .then((userData) => userData));
 
-  if (registeredUser) {
+  if (registeredUser.length > 0) {
     const [[id, email, password, name, lastName]] = registeredUser;
     const userObject = { id, email, password, name, lastName };
     return userObject;

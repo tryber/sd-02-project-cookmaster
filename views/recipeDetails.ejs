@@ -26,7 +26,7 @@
     <div>
       <% if(user && (user.id === authorInfo.authorID)) { %>
         <a <%- `href="/recipes/${recipe.id}/edit"` %>><button type="button">Editar receita</button></a>
-        <button type="button">Excluir Receita</button>
+        <a <%- `href="/recipes/${recipe.id}/delete"` %>><button type="button">Excluir Receita</button></a>
       <% } %>
     </div>
 
