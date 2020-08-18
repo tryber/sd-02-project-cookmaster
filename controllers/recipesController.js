@@ -54,6 +54,26 @@ const modifyRecipe = async (req, res) => {
   return setTimeout(() => res.redirect(`/recipes/${recipeId}`), 2000);
 };
 
+const deleteRecipePage = async (req, res) => {
+  const { id: userId } = req.user;
+  const recipeId = Number(req.originalUrl.match(/[0-9]+/g)[0]);
+  const { authorInfo: { authorID } } = await recipesModel.readRecipes(Number(recipeId));
+  if (userId !== authorID) return res.redirect(`/recipes/${recipeId}`);
+
+  return res.render('admin/deleteRecipe', { message: '', recipeId });
+};
+
+const deleteRecipe = async (req, res) => {
+  const { id: userId } = req.user;
+  const { body: { deletePassword } } = req;
+  const recipeId = Number(req.originalUrl.match(/[0-9]+/g)[0]);
+
+  const { redirect } = await recipesCRUDModel.deleteRecipe(recipeId, userId, deletePassword);
+
+  if (redirect) return res.redirect('/');
+  return res.render('admin/deleteRecipe', { message: 'Senha incorreta. Por favor, tente novamente.', recipeId });
+};
+
 module.exports = {
   recipesLandingPage,
   recipeDetails,
@@ -61,4 +81,6 @@ module.exports = {
   createNewRecipe,
   modifyRecipePage,
   modifyRecipe,
+  deleteRecipePage,
+  deleteRecipe,
 };

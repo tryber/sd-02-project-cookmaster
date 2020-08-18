@@ -73,7 +73,46 @@ const updateRecipe = async (recipeData) => {
   await Promise.all(updatedRecipes);
 };
 
+const deleteRecipe = async (recipeId, userId, deletePassword) => {
+  const userPassword = await connection().then((db) =>
+    db
+      .getTable('users')
+      .select('password')
+      .where('id = :userId')
+      .bind('userId', userId)
+      .execute()
+      .then((results) => results.fetchAll())
+      .then(([[password]]) => password));
+
+  if (deletePassword === userPassword) {
+    await connection().then((db) =>
+      db
+        .getTable('recipes_ingredients')
+        .delete()
+        .where('recipe_id = :recipeId')
+        .bind('recipeId', recipeId)
+        .execute()
+        .then(() => db
+          .getTable('users_recipes')
+          .delete()
+          .where('recipe_id = :recipeId')
+          .bind('recipeId', recipeId)
+          .execute()
+          .then(() => db
+            .getTable('recipes')
+            .delete()
+            .where('id = :recipeId')
+            .bind('recipeId', recipeId)
+            .execute())));
+
+    return { redirect: true };
+  }
+
+  return { redirect: false };
+};
+
 module.exports = {
   addNewRecipe,
   updateRecipe,
+  deleteRecipe,
 };

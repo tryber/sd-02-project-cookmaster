@@ -10,6 +10,10 @@ router.use(middlewares.auth());
 
 router.get('/:id/edit', (req, res) => controllers.recipesController.modifyRecipePage(req, res));
 
+router.get('/:id/delete', (req, res) => controllers.recipesController.deleteRecipePage(req, res));
+
+router.post('/:id/delete', (req, res) => controllers.recipesController.deleteRecipe(req, res));
+
 router.post('/:id', (req, res) => controllers.recipesController.modifyRecipe(req, res));
 
 router.get('/new', (_req, res) => controllers.recipesController.newRecipesPage(_req, res));
