@@ -11,14 +11,15 @@ const addNewRecipe = async (recipeData, userId) => {
   const ingredientsArray = formatIngredients(ingredients);
   const newRecipe = await connection().then((db) =>
     db
-      .getTable('recipes').insert(['name', 'recipe_description', 'author_alias'])
-      .values([name, description, authorName])
+      .getTable('recipes').insert(['name', 'recipe_description', 'author_alias']).values([name, description, authorName])
       .execute()
       .then((results) => results.getAutoIncrementValue())
       .then((recipeId) => db
-        .getTable('users_recipes').insert(['user_id', 'recipe_id']).values([userId, recipeId]).execute()
+        .getTable('users_recipes').insert(['user_id', 'recipe_id']).values([userId, recipeId])
+        .execute()
         .then(() => ingredientsArray.map((ingredient) => db
-          .getTable('ingredients').insert('ingredient_name').values(ingredient).execute()
+          .getTable('ingredients').insert('ingredient_name').values(ingredient)
+          .execute()
           .then((results) => results.getAutoIncrementValue())
           .then((ingredientId) => db
             .getTable('recipes_ingredients').insert(['recipe_id', 'ingredient_id']).values([recipeId, ingredientId])
@@ -36,30 +37,18 @@ const updateRecipe = async (recipeData) => {
 
   const updatedRecipes = await connection().then((db) =>
     db
-      .getTable('recipes')
-      .update()
-      .where('id = :recipeId')
-      .bind('recipeId', recipeId)
+      .getTable('recipes').update().where('id = :recipeId').bind('recipeId', recipeId)
       .set('name', name)
       .set('recipe_description', description)
       .execute()
       .then(() => db
-        .getTable('recipes_ingredients')
-        .delete()
-        .where('recipe_id = :recipeId')
-        .bind('recipeId', recipeId)
+        .getTable('recipes_ingredients').delete().where('recipe_id = :recipeId').bind('recipeId', recipeId)
         .execute())
       .then(() => ingredientsArray.map((ingredient) => db
-        .getTable('ingredients')
-        .insert('ingredient_name')
-        .values(ingredient)
-        .execute()
+        .getTable('ingredients').insert('ingredient_name').values(ingredient).execute()
         .then((results) => results.getAutoIncrementValue())
-        .then((ingredientId) => db
-          .getTable('recipes_ingredients')
-          .insert(['recipe_id', 'ingredient_id'])
-          .values([recipeId, ingredientId])
-          .execute()))));
+        .then((ingredientId) => db.getTable('recipes_ingredients').insert(['recipe_id', 'ingredient_id'])
+          .values([recipeId, ingredientId]).execute()))));
 
   await Promise.all(updatedRecipes);
 };
@@ -67,10 +56,7 @@ const updateRecipe = async (recipeData) => {
 const deleteRecipe = async (recipeId, userId, deletePassword) => {
   const userPassword = await connection().then((db) =>
     db
-      .getTable('users')
-      .select('password')
-      .where('id = :userId')
-      .bind('userId', userId)
+      .getTable('users').select('password').where('id = :userId').bind('userId', userId)
       .execute()
       .then((results) => results.fetchAll())
       .then(([[password]]) => password));
@@ -78,22 +64,13 @@ const deleteRecipe = async (recipeId, userId, deletePassword) => {
   if (deletePassword === userPassword) {
     await connection().then((db) =>
       db
-        .getTable('recipes_ingredients')
-        .delete()
-        .where('recipe_id = :recipeId')
-        .bind('recipeId', recipeId)
+        .getTable('recipes_ingredients').delete().where('recipe_id = :recipeId').bind('recipeId', recipeId)
         .execute()
         .then(() => db
-          .getTable('users_recipes')
-          .delete()
-          .where('recipe_id = :recipeId')
-          .bind('recipeId', recipeId)
+          .getTable('users_recipes').delete().where('recipe_id = :recipeId').bind('recipeId', recipeId)
           .execute()
           .then(() => db
-            .getTable('recipes')
-            .delete()
-            .where('id = :recipeId')
-            .bind('recipeId', recipeId)
+            .getTable('recipes').delete().where('id = :recipeId').bind('recipeId', recipeId)
             .execute())));
 
     return { redirect: true };
