@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookmaster - Home</title>
+  </head>
+  <body>
+    <form method="GET" action="/recipes/search" id="recipes-search-form">
+      <label for="recipe-search-input">
+        Busque sua pesquisa por palavra:
+        <input type="text" id="recipe-search-input" name="q" />
+      </label>
+    </form>
+    <div>
+      <% recipesData && recipesData.map(({ id, name, authorInfo: { fullName } }) => { %>
+      <%= `Receita: ${name} - Autor: ${fullName}` %>
+      <div>
+        <a href="/recipes/<%=id%>">Detalhes</a>
+      </div>
+      <% }); %>
+    </div>
+  </body>
+</html>

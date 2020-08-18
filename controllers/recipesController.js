@@ -1,5 +1,6 @@
 const recipesModel = require('../models/recipesModel');
 const recipesCRUDModel = require('../models/admin/recipesCRUDModel');
+const recipeSearchModels = require('../models/admin/recipeSearchModel');
 
 const recipesLandingPage = async (_req, res) => {
   const recipesData = await recipesModel.readRecipes();
@@ -74,6 +75,12 @@ const deleteRecipe = async (req, res) => {
   return res.render('admin/deleteRecipe', { message: 'Senha incorreta. Por favor, tente novamente.', recipeId });
 };
 
+const recipeSearchPage = async (req, res) => {
+  const { query: { q } } = req;
+  const recipesData = await recipeSearchModels.searchByName(q);
+  return res.render('admin/searchRecipes', { recipesData });
+};
+
 module.exports = {
   recipesLandingPage,
   recipeDetails,
@@ -83,4 +90,5 @@ module.exports = {
   modifyRecipe,
   deleteRecipePage,
   deleteRecipe,
+  recipeSearchPage,
 };
