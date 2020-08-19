@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 connection.connect((err) => {
-  const cc = 'erro: '
+  const cc = 'erro: ';
   if (err) {
     return console.error(cc + err.message);
   }
