@@ -9,7 +9,7 @@ const userModel = require('../models/userModel');
 // };
 
 const formSubmit = async (req, res) => {
-  const {email, password, checkPassword, name, lastName, redirect} = req.body;
+  const { email, password, checkPassword, name, lastName, redirect } = req.body;
   if (password !== checkPassword) {
     return res.render('cadastro', {
       message: 'Senha não confere',
