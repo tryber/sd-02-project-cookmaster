@@ -12,6 +12,7 @@ const getUser = async (req) => {
   const user = await userModel.findById(userId);
   if (!user) return null;
 
+  console.log(user)
   return user;
 };
 
@@ -23,7 +24,7 @@ const authMiddleware = (required = true) => async (req, res, next) => {
 
   if (!user && !required) return next();
 
-  const { password, ...userData } = user;
+  const { pass, ...userData } = user;
 
   req.user = userData;
 
@@ -32,5 +33,6 @@ const authMiddleware = (required = true) => async (req, res, next) => {
 
 module.exports = {
   SESSIONS,
+  getUser,
   authMiddleware,
 };

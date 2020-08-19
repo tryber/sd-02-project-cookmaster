@@ -4,7 +4,7 @@ USE cook_master;
 
 CREATE TABLE Users (
     id INT NOT NULL AUTO_INCREMENT,
-    email VARCHAR(30) NOT NULL,
+    email VARCHAR(30) NOT NULL UNIQUE,
     pass VARCHAR(30),
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
@@ -36,3 +36,7 @@ VALUES
     ('Biscoito', 'Biscoito', 'Abrir o pacote e comer', '2'),
     ('Sanduiche', 'Celular e dinheiro', 'Peça o sanduíche de sua escolha e pague', '2'),
     ('Omelete', 'Ovos', 'Bater gema e clara dos ovos e deixar na frigideira', '3');
+
+-- ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY '123123';
+
+-- FLUSH PRIVILEGES;
